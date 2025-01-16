@@ -110,28 +110,21 @@
                                     <span class="form-icon text-dark-gray"><i class="bi bi-envelope icon-extra-medium"></i></span>
                                     <input class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control required" type="email" name="email" placeholder="Váš email*" />
                                 </div>
-                                <div class="form-select-wrapper mb-4">
+                                <div class="position-relative form-group mb-20px">
                                     <select class="form-select" id="form-select" name="department" >
-                                      <option selected disabled value="">Vyberte čeho se poptávka týká.</option>
-                                      <option value="Kanalizace">Kanalizace</option>
-                                      <option value="Topeni">Topení</option>
-                                      <option value="Plyn">Plyn</option>
-                                      <option value="Voda">Voda</option>
-                                      <option value="Kotel">Kotel</option>
+                                      <option selected disabled value="">Vyberte s čím vám můžeme pomoci?</option>
+                                      <option value="eshop_novy">Chci vytvořit nový e-shop</option>
+                                      <option value="eshop_upravy">Chci upravit můj existující e-shop</option>
+                                      <option value="marketing">Mám zájem o online marketing</option>
+                                      <option value="other">Kontaktuji Vás z jiného důvodu</option>
                                     </select>
-                                    <div class="valid-feedback">
-                                     Paráda!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                      Vyberte čeho se poptávka týká.
-                                    </div>
-                                  </div>
+                               
                                 <div class="position-relative form-group mb-20px">
                                     <span class="form-icon text-dark-gray"><i class="bi bi-envelope icon-extra-medium"></i></span>
                                     <input class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control" type="text" name="shopify" placeholder="Shopify URL (volitelné)" />
                                 </div>
                                 <div class="position-relative z-index-1 form-group form-textarea mt-15px mb-0"> 
-                                    <textarea class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control" name="comment" placeholder="Vaše zpráva*" rows="5"></textarea>
+                                    <textarea class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray required form-control" name="comment" placeholder="Vaše zpráva*" rows="4"></textarea>
                                     <span class="form-icon text-dark-gray"><i class="bi bi-chat-square-dots icon-extra-medium"></i></span>
                                     <input type="hidden" name="redirect" value="">
                                     <button class="btn btn-large btn-dark-gray btn-round-edge btn-box-shadow mb-20px mt-25px submit w-100" type="submit">Odeslat</button>
