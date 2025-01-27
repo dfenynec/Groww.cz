@@ -22,11 +22,11 @@
 
                         
                         <li class="nav-item dropdown dropdown-with-icon">
-                            <a href="services.html" class="nav-link">Služby</a>
+                            <a href="index.html" class="nav-link">Služby</a>
                             <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li>
-                                    <a href="service_details.html"><i class="feather icon-feather-users"></i>
+                                    <a href="index.html"><i class="feather icon-feather-package"></i>
                                         <div class="submenu-icon-content">
                                             <span>Nový e-shop</span>
                                             <p>Pomůžeme Vám prodávat online snadno a rychle!</p>
@@ -34,7 +34,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="service-details.html"><i class="feather icon-feather-briefcase"></i>
+                                    <a href="index.html"><i class="feather icon-feather-trending-up"></i>
                                         <div class="submenu-icon-content">
                                             <span>Online Marketing</span>
                                             <p>Hledání nových zákazníků, analýzy nebo SEO nechte na nás!</p>
@@ -42,7 +42,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="services-detail.html"><i class="feather icon-feather-send"></i>
+                                    <a href="index.html"><i class="feather icon-feather-terminal"></i>
                                         <div class="submenu-icon-content">
                                             <span>Design</span>
                                             <p>Pomůžeme Vám s webdesignem nebo reklamní grafikou!</p>
@@ -51,8 +51,8 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="case_studies.html" class="nav-link">Case studies</a></li>
-                        <li class="nav-item"><a href="team.html" class="nav-link">O nás</a></li>
+                        <li class="nav-item"><a href="index.html" class="nav-link">Case studies</a></li>
+                        <li class="nav-item"><a href="index.html" class="nav-link">O nás</a></li>
                         <li class="nav-item"><a href="contact.html" class="nav-link">Kontakt</a></li>
                     </ul>
                 </div>
