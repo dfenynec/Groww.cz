@@ -1,6 +1,6 @@
-  <!-- start header -->
+
   <header>
-    <!-- start navigation -->
+
     <nav class="navbar navbar-expand-lg header-light header-transparent bg-transparent disable-fixed">
         <div class="container-fluid">
             <div class="col-auto col-lg-2 me-lg-0 me-auto">
@@ -66,6 +66,5 @@
             </div>
         </div>
     </nav>
-    <!-- end navigation -->
+
 </header>       
- <!-- end header -->
