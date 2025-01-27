@@ -15,4 +15,4 @@ jobs:
         username: ${{ secrets.FTPUSERNAME }}
         password: ${{ secrets.FTPPASSWORD }}
         protocol: ftp
-        server-dir: /
+        server-dir: /home/fp9bsd4wetld/public_html
