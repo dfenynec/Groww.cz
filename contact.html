@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html class="no-js" lang="cs">
     <head>
-        <title>Groww. web jednoduše</title>
+        <title>Groww. - Kontakt</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="author" content="David Fenynec">
@@ -51,12 +51,12 @@
                         <div class="collapse navbar-collapse" id="navbarNav"> 
                             <ul class="navbar-nav"> 
                                 <li class="nav-item"><a href="sablony.html" class="nav-link">Šablony</a></li>
-                                <li class="nav-item"><a href="case_studies.html" class="nav-link">Case studies</a></li>
+                                <li class="nav-item"><a href="about.html" class="nav-link">O nás</a></li>
                                 <li class="nav-item"><a href="contact.html" class="nav-link">Kontakt</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-auto col-lg-2 text-end d-none d-sm-flex">
+                    <div class="col-auto text-end d-none d-sm-flex">
                         <div class="header-icon">       
                             <div class="header-button">
                                  <a href="sablony.html" target="_blank" class="btn inner-link btn-large btn-white btn-hover-animation-switch btn-rounded text-dark-gray btn-box-shadow me-20px fw-400 xs-mt-10px xs-mb-10px">
@@ -163,8 +163,8 @@
                     </div> 
                     <div class="col-lg-6 offset-xxl-1" data-anime='{ "el": "childs", "translateX": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'> 
                         <div class="contact-form-style-03 position-relative border-radius-10px bg-white p-14 lg-p-10 box-shadow-double-large overflow-hidden last-paragraph-no-margin">
-                            <h2 class="fw-700 text-dark-gray mb-30px sm-mb-20px fancy-text-style-4 ls-minus-2px">Pomůžeme s  
-                                <span data-fancy-text='{ "effect": "rotate", "string": ["e-shopem!", "reklamou!", "designem!"] }'></span> 
+                            <h2 class="fw-700 text-dark-gray mb-30px sm-mb-20px fancy-text-style-4 ls-minus-2px">Pomůžeme  
+                                <span data-fancy-text='{ "effect": "rotate", "string": ["s webem!", "s reklamou!", "vám růst!"] }'></span> 
                             </h2> 
                             <form action="email-templates/contact-form.php" method="post">
                                 <div class="position-relative form-group mb-20px">
@@ -176,25 +176,26 @@
                                     <input class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control required" type="email" name="email" placeholder="Váš email*" />
                                 </div>
                                 <div class="position-relative form-group mb-20px">
-                                    <span class="form-icon text-dark-gray"><i class="bi bi-envelope icon-extra-medium"></i></span>
-                                    <select class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control required" type="select" name="select" placeholder="Vyberte prosím s čím Vám můžeme pomoci." >
-                                      <option selected disabled value="">Vyberte s čím vám můžeme pomoci</option>
-                                      <option value="eshop_novy">Chci vytvořit nový e-shop</option>
-                                      <option value="eshop_upravy">Chci upravit můj existující e-shop</option>
-                                      <option value="marketing">Mám zájem o online marketing</option>
+                                    <span class="form-icon text-dark-gray"><i class="bi bi-caret-down icon-extra-medium"></i></span>
+                                    <select class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control required" type="select" name="select" placeholder="Vyberte prosím s čím se na nás obracíte.">
+                                      <option selected disabled value="web">Vyberte prosím, s čím se na nás obracíte*</option>
+                                      <option value="web">Chci vytvořit nový web</option>
+                                      <option value="reklama">Chci přilákat nové zákazníky na existující web</option>
+                                      <option value="web_s_reklamou">Mám zájem o web i reklamu</option>
                                       <option value="other">Kontaktuji Vás z jiného důvodu</option>
                                     </select>
-                               
+                                </div>
                                 <div class="position-relative form-group mb-20px">
                                     <span class="form-icon text-dark-gray"><i class="bi bi-link-45deg icon-extra-medium"></i></span>
-                                    <input class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control" type="text" name="shopify" placeholder="Shopify URL (volitelné)" />
+                                    <input class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control" type="text" name="sablona" placeholder="Vybraná šablona (volitelné)" />
                                 </div>
                                 <div class="position-relative z-index-1 form-group form-textarea mt-15px mb-0"> 
+                                    <span class="form-icon text-dark-gray"><i class="bi bi-chat-square-dots icon-extra-medium"></i></span>
                                     <textarea class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray required form-control" name="comment" placeholder="Vaše zpráva*" rows="4"></textarea>
-                                    <span class="form- icon text-dark-gray"><i class="bi bi-chat-square-dots icon-extra-medium"></i></span>
+                                    
                                     <input type="hidden" name="redirect" value="">
                                     <button class="btn btn-large btn-dark-gray btn-round-edge btn-box-shadow mb-20px mt-25px submit w-100" type="submit">Odeslat</button>
-                                    <p class="fs-13 lh-22 w-90 md-w-100">Odesláním udělujete souhlas s procesování Vámi poskytnutých dat podle našich <a class="text-decoration-line-bottom text-dark-gray fw-500" href="#">zásad ochrany osobních údajů.</a></p>
+                                    <p class="fs-13 lh-22 w-90 md-w-100">Odesláním udělujete souhlas s procesováním Vámi poskytnutých dat podle našich <a class="text-decoration-line-bottom text-dark-gray fw-500" href="#">zásad ochrany osobních údajů.</a><br><br>* Povinné</p>
                                     <div class="form-results mt-20px d-none"></div>
                                 </div>
                             </form> 
