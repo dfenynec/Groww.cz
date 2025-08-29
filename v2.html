@@ -128,7 +128,7 @@
                     </div>
                     <div class="col-lg-5 offset-lg-1 col-md-3 align-self-end d-none d-md-inline-block">
                         <div class="position-absolute right-0px bottom-minus-90px xxl-bottom-minus-30px md-bottom-minus-35px md-right-minus-250px lg-right-minus-150px w-50 xl-w-55 lg-w-65 md-w-75 overflow-hidden">
-                            <img src="images/hero.png" class="w-100" alt="" data-anime='{ "opacity": [0, 1], "translateX": [100, 0], "duration": 1000, "delay": 200, "easing": "easeOutQuad" }'>
+                            <img src="images/hero.png" class="w-100" style="object-fit: contain; max-height: 110vh;" alt="" data-anime='{ "opacity": [0, 1], "translateX": [100, 0], "duration": 1000, "delay": 200, "easing": "easeOutQuad" }'>
                         </div>
 
                     </div>
@@ -157,12 +157,7 @@
                                 <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
                                     <div class="feature-box-icon">
                                         <!-- ponecháno původní SVG -->
-                                        <svg width="70" height="64" viewBox="0 0 256 292" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
-                                            <path d="M223.774 57.34c-.201-1.46-1.48-2.268-2.537-2.357-1.055-.088-23.383-1.743-23.383-1.743s-15.507-15.395-17.209-17.099c-1.703-1.703-5.029-1.185-6.32-.805-.19.056-3.388 1.043-8.678 2.68-5.18-14.906-14.322-28.604-30.405-28.604-.444 0-.901.018-1.358.044C129.31 3.407 123.644.779 118.75.779c-37.465 0-55.364 46.835-60.976 70.635-14.558 4.511-24.9 7.718-26.221 8.133-8.126 2.549-8.383 2.805-9.45 10.462C21.3 95.806.038 260.235.038 260.235l165.678 31.042 89.77-19.42S223.973 58.8 223.775 57.34zM156.49 40.848l-14.019 4.339c.005-.988.01-1.96.01-3.023 0-9.264-1.286-16.723-3.349-22.636 8.287 1.04 13.806 10.469 17.358 21.32zm-27.638-19.483c2.304 5.773 3.802 14.058 3.802 25.238 0 .572-.005 1.095-.01 1.624-9.117 2.824-19.024 5.89-28.953 8.966 5.575-21.516 16.025-31.908 25.161-35.828zm-11.131-10.537c1.617 0 3.246.549 4.805 1.622-12.007 5.65-24.877 19.88-30.312 48.297l-22.886 7.088C75.694 46.16 90.81 10.828 117.72 10.828z" fill="#95BF46"/>
-                                            <path d="M221.237 54.983c-1.055-.088-23.383-1.743-23.383-1.743s-15.507-15.395-17.209-17.099c-.637-.634-1.496-.959-2.394-1.099l-12.527 256.233 89.762-19.418S223.972 58.8 223.774 57.34c-.201-1.46-1.48-2.268-2.537-2.357" fill="#5E8E3E"/>
-                                            <path d="M135.242 104.585l-11.069 32.926s-9.698-5.176-21.586-5.176c-17.428 0-18.305 10.937-18.305 13.693 0 15.038 39.2 20.8 39.2 56.024 0 27.713-17.577 45.558-41.277 45.558-28.44 0-42.984-17.7-42.984-17.7l7.615-25.16s14.95 12.835 27.565 12.835c8.243 0 11.596-6.49 11.596-11.232 0-19.616-32.16-20.491-32.16-52.724 0-27.129 19.472-53.382 58.778-53.382 15.145 0 22.627 4.338 22.627 4.338" fill="#FFF"/>
-                                        </svg>
-                                        
+                                     <img id="original" src="https://www.vectorlogo.zone/logos/google/google-icon.svg" style="height: 64px;">
                                     </div>
                                     <div class="feature-box-content">
                                         <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Tvorba webu</span>
@@ -173,7 +168,7 @@
                             <div class="col-12 icon-with-text-style-01">
                                 <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
                                     <div class="feature-box-icon">
-                                        <svg width="70" height="64" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"/><path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"/><path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"/><path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"/></svg>
+                                      <img id="original" src="https://www.vectorlogo.zone/logos/google_ads/google_ads-icon.svg" style="height: 64px;">
 
                                     </div>
                                     <div class="feature-box-content">
@@ -420,7 +415,7 @@
                         <!-- end tab navigation -->
                          
                     </div>
-                    <div class="col-xl-5 col-lg-6">
+                    <div class="col-xl-5 col-lg-6 m-100px">
                         <div class="tab-content" data-anime='{ "el": "childs", "translateY": [-30, 0], "perspective": [1200,1200], "scale": [1.05, 1], "rotateX": [5, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
                             <!-- start tab content -->
                             <div class="tab-pane position-relative fade in active show box-shadow-quadruple-large border-radius-8px pt-40px" id="tab_four1">
@@ -482,7 +477,118 @@
         <!-- end section -->
         <!-- start section -->
       <!-- start section -->
-        <section class="position-relative overflow-hidden overlap-height">
+        <!-- start section --> 
+        <section class="bg-gradient-very-light-gray">
+            <div class="container">
+                <div class="row justify-content-center align-items-end mb-6">
+                    <div class="col-xl-6 col-lg-7 md-mb-20px text-center text-lg-start" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+                        <h3 class="fw-700 text-dark-gray ls-minus-1px mb-0 w-90 md-w-100">Jsme kvalifikovaní specialisté</h3>
+                    </div> 
+                    <div class="col-lg-5 offset-xl-1 last-paragraph-no-margin text-center text-lg-start" data-anime='{"el": "lines",  "translateX": [30, 0], "opacity": [0,1], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'> 
+                         <p>Máme oficiální <span class="fw-600 text-dark-gray">certifikaci Google Ads</span>, která potvrzuje naši odbornost a zkušenosti v oblasti online reklamy. Díky tomu spravujeme vaše kampaně efektivně a podle nejnovějších standardů Googlu.</p>
+                    </div>
+                </div> 
+                <div class="row align-items-center justify-content-md-center mb-7 md-mb-10 sm-mb-15">
+                    <div class="col-lg-6 col-md-10 position-relative md-mb-50px sm-mb-40px"> 
+                         <figure class="position-relative m-0 text-center" data-anime='{ "effect": "slide", "color": "#fff2ef", "direction":"lr", "easing": "easeOutQuad", "delay":50}'>
+                            <img src="images/certifikat.png" alt="">
+                            
+                        </figure>
+                    </div>
+                    <div class="col-lg-5 offset-lg-1 col-md-12" data-anime='{ "el": "childs", "translateX": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'> 
+                        
+                        <div class="row mb-9">
+                            <div class="col-12 icon-with-text-style-01 mb-30px">
+                                <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
+                                    <div class="feature-box-icon">
+                                          <img id="original" src="https://www.vectorlogo.zone/logos/google_ads/google_ads-icon.svg" style="height: 64px;">
+                                    </div>
+                                    <div class="feature-box-content">
+                                        <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Online reklama</span>
+                                        <p class="w-80 lg-w-100">Naplánujeme a odstartujeme online reklamu, která přiláká na Váš nový web zákazníky z Čech i zahraničí</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 icon-with-text-style-01">
+                                <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
+                                    <div class="feature-box-icon">
+                                        <img id="original" src="https://www.vectorlogo.zone/logos/google_analytics/google_analytics-icon.svg" style="height: 64px;">
+                                        
+
+                                    </div>
+                                    <div class="feature-box-content">
+                                        <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Měřitelné výsledky</span>
+                                        <p class="w-80 lg-w-100">Napojíme vaše nové stránky na analytické nástroje, kde jasně a transparentně uvidíte, jak pomáhají vašemu podnikání.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <a href="contact.html" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                            <span> 
+                                <span class="btn-text">Chci web</span>
+                                <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                                <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                            </span>
+                        </a>
+                        <a href="contact.html" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
+                            <span>
+                                <span class="btn-text">Chci reklamu</span>
+                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                            </span> 
+                        </a>
+                    </div> 
+                </div>
+                <div class="row position-relative clients-style-08 mb-9 md-mb-19 sm-mb-3">
+                    <div class="col swiper text-center feather-shadow" data-slider-options='{ "slidesPerView": 2, "spaceBetween":0, "speed": 4000, "loop": true, "pagination": { "el": ".slider-four-slide-pagination-2", "clickable": false }, "allowTouchMove": false, "autoplay": { "delay":0, "disableOnInteraction": false }, "navigation": { "nextEl": ".slider-four-slide-next-2", "prevEl": ".slider-four-slide-prev-2" }, "keyboard": { "enabled": true, "onlyInViewport": true }, "breakpoints": { "1200": { "slidesPerView": 4 }, "992": { "slidesPerView": 3 }, "768": { "slidesPerView": 3 } }, "effect": "slide" }'>
+                        <div class="swiper-wrapper marquee-slide">
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="edanagency.cz"><img src="images/edan.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/deepl/deepl-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/disney/disney-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/getgrav/getgrav-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/google/google-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/mint/mint-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a href="#"><img src="https://www.vectorlogo.zone/logos/paypal/paypal-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end section -->
+        <!--<section class="position-relative overflow-hidden overlap-height">
             <img src="images/demo-real-estate-07.png" class="position-absolute left-100px top-50px z-index-minus-1" alt="" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-380px, 0px, 0px);" />
             <img src="images/demo-real-estate-08.png" class="position-absolute right-100px top-100px z-index-minus-1" alt="" data-bottom-top="transform:scale(1.4, 1.4) translate3d(0px, 0px, 0px);" data-top-bottom="transform:scale(1, 1) translate3d(-300px, 0px, 0px);" />
             <div class="container overlap-gap-section">  
@@ -508,7 +614,7 @@
                         <h3 class="fw-700 text-dark-gray ls-minus-1px">Here is what our clients say!</h3>
                         <div class="swiper position-relative magic-cursor" data-slider-options='{ "autoHeight": true, "loop": true, "allowTouchMove": true, "autoplay": { "delay": 4000, "disableOnInteraction": false }, "navigation": { "nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev" }, "effect": "fade" }'>
                             <div class="swiper-wrapper mb-50px md-mb-35px">
-                                <!-- start text slider item -->
+                                <!-- start text slider item 
                                 <div class="swiper-slide review-style-08">
                                     <p class="fs-17 w-80 lg-w-100">Love the theme, really neat and super easy to use. But the customer support is what makes this an even greater theme! ThemeZaa solved all the problems I had with my custom settings.</p>
                                     <div class="mt-20px">
@@ -522,7 +628,7 @@
                                     </div> 
                                 </div>
                                 <!-- end text slider item -->
-                                <!-- start text slider item -->
+                                <!-- start text slider item 
                                 <div class="swiper-slide review-style-08">
                                     <p class="fs-17 w-80 lg-w-100">I've purchased several themes over the years and this theme, by far is absolutely amazing. It's built extremely well the back end was well thought out the design options are endless.</p>
                                     <div class="mt-20px">
@@ -536,7 +642,7 @@
                                     </div> 
                                 </div>
                                 <!-- end text slider item -->
-                                <!-- start text slider item -->
+                                <!-- start text slider item 
                                 <div class="swiper-slide review-style-08">
                                     <p class="fs-17 w-80 lg-w-100">The theme is very valid and offers many possibilities of customization to adapt it to your needs, but the thing I got the most out of it was the relationship with the support team.</p>
                                     <div class="mt-20px">
@@ -549,19 +655,19 @@
                                         </div>
                                     </div> 
                                 </div>
-                                <!-- end text slider item -->
+                                <!-- end text slider item
                             </div> 
                             <div class="d-flex">
-                                <!-- start slider navigation -->
+                                <!-- start slider navigation 
                                 <div class="slider-one-slide-prev-1 swiper-button-prev slider-navigation-style-04 border border-color-extra-medium-gray"><i class="fa-solid fa-arrow-left text-dark-gray"></i></div>
                                 <div class="slider-one-slide-next-1 swiper-button-next slider-navigation-style-04 border border-color-extra-medium-gray"><i class="fa-solid fa-arrow-right text-dark-gray"></i></div>
-                                <!-- end slider navigation --> 
+                                <!-- end slider navigation 
                             </div>
                         </div> 
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
         <!-- end section -->
         <!-- end section -->
         <!-- start footer -->
