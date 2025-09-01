@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/responsive.css"/>
         <link rel="stylesheet" href="demos/marketing/marketing.css" />
+        <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
     </head>
     <body data-mobile-nav-style="classic" class="custom-cursor">
         <!-- start cursor -->
@@ -146,7 +147,7 @@
                                         </div> 
                                     </div>
                                     <div class="process-content ps-30px last-paragraph-no-margin mb-40px">
-                                        <span class="d-block fw-600 text-dark-gray mb-5px fs-18 ls-minus-05px">Tvorba & předání webu</span>
+                                        <span class="d-block fw-600 text-dark-gray mb-5px fs-18 ls-minus-05px">Tvorba a předání webu</span>
                                         <p class="w-85 lg-w-100">Po doplacení zbytku ceny hotový web předám s potřebnou dokumentací a začneme s tvorbou reklam.</p>
                                     </div>
                                 </div> 
@@ -166,7 +167,7 @@
                             <h2 class="fw-700 text-dark-gray mb-30px sm-mb-20px fancy-text-style-4 ls-minus-2px">Pomůžeme  
                                 <span data-fancy-text='{ "effect": "rotate", "string": ["s webem!", "s reklamou!", "vám růst!"] }'></span> 
                             </h2> 
-                            <form action="email-templates/contact-form.php" method="post">
+                            <form action="email-templates/mailchimp-contact-form.php" id="contactForm" method="post">
                                 <div class="position-relative form-group mb-20px">
                                     <span class="form-icon text-dark-gray"><i class="bi bi-person icon-extra-medium"></i></span>
                                     <input class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray form-control required" type="text" name="name" placeholder="Vaše jméno*" />
@@ -192,11 +193,20 @@
                                 <div class="position-relative z-index-1 form-group form-textarea mt-15px mb-0"> 
                                     <span class="form-icon text-dark-gray"><i class="bi bi-chat-square-dots icon-extra-medium"></i></span>
                                     <textarea class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray required form-control" name="comment" placeholder="Vaše zpráva*" rows="4"></textarea>
-                                    
+                                    <!-- Checkbox for newsletter subscription -->
+                                    <div class="position-relative terms-condition-box text-start d-inline-block mt-20px">
+                                        <label>
+                                            <input type="checkbox" name="subscribe" id="subscribe" value="yes" class="check-box align-middle is-valid">
+                                            <span class="box fs-14">Chci <span class="text-decoration-line-bottom text-base-color fw-500">checklist zdarma</span> a odebírat novinky pro úspěšné podnikání.</span>
+                                        </label>
+                                    </div>
+
                                     <input type="hidden" name="redirect" value="">
-                                    <button class="btn btn-large btn-dark-gray btn-round-edge btn-box-shadow mb-20px mt-25px submit w-100" type="submit">Odeslat</button>
+        
+                                    <button class="btn btn-large btn-dark-gray btn-round-edge btn-box-shadow mb-20px mt-25px submit w-100">Odeslat</button>
+                                    <div class="g-recaptcha" data-sitekey="6Le3G7krAAAAAP8wDfMiiVdF8yyaJ2b5l6-1A-ao" data-action="LOGIN"></div>
                                     <p class="fs-13 lh-22 w-90 md-w-100">Odesláním udělujete souhlas s procesováním Vámi poskytnutých dat podle našich <a class="text-decoration-line-bottom text-dark-gray fw-500" href="#">zásad ochrany osobních údajů.</a><br><br>* Povinné</p>
-                                    <div class="form-results mt-20px d-none"></div>
+                                    <div id="formResponse" class="form-results mt-20px d-none"></div>
                                 </div>
                             </form> 
                             <div class="position-absolute bottom-minus-50px right-minus-130px fs-350 lh-100 fw-900 text-yellow">&lt;</div>
@@ -305,5 +315,85 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
+         <script src="https://www.google.com/recaptcha/api.js"></script>
+          <script>
+   function onSubmit(token) {
+     document.getElementById("contactForm").submit();
+   }
+ </script>
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('contactForm');
+  var responseDiv = document.getElementById('formResponse');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(form);
+
+    // reCAPTCHA v2: get token from widget
+    if (typeof grecaptcha !== 'undefined') {
+      var recaptchaToken = grecaptcha.getResponse();
+      if (!recaptchaToken) {
+        responseDiv.innerHTML = '<div class="alert alert-danger">Prosím, potvrďte reCAPTCHA.</div>';
+        return;
+      }
+      formData.append('g-recaptcha-response', recaptchaToken);
+    }
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      responseDiv.innerHTML = '<div class="' + data.alert + '">' + data.message + '</div>';
+      if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+      form.reset();
+    })
+    .catch(() => {
+      responseDiv.innerHTML = '<div class="alert alert-danger">Došlo k chybě při odesílání formuláře.</div>';
+    });
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('contactForm');
+  var responseDiv = document.getElementById('formResponse');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(form);
+
+    // reCAPTCHA v2: get token from widget
+    if (typeof grecaptcha !== 'undefined') {
+      var recaptchaToken = grecaptcha.getResponse();
+      if (!recaptchaToken) {
+        responseDiv.innerHTML = '<div class="alert alert-danger">Prosím, potvrďte reCAPTCHA.</div>';
+        return;
+      }
+      formData.append('g-recaptcha-response', recaptchaToken);
+    }
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      responseDiv.innerHTML = '<div class="' + data.alert + '">' + data.message + '</div>';
+      if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+      form.reset();
+    })
+    .catch(() => {
+      responseDiv.innerHTML = '<div class="alert alert-danger">Došlo k chybě při odesílání formuláře.</div>';
+    });
+  });
+});
+</script>
+
+
     </body>
 </html>
