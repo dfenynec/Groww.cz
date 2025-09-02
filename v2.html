@@ -792,6 +792,17 @@
         </div>
         <!-- end scroll progress -->
         <!-- javascript libraries -->
+        <script>
+        function getConsentCookie() {
+            const match = document.cookie.match(/(^|;) ?cookie_consent=([^;]*)(;|$)/);
+            return match ? match[2] : null;
+        }
+
+        if (getConsentCookie() === 'accepted') {
+            // Insert your Google Analytics/gtag code here
+        }
+        </script>
+
         <script src="js/cookie-consent.js"></script>
 
         <script type="text/javascript" src="js/jquery.js"></script>

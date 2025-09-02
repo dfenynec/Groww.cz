@@ -34,9 +34,11 @@
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                Timestamp: new Date().toISOString(),
-                Consent: status,
-                UserAgent: navigator.userAgent
+                   Timestamp: new Date().toISOString(),
+                    Consent: status,
+                    UserAgent: navigator.userAgent,
+                    PageURL: window.location.href,
+                    Language: navigator.language
                 // IP will be logged by SheetsDB automatically
             })
         });
