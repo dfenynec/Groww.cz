@@ -762,6 +762,28 @@
         <!-- start subscription popup -->
         <!-- (beze změny, skryto) -->
         <!-- end subscription popup -->
+        <!-- start cookies model -->
+        <div id="cookies-model" class="cookie-message bg-dark-gray border-radius-8px" style="display: block;">
+            <div class="cookie-description fs-14 text-white mb-20px lh-22">
+                We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Allow cookies" you consent to our use of cookies.
+            </div>
+            <div class="cookie-btn">
+                <a href="#" class="btn btn-transparent-white border-1 border-color-transparent-white-light btn-very-small btn-switch-text btn-rounded w-100 mb-15px reject_cookies_btn" aria-label="btn">
+                    <span>
+                        <span class="btn-double-text" data-text="No cookies please">Reject cookies</span>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-white btn-very-small btn-switch-text btn-box-shadow accept_cookies_btn btn-rounded w-100 mb-15px" data-accept-btn="" aria-label="text">
+                    <span>
+                        <span class="btn-double-text" data-text="Yes why not">Allow cookies</span>
+                    </span>
+                </a>
+                <a class="text-decoration-line-bottom text-center fs-14 cookie_options_btn" href="#">Cookie options</a>
+            </div>
+        </div>
+
+
+        <!-- end cookies model -->
          <!-- start scroll progress -->
         <div class="scroll-progress d-none d-xxl-block">
           <a href="#" class="scroll-top" aria-label="scroll">
@@ -770,6 +792,8 @@
         </div>
         <!-- end scroll progress -->
         <!-- javascript libraries -->
+        <script src="js/cookie-consent.js"></script>
+
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
