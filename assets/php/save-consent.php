@@ -12,11 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $data = json_decode(file_get_contents('php://input'), true);
 
 // Validate consent value
-if (!isset($data['consent']) || !in_array($data['consent'], ['accepted', 'rejected'])) {
+if (!isset($data['consent']) || !in_array($data['consent'], ['accepted', 'rejected', 'all', 'necessary'])) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid consent value']);
     exit;
 }
+
 
 // Prepare consent record
 $record = [
@@ -24,7 +25,9 @@ $record = [
     'consent'   => $data['consent'],
     'ip'        => $_SERVER['REMOTE_ADDR'],
     'userAgent' => $data['userAgent'] ?? '',
+    'pageUrl'   => $data['pageUrl'] ?? '',
 ];
+
 
 // File to store logs (make sure this is not web-accessible)
 $file = __DIR__ . '/consent-log.json';

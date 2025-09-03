@@ -1,8 +1,7 @@
 // /js/cookie-consent.js
-
 (function() {
-    function setConsentCookie(status) {
-        document.cookie = "cookie_consent=" + status + "; path=/; max-age=" + (60*60*24*365) + "; SameSite=Strict";
+    function setConsentCookie(type) {
+        document.cookie = "cookie_consent=" + type + "; path=/; max-age=" + (60*60*24*365) + "; SameSite=Strict";
     }
 
     function getConsentCookie() {
@@ -16,67 +15,69 @@
     }
 
     // Send to PHP endpoint
-    function sendConsentToPHP(status) {
+    function sendConsentToPHP(type) {
         fetch('/assets/php/save-consent.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                consent: status,
+                consent: type,
                 timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
+                userAgent: navigator.userAgent,
+                pageUrl: window.location.href
             })
         });
     }
 
     // Send to SheetsDB endpoint
-    function sendConsentToSheetsDB(status) {
+    function sendConsentToSheetsDB(type) {
         fetch('https://sheetdb.io/api/v1/abza59bhpfpzo', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                   Timestamp: new Date().toISOString(),
-                    Consent: status,
-                    UserAgent: navigator.userAgent,
-                    PageURL: window.location.href,
-                    Language: navigator.language
-                // IP will be logged by SheetsDB automatically
+                Timestamp: new Date().toISOString(),
+                Consent: type,
+                UserAgent: navigator.userAgent,
+                PageURL: window.location.href
             })
         });
     }
 
-    // Call both endpoints
-    function sendConsentToServer(status) {
-        sendConsentToPHP(status);
-        sendConsentToSheetsDB(status);
+    function sendConsentToServer(type) {
+        sendConsentToPHP(type);
+        sendConsentToSheetsDB(type);
+    }
+
+    function enableAllCookies() {
+        // Initialize Google Analytics, marketing, etc.
+        // Example: load GA4 here if not already loaded
+    }
+
+    function enableOnlyNecessaryCookies() {
+        // Do not load analytics/marketing scripts
+        // Only essential cookies/scripts should run
     }
 
     function setupConsentButtons() {
-        var acceptBtn = document.querySelector('.accept_cookies_btn');
-        var rejectBtn = document.querySelector('.reject_cookies_btn');
-        var optionsBtn = document.querySelector('.cookie_options_btn');
+        var acceptAllBtn = document.querySelector('.accept_all_btn');
+        var acceptNecessaryBtn = document.querySelector('.accept_necessary_btn');
 
-        if (acceptBtn) {
-            acceptBtn.addEventListener('click', function(e) {
+        if (acceptAllBtn) {
+            acceptAllBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                setConsentCookie('accepted');
-                sendConsentToServer('accepted');
+                setConsentCookie('all');
+                sendConsentToServer('all');
+                enableAllCookies();
                 hideCookieBanner();
             });
         }
 
-        if (rejectBtn) {
-            rejectBtn.addEventListener('click', function(e) {
+        if (acceptNecessaryBtn) {
+            acceptNecessaryBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                setConsentCookie('rejected');
-                sendConsentToServer('rejected');
+                setConsentCookie('necessary');
+                sendConsentToServer('necessary');
+                enableOnlyNecessaryCookies();
                 hideCookieBanner();
-            });
-        }
-
-        if (optionsBtn) {
-            optionsBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('Custom cookie options coming soon!');
             });
         }
     }

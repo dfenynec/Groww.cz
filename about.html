@@ -50,10 +50,10 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav"> 
                             <ul class="navbar-nav"> 
+                                <li class="nav-item"><a href="index.html" class="nav-link">Domů</a></li>
                                 <li class="nav-item"><a href="sablony.html" class="nav-link">Šablony</a></li>
                                 <li class="nav-item"><a href="about.html" class="nav-link">O nás</a></li>
-                                <li class="nav-item"><a href="contact.html" class="nav-link">Kontakt</a></li>
-                            </ul>
+                                <li class="nav-item"><a href="contact.html" class="nav-link">Kontakt</a></li></ul>
                         </div>
                     </div>
                     <div class="col-auto text-end d-none d-sm-flex">
@@ -500,7 +500,48 @@
           </a>
         </div>
         <!-- end scroll progress -->
+         <!-- start cookies model -->
+        <div id="cookies-model" class="cookie-message bg-dark-gray border-radius-8px" style="display: block;">
+            <div class="cookie-description fs-14 text-white mb-20px lh-22">
+                Cookies tu máme, aby všechno šlapalo jak má. A věřte - na vašem novém webu je určitě taky oceníte!
+            </div>
+            <div class="cookie-btn">
+                <a href="#" class="btn btn-transparent-white border-1 border-color-transparent-white-light btn-very-small btn-switch-text btn-rounded w-100 mb-15px accept_necessary_btn " aria-label="btn">
+                    <span>
+                        <span class="btn-double-text" data-text="jenom pár">Pouze nezbytné</span>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-white btn-very-small btn-switch-text btn-box-shadow btn-rounded accept_all_btn w-100 mb-15px" data-accept-btn="" aria-label="text">
+                    <span>
+                        <span class="btn-double-text" data-text="všechny sušenky">Přijmout vše</span>
+                    </span>
+                </a>
+            </div>
+            <div class="fs-14 text-center align-items-center ">
+                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="#">Více o Cookies</a>
+            </div>
+            
+        </div>
+
+
+        <!-- end cookies model -->
         <!-- javascript libraries -->
+       <script>
+        function getConsentCookie() {
+            const match = document.cookie.match(/(^|;) ?cookie_consent=([^;]*)(;|$)/);
+            return match ? match[2] : null;
+        }
+
+        // Only load Google Analytics if user accepted all cookies
+        if (getConsentCookie() === 'all') {
+            // Insert your Google Analytics/gtag code here
+        }
+        </script>
+
+
+       
+        <!-- javascript libraries -->
+          <script src="js/cookie-consent.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
