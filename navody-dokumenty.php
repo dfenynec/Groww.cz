@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html class="no-js" lang="cs">
     <head>
-        <title>Groww. - Návody</title>
+        <title>Groww. - Návody a dokumenty</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="author" content="David Fenynec">
