@@ -588,59 +588,9 @@
                 </div>
             </div>
         </section>
-        <!-- end section -->
-        <!-- start footer -->
-        <footer class="footer-demo bg-dark-slate-blue pb-4 sm-pb-50px" style="background-image: url(images/demo-footer-pattern.svg)">
-            <div class="container">
-                <div class="row mb-6 md-mb-30px">
-                    <div class="col-xl-5 col-lg-6 md-mb-30px text-center text-lg-start">
-                        <h3 class="text-white fw-600 alt-font mb-40px ls-minus-1px md-mb-30px md-w-60 sm-w-70 xs-w-100 md-mx-auto">Craft a standout website with crafto.</h3>
-                        <div class="row">
-                            <div class="col-lg-5 col-sm-6 xs-mb-20px">
-                                <span class="alt-font fs-14 fw-600 text-uppercase d-block text-white ls-1px lh-18">Presale questions</span>
-                                <a href="mailto:info@themezaa.com">info@themezaa.com</a>
-                            </div>
-                            <div class="col-lg-5 col-sm-6">
-                                <span class="alt-font fs-14 fw-600 text-uppercase d-block text-white ls-1px lh-18">Getting started</span>
-                                <a href="https://1.envato.market/R53mL2" target="_blank">Purchase on Envato</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-6 offset-xl-1 text-center text-lg-start">
-                        <span class="alt-font fs-14 fw-600 text-uppercase text-white ls-1px d-block mb-5px">Useful links</span>
-                        <ul>
-                            <li><a href="https://craftohtml.themezaa.com/documentation/" target="_blank">Documentation</a></li>
-                            <li><a href="https://www.themezaa.com/support/" target="_blank">Support center</a></li>
-                            <li><a href="https://www.youtube.com/channel/UCxIgqIkSGVVqEsm-HE-tadQ/" target="_blank">Video tutorials</a></li>
-                            <li><a href="https://themeforest.net/user/themezaa/portfolio" target="_blank">Envato portfolio</a></li>
-                            <li><a href="https://www.themezaa.com/theme-customization/" target="_blank">Customization</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2 col-6 text-center text-lg-start">
-                        <span class="alt-font fs-14 fw-600 text-uppercase text-white ls-1px d-block mb-5px">Follow Us</span>
-                        <ul>
-                            <li><a href="https://www.facebook.com/themezaastudio/" target="_blank">Facebook</a></li>
-                            <li><a href="https://www.twitter.com/themezaa" target="_blank">Twitter</a></li>
-                            <li><a href="https://www.dribbble.com/linksture" target="_blank">Dribbble</a></li> 
-                            <li><a href="https://www.youtube.com/channel/UCxIgqIkSGVVqEsm-HE-tadQ/" target="_blank">Youtube</a></li>
-                            <li><a href="https://www.linkedin.com/company/themezaa/" target="_blank">Linkedin</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2 order-first order-lg-4 text-center text-lg-start md-mb-20px">
-                        <a href="index.html" class="footer-logo"><img src="images/logo-white-demo.png" data-at2x="images/logo-white-demo@2x.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-7 last-paragraph-no-margin text-center text-lg-start">
-                        <p class="fs-13 lh-22 w-90 md-w-100">ThemeZaa - The best WordPress, Shopify and Magento themes and plugins provider. We design and develop quality themes and plugins to create your awesome website.</p>
-                    </div>
-                    <div class="col-lg-5 text-center text-lg-end md-mt-15px last-paragraph-no-margin">
-                        <p class="fs-13 lh-22">&copy; 2024 Crafto is Powered by <a href="https://www.themezaa.com/" target="_blank" class="text-decoration-line-bottom text-white">ThemeZaa</a></p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- end footer -->
+        
+        <?php include 'assets/php/footer.php';?>
+    
         <!-- javascript libraries -->
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
