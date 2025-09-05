@@ -53,7 +53,7 @@
                                 </span>
                             </a>
                              
-                             <a href="sablony.html" target="_blank" class="btn inner-link btn-extra-large btn-white btn-hover-animation-switch btn-rounded text-dark-gray btn-box-shadow me-20px fw-400 xs-mt-10px xs-mb-10px">
+                             <a href="sablony.php" target="_blank" class="btn inner-link btn-extra-large btn-white btn-hover-animation-switch btn-rounded text-dark-gray btn-box-shadow me-20px fw-400 xs-mt-10px xs-mb-10px">
                                 <span> 
                                     <span class="btn-text">Vyberte si šablonu</span>
                                     <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -136,14 +136,14 @@
                                 </div>
                             </div>
                         </div> 
-                        <a href="contact.html" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                        <a href="contact.php" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                             <span> 
                                 <span class="btn-text">Chci web</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                             </span>
                         </a>
-                        <a href="contact.html" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
+                        <a href="contact.php" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
                             <span>
                                 <span class="btn-text">Chci reklamu</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -252,7 +252,7 @@
                             </div>
                             <!-- end process step item -->  
                         </div>
-                        <a href="sablony.html" class="btn btn-large btn-dark-gray inner-link btn-hover-animation-switch btn-rounded btn-box-shadow me-30px sm-me-20px">
+                        <a href="sablony.php" class="btn btn-large btn-dark-gray inner-link btn-hover-animation-switch btn-rounded btn-box-shadow me-30px sm-me-20px">
                             <span> 
                                 <span class="btn-text">Vyberte si šablonu</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -386,7 +386,7 @@
                                        
                                     </ul>
                                     <div class="d-block bg-gradient-very-light-gray pt-25px pb-25px ps-45px pe-45px sm-ps-25px sm-pe-25px border-radius-8px"> 
-                                        <a href="contact.html" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
+                                        <a href="contact.php" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
                                         <span class="fs-13 ms-15px d-inline-block">1. měsíc online reklamy zdarma</span>
                                     </div>
                                 </div>
@@ -403,7 +403,7 @@
                                         <li class="border-bottom border-color-extra-medium-gray pt-15px pb-15px ps-45px pe-45px sm-ps-25px sm-pe-25px fw-500 text-dark-gray"><i class="feather icon-feather-check fs-20 text-green me-10px"></i>Analytika, měření a optimalizace</li>
                                     </ul>
                                     <div class="d-block bg-gradient-very-light-gray pt-25px pb-25px ps-45px pe-45px sm-ps-25px sm-pe-25px border-radius-8px"> 
-                                        <a href="contact.html" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
+                                        <a href="contact.php" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
                                         <span class="fs-13 ms-15px d-inline-block">Měsíční plán, lze zrušit kdykoliv.</span>
                                     </div>
                                 </div>
@@ -420,7 +420,7 @@
                                         <li class="border-bottom border-color-extra-medium-gray pt-15px pb-15px ps-45px pe-45px sm-ps-25px sm-pe-25px fw-500 text-dark-gray"><i class="feather icon-feather-check fs-20 text-green me-10px"></i>Úpravy grafiky a fotografií</li>
                                     </ul>
                                     <div class="d-block bg-gradient-very-light-gray pt-25px pb-25px ps-45px pe-45px sm-ps-25px sm-pe-25px border-radius-8px"> 
-                                        <a href="contact.html" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
+                                        <a href="contact.php" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
                                         <span class="fs-13 ms-15px d-inline-block">Hodinová sazba, měsíční fakturace.</span>
                                     </div>
                                 </div>
@@ -481,14 +481,14 @@
                                 </div>
                             </div>
                         </div> 
-                        <a href="contact.html" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                        <a href="contact.php" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                             <span> 
                                 <span class="btn-text">Chci web</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                             </span>
                         </a>
-                        <a href="contact.html" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
+                        <a href="contact.php" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
                             <span>
                                 <span class="btn-text">Chci reklamu</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -688,4 +688,4 @@
         <script type="text/javascript" src="js/vendors.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </body>
-</html>
+    </html>

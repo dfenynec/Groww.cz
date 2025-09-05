@@ -78,7 +78,7 @@
                             <li class="nav-item"><a href="sablony.php" class="nav-link">Šablony</a></li>
                             <li class="nav-item"><a href="about.php" class="nav-link">O nás</a></li>
                             <li class="nav-item"><a href="contact.php" class="nav-link">Kontakt</a></li>
-                            <li class="nav-item"><a href="navody-dokumentace.php" class="nav-link">Návody a dokumentace</a></li>
+                            <li class="nav-item"><a href="navody-dokumenty.php" class="nav-link">Návody a dokumentace</a></li>
                           
                         </ul>
                     </div> 
