@@ -630,7 +630,7 @@
         <!-- end section -->
         <!-- start footer -->
        <!-- start footer -->
-       <?php include 'footer.php'; ?> 
+      <?php include 'assets/php/footer.php'; ?>    
           <!-- end footer -->
         <!-- start subscription popup -->
         <!-- (beze změny, skryto) -->

@@ -27,7 +27,7 @@
                 <div class="row mb-5 sm-mb-30px">
                     <!-- start footer column -->
                     <div class="col-lg-3 col-md-4 col-sm-6 d-flex flex-column last-paragraph-no-margin md-mb-35px">
-                        <a href="demo-marketing.html" class="footer-logo mb-25px xs-mb-20px d-inline-block">
+                        <a href="index.php" class="footer-logo mb-25px xs-mb-20px d-inline-block">
                             <img src="images/Logo_dark.png" data-at2x="images/Logo_dark@2x.png" alt="">
                         </a>
                         <div class="elements-social social-icon-style-08 mt-auto">
@@ -74,18 +74,18 @@
                     <!-- start footer menu -->
                     <div class="col-lg-8 ps-0 text-center text-lg-start md-mb-10px"> 
                         <ul class="footer-navbar fs-15 lh-normal"> 
-                            <li class="nav-item active"><a href="index.html" class="nav-link ps-0">Domů</a></li>
-                            <li class="nav-item"><a href="sablony.html" class="nav-link">Šablony</a></li>
-                            <li class="nav-item"><a href="about.html" class="nav-link">O nás</a></li>
-                            <li class="nav-item"><a href="contact.html" class="nav-link">Kontakt</a></li>
-                            <li class="nav-item"><a href="navod-demo.html" class="nav-link">Návody a dokumentace</a></li>
+                            <li class="nav-item active"><a href="index.php" class="nav-link ps-0">Domů</a></li>
+                            <li class="nav-item"><a href="sablony.php" class="nav-link">Šablony</a></li>
+                            <li class="nav-item"><a href="about.php" class="nav-link">O nás</a></li>
+                            <li class="nav-item"><a href="contact.php" class="nav-link">Kontakt</a></li>
+                            <li class="nav-item"><a href="navody-dokumentace.php" class="nav-link">Návody a dokumentace</a></li>
                           
                         </ul>
                     </div> 
                     <!-- end footer menu -->
                     <!-- start copyright -->
                     <div class="col-lg-4 last-paragraph-no-margin text-center text-lg-end">
-                        <p class="fs-15">&copy; 2025 by<a href="index.html"> <img src="images/Logo_allwhite.png" class="w-90px" data-at2x="images/Logo_allwhite@2x.png" alt=""></a></p>
+                        <p class="fs-15">&copy; 2025 by<a href="index.php"> <img src="images/Logo_allwhite.png" class="w-90px" data-at2x="images/Logo_allwhite@2x.png" alt=""></a></p>
                     </div>
                     <!-- start copyright -->  
                 </div>
