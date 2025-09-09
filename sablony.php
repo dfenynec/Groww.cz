@@ -55,12 +55,55 @@
         <!-- start section -->
         <section class="overlap-height">
             <div class="container overlap-gap-section" data-anime='{ "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                <div class="row align-items-center mb-5">
+             <div class="container mb-10">
+                <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 justify-content-center" data-anime='{ "el": "childs", "translateY": [0, 0], "translateX": [0, 0], "opacity": [0,1], "duration": 800, "delay": 300, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <!-- start features box item -->
+                    <div class="col icon-with-text-style-01 lg-mb-50px sm-mb-40px">
+                        <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+                            <div class="feature-box-icon me-25px">
+                                <img src="images/prakticnost.png" class="h-100px" alt="">
+                            </div>
+                            <div class="feature-box-content">
+                                <span class="d-block text-dark-gray fs-18 fw-600 ls-minus-05px mb-5px">Praktičnost</span>
+                                <p class="w-90 md-w-100">Každý web i kampaň má přinášet nové zákazníky, ne jen hezky vypadat.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end features box item -->
+                    <!-- start features box item -->
+                    <div class="col icon-with-text-style-01 lg-mb-50px sm-mb-40px">
+                        <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+                            <div class="feature-box-icon me-25px">
+                                <img src="images/Spolehlivost.png" class="h-100px" alt="">
+                            </div>
+                            <div class="feature-box-content">
+                                <span class="d-inline-block text-dark-gray fs-18 fw-600 ls-minus-05px mb-5px">Spolehlivost</span>
+                                <p class="w-90 md-w-100">Držíme slovo, termíny i výsledky. Na naši práci se můžete spolehnout.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end features box item -->
+                    <!-- start features box item -->
+                    <div class="col icon-with-text-style-01">
+                        <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+                            <div class="feature-box-icon me-25px">
+                                <img src="images/podpora.png" class="h-100px" alt="">
+                            </div>
+                            <div class="feature-box-content">
+                                <span class="d-inline-block text-dark-gray fs-18 fw-600 ls-minus-05px mb-5px">Podpora</span>
+                                <p class="w-90 md-w-100">Když je potřeba, jsme na telefonu i e-mailu. Nenecháme vás v tom.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end features box item -->
+                </div>
+            </div>   
+            <div class="row align-items-center mb-5">
                     <div class="col-12 text-center text-md-start">
                         <!-- filter navigation -->
                         <ul class="portfolio-filter nav nav-tabs justify-content-center border-0">
                             <li class="nav active"><a data-filter="*" href="#">Vše</a></li>
-                            <li class="nav"><a data-filter=".doporucujeme" href="#">Doporučujeme</a></li>
+                            <li class="nav text-base-color"><a data-filter=".doporucujeme" href="#">Doporučujeme</a></li>
                             <li class="nav"><a data-filter=".sluzby" href="#">Služby</a></li>
                             <li class="nav"><a data-filter=".design" href="#">Design</a></li>
                             <li class="nav"><a data-filter=".tech" href="#">Technologie</a></li>
@@ -70,206 +113,479 @@
                 </div> 
                 <div class="row">
                     <div class="col-12 filter-content p-md-0">
-                        <ul class="portfolio-simple portfolio-wrapper grid-loading grid grid-3col xxl-grid-3col xl-grid-3col lg-grid-3col md-grid-2col sm-grid-1col xs-grid-1col gutter-extra-large text-center">
+                        <ul class="portfolio-simple portfolio-wrapper grid-loading grid grid-2col xxl-grid-2col xl-grid-2col lg-grid-2col md-grid-1col sm-grid-1col xs-grid-1col gutter-extra-large text-center">
                             <li class="grid-sizer"></li>
                             <!-- start portfolio item -->
                             <li class="grid-item doporucujeme design transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-architecture.html">
-                                            <img src="images/architecture.jpg" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-architecture.html" class="text-dark-gray text-dark-gray-hover fw-600">Architektura</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Design</div>
-                                    </div>
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="images/architektura.png" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Architektura</span>
+                                                <p class="m-0">Design</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Architektura" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-architecture.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
                             <!-- start portfolio item -->
-                            <li class="grid-item doporucujeme sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-beauty-salon.html">
-                                            <img src="images/beauty.jpg" alt="" />
-                                        </a> 
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-beauty-salon.html" class="text-dark-gray text-dark-gray-hover fw-600">Salon krásy</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Služby</div>
-                                    </div>
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="images/salonkrasy.png" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Salon krásy</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Salon krásy" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-beauty-salon.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-barber.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-barber.html" class="text-dark-gray text-dark-gray-hover fw-600">Barber Shop</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Služby</div>
-                                    </div>
+                               <!-- start portfolio item -->
+                           <li class="grid-item doporucujeme design transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="images/logistika.png" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Logistika</span>
+                                                <p class="m-0">Technologie</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Logistika" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-logistics.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-consulting.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a> 
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-consulting.html" class="text-dark-gray text-dark-gray-hover fw-600">Konzultace</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Služby</div>
-                                    </div>
+                                 <!-- start portfolio item -->
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="images/barber.png" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech sluzby doporucujeme transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-logistics.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a> 
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-logistics.html" class="text-dark-gray text-dark-gray-hover fw-600">Logistika</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Služby</div>
-                                    </div>
+                                <!-- start portfolio item -->
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="images/konzultace.png" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Konzultace</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Konzultace" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-consulting.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech doporucujeme design sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Violator series</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Digital</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item --> 
-                            <!-- start portfolio item -->
-                            <li class="grid-item doporucujeme design transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Tailoring inteo</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Branding</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a> 
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Design blast</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Photography</div>
-                                    </div>
+                               <!-- start portfolio item -->
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech doporucujeme design sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Herbal beauty</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Application</div>
-                                    </div>
+                                 <!-- start portfolio item -->
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech doporucujeme design transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a> 
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Cropo identity</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Packaging</div>
-                                    </div>
+                                 <!-- start portfolio item -->
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech sluzby doporucujeme transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a> 
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Harddot stone</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Graphics</div>
-                                    </div>
+                                 <!-- start portfolio item -->
+                           <li class="grid-item sluzby transition-inner-all">
+                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
+                                    <figure class="mb-0 hover-box box-hover position-relative">
+                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
+                                        <figcaption class="w-100 p-30px bg-white">
+                                            <div class="position-relative z-index-1 overflow-hidden">
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
+                                                <p class="m-0">Služby</p>
+                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vybrat</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>
+                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                    <span>
+                                                        <span class="btn-text">Prohlédnout</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span> 
+                                                </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item tech doporucujeme design sluzby transition-inner-all">
-                                <div class="portfolio-box">
-                                    <div class="portfolio-image border-radius-6px">
-                                        <a href="demo-marketing-single-project-simple.html">
-                                            <img src="https://placehold.co/800x635" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="portfolio-caption pt-30px pb-30px">
-                                        <a href="demo-marketing-single-project-simple.html" class="text-dark-gray text-dark-gray-hover fw-600">Violator series</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block">Digital</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item --> 
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
         <!-- end section -->
+         <section class="overlap-height">
+            <div class="container overlap-gap-section">
+                
+                <div class="row row-cols-1 row-cols-xl-2 row-cols-lg-2 row-cols-sm-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 mb-3 md-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="images/template.png" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Jeremy dupont</span>
+                                    <p class="m-0">Executive officer</p>
+                                    <div class="social-icon hover-text mt-20px social-icon-style-05">
+                                       <a href="contact.php" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                        <span> 
+                                            <span class="btn-text">Vybrat</span>
+                                            <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                            <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                        </span>
+                                    </a>
+                                    <a href="contact.php" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                        <span>
+                                            <span class="btn-text">Prohlédnout</span>
+                                            <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                            <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                        </span> 
+                                    </a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->     
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 mb-3 md-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Jessica dover</span>
+                                    <p class="m-0">Vice president</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->     
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 mb-3 md-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Matthew taylor</span>
+                                    <p class="m-0">Financial officer</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->     
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 mb-3 md-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Daniel james</span>
+                                    <p class="m-0">People officer</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 lg-mb-3 md-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Michal ruheen</span>
+                                    <p class="m-0">Financial officer</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 lg-mb-3 md-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Jeremy smith</span>
+                                    <p class="m-0">Marketing executive</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01 xs-mb-30px">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Herman miller</span>
+                                    <p class="m-0">Marketing officer</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->
+                    <!-- start team member item --> 
+                    <div class="col text-center team-style-01">
+                        <figure class="mb-0 hover-box box-hover position-relative">
+                            <img src="https://via.placeholder.com/600x756" alt="" class="border-radius-6px" />
+                            <figcaption class="w-100 p-30px bg-white">
+                                <div class="position-relative z-index-1 overflow-hidden">
+                                    <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Bryan jonhson</span>
+                                    <p class="m-0">Marketing executive</p>
+                                    <div class="social-icon hover-text mt-20px">
+                                        <a href="https://www.facebook.com/" target="_blank" class="fw-600 text-dark-gray">Fb.</a>
+                                        <a href="https://www.instagram.com/" target="_blank" class="fw-600 text-dark-gray">In.</a>
+                                        <a href="https://www.twitter.com/" target="_blank" class="fw-600 text-dark-gray">Tw.</a>
+                                        <a href="https://dribbble.com/" target="_blank" class="fw-600 text-dark-gray">Dr.</a>
+                                    </div>
+                                </div>
+                                <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <!-- end team member item -->
+                </div>
+            </div>
+        </section>
          <!-- start footer -->
      <?php include 'assets/php/footer.php'; ?>    
         <!-- start subscription popup -->

@@ -15,10 +15,10 @@
                                 <img src="images/footerCTA.png" data-at2x="images/footerCTA.png" alt="" class="w-100" style="object-fit: contain;">
                                 
                             </div>
-                       
+                       <!-- 
                              <img src="images/arrow.svg" class="animation-float position-absolute bottom-minus-150px h-200px right-minus-100px appear anime-complete" 
                                 data-anime='{ "translateY": [-50, 0], "opacity": [0,1], "duration": 800, "delay": 1000, "staggervalue": 300, "easing": "easeOutQuad" }' alt="">
-                        
+                         -->
                         </div>
                     </div>
                 </div>
