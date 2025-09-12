@@ -210,7 +210,7 @@
         </section>
         <!-- end section -->
          <!-- start footer -->
-       <?php include 'assets/php/footer.php'; ?>      
+     <?php include 'assets/php/footer.php'; ?>      
           <!-- end footer -->
         <!-- start subscription popup -->
         <!-- (beze změny, skryto) -->

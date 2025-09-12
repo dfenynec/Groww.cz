@@ -259,7 +259,7 @@
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                             </span>
                         </a>
-                        <a href="#pricing" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray popup-youtube p-0 fw-600">
+                        <a href="#pricing" class="btn btn-link btn-hover-animation-switch inner-link btn-extra-large text-dark-gray p-0 fw-600">
                             <span>
                                 <span class="btn-text">Kolik to stojí?</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -386,8 +386,14 @@
                                        
                                     </ul>
                                     <div class="d-block bg-gradient-very-light-gray pt-25px pb-25px ps-45px pe-45px sm-ps-25px sm-pe-25px border-radius-8px"> 
-                                        <a href="contact.php" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
-                                        <span class="fs-13 ms-15px d-inline-block">1. měsíc online reklamy zdarma</span>
+                                         <a href="sablony.php" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                            <span> 
+                                                <span class="btn-text">Chci web</span>
+                                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                            </span>
+                                        </a>
+                                        <span class="fs-13 mt-2 ms-5px d-inline-block">50% záloha předem, 50 % po předání webu</span>
                                     </div>
                                 </div>
                                 
@@ -403,8 +409,14 @@
                                         <li class="border-bottom border-color-extra-medium-gray pt-15px pb-15px ps-45px pe-45px sm-ps-25px sm-pe-25px fw-500 text-dark-gray"><i class="feather icon-feather-check fs-20 text-green me-10px"></i>Analytika, měření a optimalizace</li>
                                     </ul>
                                     <div class="d-block bg-gradient-very-light-gray pt-25px pb-25px ps-45px pe-45px sm-ps-25px sm-pe-25px border-radius-8px"> 
-                                        <a href="contact.php" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
-                                        <span class="fs-13 ms-15px d-inline-block">Měsíční plán, lze zrušit kdykoliv.</span>
+                                        <a href="checkout-ads.php?sablona=Reklama" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                            <span> 
+                                                <span class="btn-text">Chci reklamu</span>
+                                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                            </span>
+                                        </a>
+                                        <span class="fs-13 ms-5px  mt-2  d-inline-block">Měsíční plán, lze zrušit kdykoliv.</span>
                                     </div>
                                 </div>
                                 <span class="position-absolute top-25px right-25px  bg-base-color border border-1 border-color-extra-medium-gray box-shadow-large fw-600 text-white text-uppercase border-radius-10px ps-15px pe-15px fs-12 bg-base-color xs-right-10px xs-top-10px">Doporučujeme</span>
@@ -420,8 +432,14 @@
                                         <li class="border-bottom border-color-extra-medium-gray pt-15px pb-15px ps-45px pe-45px sm-ps-25px sm-pe-25px fw-500 text-dark-gray"><i class="feather icon-feather-check fs-20 text-green me-10px"></i>Úpravy grafiky a fotografií</li>
                                     </ul>
                                     <div class="d-block bg-gradient-very-light-gray pt-25px pb-25px ps-45px pe-45px sm-ps-25px sm-pe-25px border-radius-8px"> 
-                                        <a href="contact.php" class="btn btn-medium btn-rounded btn-dark-gray btn-box-shadow fw-600 sm-mb-10px">Mám zájem</a>
-                                        <span class="fs-13 ms-15px d-inline-block">Hodinová sazba, měsíční fakturace.</span>
+                                        <a href="contact.php" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                            <span> 
+                                                <span class="btn-text">Mám zájem</span>
+                                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                            </span>
+                                        </a>
+                                        <span class="fs-13 ms-5px  mt-2  d-inline-block">Hodinová sazba, měsíční fakturace.</span>
                                     </div>
                                 </div>
                                 
@@ -502,42 +520,42 @@
                         <div class="swiper-wrapper marquee-slide">
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="edanagency.cz"><img src="images/edan.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="edanagency.cz"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/deepl/deepl-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/disney/disney-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/getgrav/getgrav-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/google/google-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/mint/mint-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                             <!-- start client item -->
                             <div class="swiper-slide">
-                                <a href="#"><img src="https://www.vectorlogo.zone/logos/paypal/paypal-ar21.svg" class="h-40px xs-h-30px" alt="" /></a>
+                                <a href="#"><img src="" class="h-40px xs-h-30px" alt="" /></a>
                             </div>
                             <!-- end client item -->
                         </div> 

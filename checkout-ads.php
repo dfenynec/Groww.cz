@@ -32,19 +32,7 @@
        <?php include 'assets/php/header.php'; ?>          
          <!-- end header -->  
   <!-- start section -->
-       <section class="page-title-big-typography ipad-top-space-margin xs-py-0 background-position-center-top position-relative lg-overflow-hidden" style="background-image: url('images/demo-marketing-dot.svg')" data-anime='{ "opacity": [0, 1], "easing": "easeOutQuad" }'>
-            <div class="bg-gradient-black-green position-absolute left-0px top-0px h-100 w-100 z-index-minus-1"></div>
-            <div class="container">
-                <div class="row align-items-center pt-10 extra-small-screen">
-                    <div class="position-relative page-title-extra-small" data-anime='{ "el": "childs", "opacity": [0, 1], "translateX": [-50, 0], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                        <h2 class="fw-700 text-dark-gray mb-20px text-center ls-minus-2px">Objednávka webu jednoduše</h2>
-                        <h1 class="text-base-color fw-500 text-uppercase text-center ls-minus-05px">Vyplňte kontaktní údaje, zaplaťte online zálohu a do 7–14 dnů máte hotový web.</h1>
-                    </div>
-                </div>
-            </div>
-            
-        </section>
-        <!-- end section -->
+   
 
 <section class="pt-5">
   <div class="container">
@@ -81,14 +69,14 @@
           <div class="row">
             <div class="col-md-6 mb-20px">
               <label class="mb-10px ">Vybraná služba</label>
-              <input class="border-radius-4px text-dark-gray input-small fw-600 bg-yellow" type="text" name="sablona" id="sablona" readonly>
+              <input class="border-radius-4px text-dark-gray input-small fw-600 bg-yellow" type="text" name="sablona" id="sablona" value="Reklama" readonly>
             </div>
             <div class="col-md-6 mb-20px">
-              <label class="mb-10px">Hosting <span class="text-red">*</span></label>
+              <label class="mb-10px">Inzertní systémy <span class="text-red">*</span></label>
               <select class="form-select select-small required" name="hosting" id="hosting" >
-                <option value="">Máte zařízený hosting?</option>
-                <option value="zaridit">Zařiďte za mě</option>
-                <option value="vlastni">Mám vlastní</option>
+                <option value="">Používáte Google Ads nebo Sklik?</option>
+                <option value="Ano">Ano</option>
+                <option value="Registrovat">Zatím ne</option>
               </select>
             </div>
             <div class="col-md-6 mb-20px">
@@ -136,7 +124,7 @@
               <input class="border-radius-4px input-small" type="text" name="ic" id="ic">
             </div>
             <div class="col-12 mb-20px">
-              <label class="mb-10px">Doména pro web </label><span class="text-red">*</span>
+              <label class="mb-10px">Web pro reklamu <span class="text-red">*</span></label>
               <input class="border-radius-4px required input-small form-control" type="text" name="domena" id="domena" placeholder="např. mojedomena.cz" >
             </div>
             
@@ -152,8 +140,8 @@
           <table class="w-100 total-price-table your-order-table">
             <tbody>
               <tr>
-                <th class="w-60 lg-w-55 xs-w-50 fw-600 text-dark-gray alt-font">Šablona</th>
-                <td class="fw-600 text-dark-gray alt-font">Hosting</td>
+                <th class="w-60 lg-w-55 xs-w-50 fw-600 text-dark-gray alt-font">Služba</th>
+                <td class="fw-600 text-dark-gray alt-font">Inzertní systémy</td>
               </tr>
               <tr class="product">
                 <td class="product-thumbnail">
@@ -162,28 +150,21 @@
                 <td class="product-price" id="order-hosting"></td>
               </tr>
               <tr class="total-amount">
-                    <th class="fw-600 text-dark-gray alt-font">Celkem záloha</th>
+                    <th class="fw-600 text-dark-gray alt-font">Celkem</th>
                     <td data-title="Total">
-                        <h6 class="d-block fw-700 mb-0 text-dark-gray alt-font" data-title="Price" id="order-cena">14&nbsp;995 Kč</h6>
-                        <span class="fs-14">(50 % ceny, bez DPH)</span>
+                        <h6 class="d-block fw-700 mb-0 text-dark-gray alt-font" data-title="Price" id="order-cena">0 Kč</h6>
                     </td>
+                     
                 </tr>
+               
             </tbody>
+            
           </table>
           <!-- ZACHOVÁNO: původní platební metody, tabulky, texty -->
+            <span class="fs-14">1. měsíc zdarma - potom 2 990 Kč/měsíc</span>
           <div class="p-40px lg-p-25px bg-white border-radius-6px box-shadow-large mt-10px mb-30px sm-mb-25px checkout-accordion">
             <div class="w-100" id="accordion-style-05">
-              <div class="heading active-accordion">
-                <label class="mb-5px">
-                  <input class="d-inline w-auto me-5px mb-0 p-0" type="radio" name="payment_option" value="bankovni_prevod" checked="checked" form="objednavka-form">
-                  <span class="d-inline-block text-dark-gray fw-500">Bankovní převod</span>
-                  <a class="accordion-toggle" data-bs-toggle="collapse" data-bs-parent="#accordion-style-05" href="#style-5-collapse-1"></a>
-                </label>
-              </div>
-              <div id="style-5-collapse-1" class="collapse show" data-bs-parent="#accordion-style-05">
-                <div class="p-25px bg-very-light-gray mt-20px mb-20px fs-14 lh-24">Proveďte platbu přímo na náš bankovní účet. Jako variabilní symbol použijte číslo objednávky, které Vám zašleme e-mailem.</div>
-              </div>
-              <div class="heading active-accordion">
+             <div class="heading active-accordion">
                 <label class="mb-5px">
                   <input class="d-inline w-auto me-5px mb-0 p-0" type="radio" name="payment_option" value="stripe" form="objednavka-form">
                   <span class="d-inline-block text-dark-gray fw-500">Online kartou <img src="images/payment.png" class="w-120px ms-10px" alt=""/></span>
@@ -191,11 +172,11 @@
                 </label>
               </div>
               <div id="style-5-collapse-3" class="collapse" data-bs-parent="#accordion-style-05">
-                <div class="p-25px bg-very-light-gray mt-20px mb-20px fs-14 lh-24">Plaťte pohodlně online, bezpečně přes platební bránu Stripe.</div>
+                <div class="p-25px bg-very-light-gray mt-20px mb-20px fs-14 lh-24">Plaťte pohodlně online, bezpečně přes platební bránu Stripe. Platba odchází z karty automaticky každý měsíc. Přístup k platbě vám zašleme emailem.</div>
               </div>
             </div>
           </div>
-          <p class="fs-14 mb-5 lh-24"> <b>Upozornění:</b> Při objednávce webu platíte pouze zálohu ve výši <span class="text-decoration-line-bottom text-dark-gray fw-500">  50&nbsp;% z ceny</span>. Doplatek uhradíte až po předání hotového webu.</p>
+          <p class="fs-14 mb-5 lh-24"> <b>Upozornění:</b> První měsíc správy reklam je zdarma. Po objednání vás budeme kontaktovat ohledně nastavení přístupu k reklamním systémům. Od druhého měsíce je služba zpoplatněna dle platného ceníku, můžete ji kdykoliv zrušit.</p>
           <div class="position-relative terms-condition-box text-start d-flex align-items-center">
             <label>
               <input type="checkbox" form="objednavka-form" name="terms_condition" value="1" id="terms_condition" class="check-box terms-condition-box required align-middle" required>
@@ -205,7 +186,7 @@
           <p class="fs-14 lh-24"><span class="text-red">*</span> Povinné.</p>
          <button type="submit" form="objednavka-form" class="btn btn-dark-gray btn-large btn-switch-text btn-round-edge btn-box-shadow w-100 mt-30px">
 <span>
-<span class="btn-double-text" data-text="s nutností platby">Objednat web</span>
+<span class="btn-double-text" data-text="s měsícem zdarma">Objednat reklamu</span>
 </span>
 </button>
 <div id="potvrzeni" class="form-results mt-20px d-none" ></div>

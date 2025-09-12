@@ -6,21 +6,35 @@
                 <div class="row g-0 justify-content-center align-items-center bg-base-color border-radius-6px ps-7 pe-7 pt-4 pb-4 lg-p-30px sm-p-20px mb-7">
                                          
                     <div class="col-lg-6 col-md-9 text-center text-lg-start md-mb-20px">
-                        <h4 class="text-white fw-600 mb-0 ls-minus-1px">Získejte zdarma průvodce:<br><span class="fw-400 fs-28"> fotky a texty, které přitahují zákazníky!</span></h4>
+                        <h4 class="text-white fw-600 mb-0 ls-minus-1px">Získejte reklamu zdarma<br><span class="fw-400 fs-28"> online marketing, co funguje </span></h4>
+                    <a href="checkout-ads.php?sablona=Reklama" class="btn align-right btn-large mt-5 btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                    <span> 
+                                                        <span class="btn-text">Vyzkoušet na 30 dní zdarma</span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                                    </span>
+                                                </a>                   
                     </div>
                     <div class="col-auto col-lg-5 icon-with-text-style-08 offset-lg-1">
+
                         <div class="feature-box feature-box-left-icon-middle">
-                        
-                            <div class="feature-box-content last-paragraph-no-margin">
-                                <img src="images/footerCTA.png" data-at2x="images/footerCTA.png" alt="" class="w-100" style="object-fit: contain;">
-                                
+
+                            <div class="feature-box-content last-paragraph-no-margin text-center text-lg-start">
+
+                            <p class="mb-2 text-white opacity-8 fs-16">
+
+                                První měsíc správy reklam Google a Seznam zdarma, včetně analýzy klíčových slov optimalizaci a report výsledků, pak jen 2 990 Kč/měs.
+
+                            </p>
+
+                            
+
+                            <small class="d-block mt-2 text-white opacity-7">Měsíční plán, možnost zrušit kdykoliv.</small>
+
                             </div>
-                       <!-- 
-                             <img src="images/arrow.svg" class="animation-float position-absolute bottom-minus-150px h-200px right-minus-100px appear anime-complete" 
-                                data-anime='{ "translateY": [-50, 0], "opacity": [0,1], "duration": 800, "delay": 1000, "staggervalue": 300, "easing": "easeOutQuad" }' alt="">
-                         -->
-                        </div>
-                    </div>
+
+                        </div> 
+
                 </div>
             </div>
             <div class="container footer-dark text-center text-sm-start"> 
@@ -54,7 +68,7 @@
                     <!-- end footer column -->
                     <!-- start footer column -->
                     <div class="col-lg-3 col-md-12 col-sm-6 text-md-center text-lg-start">
-                        <span class="fs-16 fw-500 d-block text-white mb-5px">Pro dárek zdarma:</span> 
+                        <span class="fs-16 fw-500 d-block text-white mb-5px">Pro tipy zdarma:</span> 
                          <p class="w-90 lg-w-95 xs-w-60 xs-mx-auto mb-10px">Odebírejte naše novinky</p> 
                         <div class="d-inline-block w-100 newsletter-style-02 position-relative mb-15px">
                             <form action="email-templates/mailchimp.php" method="post" class="position-relative w-100">

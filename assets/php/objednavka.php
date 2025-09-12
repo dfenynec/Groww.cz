@@ -136,8 +136,7 @@ try {
     echo "<h5>Děkujeme za objednávku!</h5>";
     echo "<p>Číslo objednávky: <b>" . htmlspecialchars($orderId) . "</b></p>";
     echo "<p>Brzy Vám zašleme odkaz na platební bránu Stripe nebo bankovní převod na e-mail: <b>" . htmlspecialchars($email) . "</b></p>";
-    echo "<p>Vybraná šablona: <b>" . htmlspecialchars($template) . "</b></p>";
-    echo "<p>Fakturovaná záloha: <b>14 995 Kč</b></p>";
+    echo "<p>Vybraná služba: <b>" . htmlspecialchars($template) . "</b></p>";
     echo '</div>';
 
 } catch (Exception $e) {
