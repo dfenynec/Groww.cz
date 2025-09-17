@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-lg-5 offset-lg-1 col-md-3 align-self-end d-none d-md-inline-block">
                         <div class="position-absolute right-0px top-80px md-right-minus-250px lg-right-minus-150px w-45 xl-w-55 lg-w-65 md-w-75 overflow-hidden">
-                            <img src="" class="w-100" alt="" data-anime='{ "opacity": [0, 1], "translateX": [100, 0], "duration": 1000, "delay": 200, "easing": "easeOutQuad" }'>
+                           <!--  <img src="" class="w-100" alt="" data-anime='{ "opacity": [0, 1], "translateX": [100, 0], "duration": 1000, "delay": 200, "easing": "easeOutQuad" }'> --> 
                         </div>
 
                     </div>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="feature-box-content">
                                 <span class="d-inline-block text-dark-gray fs-18 fw-600 ls-minus-05px mb-5px">Spolehlivost</span>
-                                <p class="w-90 md-w-100">Držíme slovo, termíny i výsledky. Na naši práci se můžete spolehnout.</p>
+                                <p class="w-90 md-w-100">Držím slovo, termíny i výsledky. Na moji práci se můžete spolehnout.</p>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="feature-box-content">
                                 <span class="d-inline-block text-dark-gray fs-18 fw-600 ls-minus-05px mb-5px">Podpora</span>
-                                <p class="w-90 md-w-100">Když je potřeba, jsme na telefonu i e-mailu. Nenecháme vás v tom.</p>
+                                <p class="w-90 md-w-100">Když je potřeba, jsem na telefonu i e-mailu. Nenechám vás v tom.</p>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                         <!-- filter navigation -->
                         <ul class="portfolio-filter nav nav-tabs justify-content-center border-0">
                             <li class="nav active"><a data-filter="*" href="#">Vše</a></li>
-                            <li class="nav text-base-color"><a data-filter=".doporucujeme" href="#">Doporučujeme</a></li>
+                            <li class="nav text-base-color"><a data-filter=".doporucujeme" href="#">Doporučuji</a></li>
                             <li class="nav"><a data-filter=".sluzby" href="#">Služby</a></li>
                             <li class="nav"><a data-filter=".design" href="#">Design</a></li>
                             <li class="nav"><a data-filter=".tech" href="#">Technologie</a></li>
