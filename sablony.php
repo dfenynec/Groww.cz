@@ -119,11 +119,12 @@
                             <li class="grid-item doporucujeme design transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="images/architektura.png" alt="" class="border-radius-6px" />
+                                        <a href="preview?template=architektura"><img src="images/architektura.png" alt="" class="border-radius-6px" /></a>
+                                        
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Architektura</span>
-                                                <p class="m-0">Design</p>
+                                            
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
                                                 <a href="checkout.php?sablona=Architektura" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
@@ -132,7 +133,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-architecture.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=architektura" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -151,11 +152,10 @@
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="images/salonkrasy.png" alt="" class="border-radius-6px" />
+                                         <a href="preview?template=salon"> <img src="images/salonkrasy.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Salon krásy</span>
-                                                <p class="m-0">Služby</p>
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
                                                 <a href="checkout.php?sablona=Salon krásy" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
@@ -164,7 +164,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-beauty-salon.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=salon" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -183,11 +183,10 @@
                            <li class="grid-item doporucujeme design transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="images/logistika.png" alt="" class="border-radius-6px" />
+                                        <a href="preview?template=logistika"> <img src="images/logistika.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Logistika</span>
-                                                <p class="m-0">Technologie</p>
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
                                                 <a href="checkout.php?sablona=Logistika" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
@@ -196,7 +195,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-logistics.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=logistika" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -215,7 +214,7 @@
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="images/barber.png" alt="" class="border-radius-6px" />
+                                        <a href="preview?template=barber"> <img src="images/barber.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
@@ -228,7 +227,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=barber" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -247,11 +246,10 @@
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="images/konzultace.png" alt="" class="border-radius-6px" />
+                                        <a href="preview?template=konzultace"> <img src="images/konzultace.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Konzultace</span>
-                                                <p class="m-0">Služby</p>
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
                                                 <a href="checkout.php?sablona=Konzultace" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
@@ -260,7 +258,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-consulting.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=konzultace" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -275,15 +273,14 @@
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                               <!-- start portfolio item -->
+                            <!-- start portfolio item -->
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
+                                        <a href="preview?template=barber"> <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
-                                                <p class="m-0">Služby</p>
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
                                                 <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
@@ -292,7 +289,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=barber" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -306,16 +303,15 @@
                                     </figure>
                                 </div>
                             </li>
-                            <!-- end portfolio item -->
-                                 <!-- start portfolio item -->
+                            <!-- end portfolio item -->   
+                              <!-- start portfolio item -->
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
+                                        <a href="preview?template=barber"> <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
-                                                <p class="m-0">Služby</p>
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
                                                 <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
@@ -324,71 +320,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
-                                                    <span>
-                                                        <span class="btn-text">Prohlédnout</span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                    </span> 
-                                                </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-                                 <!-- start portfolio item -->
-                           <li class="grid-item sluzby transition-inner-all">
-                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
-                                    <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
-                                        <figcaption class="w-100 p-30px bg-white">
-                                            <div class="position-relative z-index-1 overflow-hidden">
-                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
-                                                <p class="m-0">Služby</p>
-                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
-                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
-                                                    <span> 
-                                                        <span class="btn-text">Vybrat</span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                    </span>
-                                                </a>
-                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
-                                                    <span>
-                                                        <span class="btn-text">Prohlédnout</span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                    </span> 
-                                                </a>
-                                                </div>
-                                            </div>
-                                            <div class="box-overlay bg-white box-shadow-quadruple-large border-radius-6px"></div>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-                                 <!-- start portfolio item -->
-                           <li class="grid-item sluzby transition-inner-all">
-                                <div class="col text-center team-style-01 mb-15 md-mb-30px">
-                                    <figure class="mb-0 hover-box box-hover position-relative">
-                                        <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" />
-                                        <figcaption class="w-100 p-30px bg-white">
-                                            <div class="position-relative z-index-1 overflow-hidden">
-                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
-                                                <p class="m-0">Služby</p>
-                                                <div class="social-icon hover-text mt-20px social-icon-style-05">
-                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
-                                                    <span> 
-                                                        <span class="btn-text">Vybrat</span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                                    </span>
-                                                </a>
-                                                <a href="demo-barber.html" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=barber" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>

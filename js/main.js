@@ -565,43 +565,43 @@
      Portfolio
      ====================================== */
 
-    // Portfolio isotope filter
-    if (typeof imagesLoaded === 'function') {
-        $('.portfolio-wrapper, .shop-wrapper').each(function () {
-            var _this = $(this);
-            _this.imagesLoaded(function () {
-                _this.removeClass('grid-loading');
-                if (typeof $.fn.isotope === 'function') {
-                    var _thisIsotop = _this.isotope({
-                        layoutMode: 'masonry',
-                        itemSelector: '.grid-item',
-                        percentPosition: true,
-                        stagger: 0,
-                        masonry: {
-                            columnWidth: '.grid-sizer',
-                        }
-                    });
-                }
-                isotopeObjs.push(_this);
+  // Portfolio isotope filter
+if (typeof imagesLoaded === 'function') {
+    $('.portfolio-wrapper, .shop-wrapper').each(function () {
+        var _this = $(this);
+        _this.imagesLoaded(function () {
+            _this.removeClass('grid-loading');
+            // Inicializace Isotope pouze na desktopu
+            if (window.innerWidth > 600 && typeof $.fn.isotope === 'function') {
+                var _thisIsotop = _this.isotope({
+                    layoutMode: 'masonry',
+                    itemSelector: '.grid-item',
+                    percentPosition: true,
+                    stagger: 0,
+                    masonry: {
+                        columnWidth: '.grid-sizer',
+                    }
+                });
 
                 // Filter default on load
-                if (typeof $.fn.isotope === 'function') {
-                    var currentPortfolioActive = $('.portfolio-filter > li.active > a').attr('data-filter');
-                    if (currentPortfolioActive != '' && currentPortfolioActive != undefined) {
-                        _this.isotope({filter: currentPortfolioActive});
-                    }
+                var currentPortfolioActive = $('.portfolio-filter > li.active > a').attr('data-filter');
+                if (currentPortfolioActive != '' && currentPortfolioActive != undefined) {
+                    _this.isotope({filter: currentPortfolioActive});
                 }
-            });
 
-            _this.on('arrangeComplete', function () {
-                reInitSkrollr();
-            });
+                _this.on('arrangeComplete', function () {
+                    reInitSkrollr();
+                });
 
-            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-                _this.isotope({transitionDuration: 0});
-            });
+                $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    _this.isotope({transitionDuration: 0});
+                });
+            }
+            // Na mobilu se Isotope nespustí, layout je čistě podle CSS
         });
-    }
+    });
+}
+
 
     $(document).on('click', '.portfolio-filter > li > a', function () {
         var _this = $(this),
