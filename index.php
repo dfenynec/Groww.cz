@@ -40,7 +40,7 @@
                 <div class="row align-items-center h-100">
                     <div class="col-lg-6 col-md-9 position-relative z-index-1 d-flex flex-column justify-content-center h-100">  
                         <div class="fs-120 lg-fs-100 text-dark-gray lh-100 fw-500 mb-6 ls-minus-5px fancy-text-style-4" data-anime='{ "el": "childs", "opacity": [0, 1], "translateX": [-100, 0], "staggervalue": 300, "duration": 1000, "easing": "easeOutCubic" }'>
-                            <span class="d-inline-block">Umíme</span>
+                            <span class="d-inline-block">Umím</span>
                             <span class="fw-700 d-inline-block" data-fancy-text='{ "effect": "wave", "string": ["weby", "marketing", "design", "plnit sny"], "duration": 4000 }'></span>
                         </div>
                         <div class="fs-20 lh-34 xs-fs-19 mb-35px xs-mb-20px w-85 lg-w-95 sm-w-100 ls-minus-05px" data-anime='{ "opacity": [0, 1], "translateX": [-100, 0], "duration": 1000, "delay": 1000, "easing": "easeOutCubic" }'>Nejjednodušší a nejrychlejší způsob jak být vidět na webu, který mění návštěvníky v zákazníky. Žádné složité systémy, jen stránky co fungují.</div>
@@ -108,8 +108,8 @@
                         </figure>
                     </div>
                     <div class="col-lg-5 offset-lg-1 col-md-12" data-anime='{ "el": "childs", "translateX": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'> 
-                        <span class="fs-15 text-uppercase text-base-color fw-600 ls-1px mb-15px d-block">Tvoříme weby co fungují</span>
-                        <h3 class="fw-700 text-dark-gray ls-minus-1px fancy-text-style-4">Pomáháme růst všem <span data-fancy-text='{ "effect": "rubber-band", "direction": "left", "string": ["snílkům", "nadšencům", "osobnostem", "vizionářům"] }'></span></h3>
+                        <span class="fs-15 text-uppercase text-base-color fw-600 ls-1px mb-15px d-block">Tvořím weby co fungují</span>
+                        <h3 class="fw-700 text-dark-gray ls-minus-1px fancy-text-style-4">Pomáhám růst všem <span data-fancy-text='{ "effect": "rubber-band", "direction": "left", "string": ["snílkům", "nadšencům", "osobnostem", "vizionářům"] }'></span></h3>
                         <div class="row mb-9">
                             <div class="col-12 icon-with-text-style-01 mb-30px">
                                 <div class="feature-box feature-box-left-icon last-paragraph-no-margin">
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="feature-box-content">
                                         <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Tvorba webu</span>
-                                        <p class="w-80 lg-w-100">Během pár dní připravíme hotový web a vy se soustředíte na svůj byznys.</p>
+                                        <p class="w-80 lg-w-100">Během pár dní připravím hotový web a vy se soustředíte na svůj byznys.</p>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="feature-box-content">
                                         <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Online marketing</span>
-                                        <p class="w-80 lg-w-100">Spustíme kampaně, které přivedou poptávky z vyhledávačů i sociálních sítí.</p>
+                                        <p class="w-80 lg-w-100">Spustím kampaně, které přivedou poptávky z vyhledávačů i sociálních sítí.</p>
                                     </div>
                                 </div>
                             </div>
@@ -458,10 +458,10 @@
             <div class="container">
                 <div class="row justify-content-center align-items-end mb-6">
                     <div class="col-xl-6 col-lg-7 md-mb-20px text-center text-lg-start" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                        <h3 class="fw-700 text-dark-gray ls-minus-1px mb-0 w-90 md-w-100">Jsme kvalifikovaní specialisté</h3>
+                        <h3 class="fw-700 text-dark-gray ls-minus-1px mb-0 w-90 md-w-100">Jsem kvalifikovaný specialista</h3>
                     </div> 
                     <div class="col-lg-5 offset-xl-1 last-paragraph-no-margin text-center text-lg-start" data-anime='{"el": "lines",  "translateX": [30, 0], "opacity": [0,1], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'> 
-                         <p>Máme oficiální <span class="fw-600 text-dark-gray">certifikaci Google Ads</span>, která potvrzuje naši odbornost a zkušenosti v oblasti online reklamy. Díky tomu spravujeme vaše kampaně efektivně a podle nejnovějších standardů Googlu.</p>
+                         <p>Mám oficiální <span class="fw-600 text-dark-gray">certifikaci Google Ads</span>, která potvrzuje mou odbornost a zkušenosti v oblasti online reklamy. Díky tomu spravujemu vaše kampaně efektivně a podle nejnovějších standardů Googlu.</p>
                     </div>
                 </div> 
                 <div class="row align-items-center justify-content-md-center mb-7 md-mb-10 sm-mb-15">
@@ -481,7 +481,7 @@
                                     </div>
                                     <div class="feature-box-content">
                                         <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Online reklama</span>
-                                        <p class="w-80 lg-w-100">Naplánujeme a odstartujeme online reklamu, která přiláká na Váš nový web zákazníky z Čech i zahraničí</p>
+                                        <p class="w-80 lg-w-100">Naplánuju a odstartuju online reklamu, která přiláká na Váš nový web zákazníky z Čech i zahraničí</p>
                                     </div>
                                 </div>
                             </div>
@@ -494,7 +494,7 @@
                                     </div>
                                     <div class="feature-box-content">
                                         <span class="d-inline-block text-dark-gray fw-600 mb-5px fs-18 ls-minus-05px">Měřitelné výsledky</span>
-                                        <p class="w-80 lg-w-100">Napojíme vaše nové stránky na analytické nástroje, kde jasně a transparentně uvidíte, jak pomáhají vašemu podnikání.</p>
+                                        <p class="w-80 lg-w-100">Napojím vaše nové stránky na analytické nástroje, kde jasně a transparentně uvidíte, jak pomáhají vašemu podnikání.</p>
                                     </div>
                                 </div>
                             </div>
@@ -663,7 +663,7 @@
          <!-- start cookies model -->
         <div id="cookies-model" class="cookie-message bg-dark-gray border-radius-8px" style="display: block;">
             <div class="cookie-description fs-14 text-white mb-20px lh-22">
-                Cookies tu máme, aby všechno šlapalo jak má. A věřte - na vašem novém webu je určitě taky oceníte!
+                Cookies tu mám, aby všechno šlapalo jak má. A věřte - na vašem novém webu je určitě taky oceníte!
             </div>
             <div class="cookie-btn">
                 <a href="#" class="btn btn-transparent-white border-1 border-color-transparent-white-light btn-very-small btn-switch-text btn-rounded w-100 mb-15px accept_necessary_btn " aria-label="btn">

@@ -37,8 +37,8 @@
             <div class="container">
                 <div class="row align-items-center pt-10 extra-small-screen">
                     <div class="position-relative page-title-extra-small" data-anime='{ "el": "childs", "opacity": [0, 1], "translateX": [-50, 0], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                        <h2 class="fw-700 text-dark-gray mb-20px text-center ls-minus-2px">Objednávka webu jednoduše</h2>
-                        <h1 class="text-base-color fw-500 text-uppercase text-center ls-minus-05px">Vyplňte kontaktní údaje, zaplaťte online zálohu a do 7–14 dnů máte hotový web.</h1>
+                        <h2 class="fw-700 text-dark-gray mb-20px text-center ls-minus-2px">Nezávazná poptávka</h2>
+                        <h1 class="text-base-color fw-500 text-uppercase text-center ls-minus-05px">Vyplňte kontaktní údaje, potvrďte návrh a zaplaťte online zálohu a do 7–14 dnů od zaplacení zálohy máte hotový web.</h1>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
       </div>
       <div class="col-lg-5">
         <div class="bg-very-light-gray border-radius-6px p-50px lg-p-25px your-order-box">
-          <span class="fs-26 alt-font fw-600 text-dark-gray mb-5px d-block">Vaše objednávka</span>
+          <span class="fs-26 alt-font fw-600 text-dark-gray mb-5px d-block">Nezávazná poptávka</span>
           <table class="w-100 total-price-table your-order-table">
             <tbody>
               <tr>
@@ -163,6 +163,8 @@
               </tr>
               <tr class="total-amount">
                     <th class="fw-600 text-dark-gray alt-font">Celkem záloha</th>
+                    <span class="fs-14">(platíte až po odsouhlasení návrhu)
+                    </span>
                     <td data-title="Total">
                         <h6 class="d-block fw-700 mb-0 text-dark-gray alt-font" data-title="Price" id="order-cena">14&nbsp;995 Kč</h6>
                         <span class="fs-14">(50 % ceny, bez DPH)</span>
@@ -205,7 +207,7 @@
           <p class="fs-14 lh-24"><span class="text-red">*</span> Povinné.</p>
          <button type="submit" form="objednavka-form" class="btn btn-dark-gray btn-large btn-switch-text btn-round-edge btn-box-shadow w-100 mt-30px">
 <span>
-<span class="btn-double-text" data-text="s nutností platby">Objednat web</span>
+<span class="btn-double-text" data-text="pro návrh zdarma">Poslat poptávku</span>
 </span>
 </button>
 <div id="potvrzeni" class="form-results mt-20px d-none" ></div>

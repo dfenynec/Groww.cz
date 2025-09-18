@@ -55,7 +55,7 @@
                     <!-- start footer column -->
                     <div class="col-lg-3 col-md-4 col-sm-6 last-paragraph-no-margin md-mb-35px"> 
                         <span class="fs-16 fw-500 d-block text-white mb-5px">Groww. digital</span>
-                        <p class="w-85 lg-w-95 xs-w-60 xs-mx-auto mb-10px">Již 5 let pro vás doručujeme weby přímo z Východních Čech</p> 
+                        <p class="w-85 lg-w-95 xs-w-60 xs-mx-auto mb-10px">Již 5 let pro vás tvořím weby přímo z Východních Čech</p> 
                         <div class="d-inline-block"><div class="bg-white-transparent-very-light fw-500 text-white lh-22 text-uppercase border-radius-30px pe-10px ps-10px fs-10 ms-10px d-inline-block align-middle">Díky za důvěru!</div></div> 
                     </div>
                     <!-- end footer column -->

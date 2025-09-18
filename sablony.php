@@ -274,7 +274,7 @@
                             </li>
                             <!-- end portfolio item -->
                             <!-- start portfolio item -->
-                           <li class="grid-item tech transition-inner-all">
+                           <li class="grid-item tech design doporucujeme transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
                                         <a href="preview?template=aplikace"> <img src="images/demo-app.png" alt="" class="border-radius-6px" /></a>
@@ -305,10 +305,10 @@
                             </li>
                             <!-- end portfolio item -->   
                               <!-- start portfolio item -->
-                           <li class="grid-item sluzby transition-inner-all">
+                           <li class="grid-item tech design transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=produkt"> <img src="product.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview?template=produkt"> <img src="images/product.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Produkt</span>
@@ -336,6 +336,20 @@
                             </li>
                             <!-- end portfolio item -->
                         </ul>
+                    </div>
+                </div>
+                <div class="row mt-5 justify-content-center" data-anime='{ "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+                    <div class="col-auto text-center">
+                        <div class="icon-with-text-style-06">
+                            <div class="feature-box feature-box-left-icon-middle">
+                                <div class="feature-box-icon me-10px">
+                                    <i class="bi bi-plus-square-fill icon-very-medium text-base-color"></i>
+                                </div>
+                                <div class="feature-box-content last-paragraph-no-margin">
+                                    <div class="text-dark-gray fs-20 ls-minus-05px">Stále přidávám nové <span class="fw-600">šablony</span>, aby si vybral každý</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

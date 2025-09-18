@@ -151,14 +151,14 @@
                                 <div class="position-relative z-index-1 form-group form-textarea mt-15px mb-0"> 
                                     <span class="form-icon text-dark-gray"><i class="bi bi-chat-square-dots icon-extra-medium"></i></span>
                                     <textarea class="ps-0 border-radius-0px medium-gray bg-transparent border-color-extra-medium-gray required form-control" name="comment" placeholder="Vaše zpráva*" rows="4"></textarea>
-                                    <!-- Checkbox for newsletter subscription -->
+                                    <!-- Checkbox for newsletter subscription
                                     <div class="position-relative terms-condition-box text-start d-inline-block mt-20px">
                                         <label>
                                             <input type="checkbox" name="subscribe" id="subscribe" value="yes" class="check-box align-middle is-valid">
                                             <span class="box fs-14">Chci <span class="text-decoration-line-bottom text-base-color fw-500">checklist zdarma</span> a odebírat novinky pro úspěšné podnikání.</span>
                                         </label>
                                     </div>
-
+ -->
                                     <input type="hidden" name="redirect" value="">
         
                                     <button class="btn btn-large btn-dark-gray btn-round-edge btn-box-shadow mb-20px mt-25px submit w-100">Odeslat</button>
