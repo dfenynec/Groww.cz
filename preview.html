@@ -161,12 +161,16 @@
         }
 
         iframe {
-  border: 10px solid var(--dark-gray);      /* světle šedý rámeček */
-  border-radius: 16px;            /* zaoblené rohy */
+            border: 10px solid var(--dark-gray);
+            /* světle šedý rámeček */
+            border-radius: 16px;
+            /* zaoblené rohy */
 
-  padding: 5;                     /* bez vnitřního odsazení */
-  background: var(--dark-gray);               /* bílý podklad, pokud je potřeba */
-}
+            padding: 5;
+            /* bez vnitřního odsazení */
+            background: var(--dark-gray);
+            /* bílý podklad, pokud je potřeba */
+        }
     </style>
 </head>
 
@@ -185,80 +189,94 @@
                 <div class="col-auto ms-auto md-ms-0 menu-order position-static">
                     <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
-                   
+
                     </button>
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav ">
                             <li class="nav-item dropdown dropdown-with-icon">
                                 <a href="#" class="nav-link">Vyberte šablonu</a>
-                                    <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                     <li>
-                                            <a href="#" data-template="logistika"><i class="feather icon-feather-truck"></i>
-                                                <div class="submenu-icon-content">
-                                                    <span>Logistika</span>
-                                                 </div>
-                                            </a>
-                                        </li>  
-            
-                                      <li>
-                                            <a href="#"  data-template="barber"><i class="feather icon-feather-scissors"></i>
-                                                <div class="submenu-icon-content">
-                                                    <span>Barber</span>
-                                                 </div>
-                                            </a>
-                                        </li>  
-                                        <li>
-                                            <a href="#" data-template="salon"><i class="feather icon-feather-star"></i>
-                                                <div class="submenu-icon-content">
-                                                    <span>Salón Krásy</span>
-                                                 </div>
-                                            </a>
-                                        </li>  
-                                        <li>
-                                            <a href="#"  data-template="konzultace"><i class="feather icon-feather-message-circle"></i>
-                                                <div class="submenu-icon-content">
-                                                    <span>Konzultace</span>
-                                                 </div>
-                                            </a>
-                                        </li>  
-                                     <li>
-                                            <a href="#" data-template="architektura"><i class="feather icon-feather-home"></i>
-                                                <div class="submenu-icon-content">
-                                                    <span>Architektura</span>
-                                                 </div>
-                                            </a>
-                                        </li>  
-                                        <li>
-                                            <a href="#" data-template="aplikace"><i class="feather icon-feather-smartphone"></i>
-                                                <div class="submenu-icon-content">
-                                                    <span>Aplikace</span>
-                                                 </div>
-                                            </a>
-                                        </li>  
-                                   
+                                <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li>
+                                        <a href="#" data-template="aplikace"><i
+                                                class="feather icon-feather-smartphone"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Aplikace</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-template="architektura"><i
+                                                class="feather icon-feather-home"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Architektura</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-template="barber"><i class="feather icon-feather-scissors"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Barber</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-template="logistika"><i class="feather icon-feather-truck"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Logistika</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" data-template="salon"><i class="feather icon-feather-star"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Salón Krásy</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-template="konzultace"><i
+                                                class="feather icon-feather-message-circle"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Konzultace</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                       <li>
+                                        <a href="#" data-template="produkt"><i
+                                                class="feather icon-feather-message-headphones"></i>
+                                            <div class="submenu-icon-content">
+                                                <span>Produkt</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+
+
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="col-auto ms-auto">
-                    <div class="header-icon">
-                        <div class="header-button">
-                            <a id="chooseBtn" href="checkout.php?sablona=Logistika" target="_blank"
-                                class="btn inner-link btn-large btn-white btn-hover-animation-switch btn-rounded text-dark-gray btn-box-shadow me-20px fw-400 xs-mt-10px xs-mb-10px">
-                                <span>
-                                    <span class="btn-text">Objednat</span>
-                                    <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                    <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
-                                </span>
-                            </a>
+                        <div class="header-icon">
+                            <div class="header-button">
+                                <a id="chooseBtn" href="checkout.php?sablona=Logistika" target="_blank"
+                                    class="btn inner-link btn-large btn-white btn-hover-animation-switch btn-rounded text-dark-gray btn-box-shadow me-20px fw-400 xs-mt-10px xs-mb-10px">
+                                    <span>
+                                        <span class="btn-text">Objednat</span>
+                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                        <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
+                                    </span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-               
+
             </div>
-             
+
         </nav>
     </header>
 
@@ -285,7 +303,8 @@
             salon: 'demo-beauty-salon.html',
             konzultace: 'demo-consulting.html',
             architektura: 'demo-architecture.html',
-            aplikace: 'demo-application.html'
+            aplikace: 'demo-application.html',
+            produkt: 'demo-product.html'
         };
         // Mapování slug → label pro URL
         const LABEL_MAP = {
@@ -294,7 +313,8 @@
             salon: 'Salón Krásy',
             konzultace: 'Konzultace',
             architektura: 'Architektura',
-            aplikace: 'Aplikace'
+            aplikace: 'Aplikace',
+            produkt: 'Produkt'
         };
 
         function loadTemplate(slug) {
@@ -311,8 +331,8 @@
             loadTemplate(template);
 
             // Kliknutí na dropdown menu
-            document.querySelectorAll('[data-template]').forEach(function(item) {
-                item.addEventListener('click', function(e) {
+            document.querySelectorAll('[data-template]').forEach(function (item) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
                     const slug = this.getAttribute('data-template');
                     loadTemplate(slug);
@@ -330,4 +350,5 @@
     <script type="text/javascript" src="js/vendors.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
+
 </html>
