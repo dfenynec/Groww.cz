@@ -106,7 +106,7 @@
                        
                         <div class="bg-yellow p-35px mb-9 border-radius-6px mt-9">
                             <div class="row align-items-center justify-content-center justify-content-lg-start">
-                                <div class="col-5 col-sm-3 sm-mb-20px text-center"><img src="https://placehold.co/233x237" alt=""/></div>
+                                <div class="col-5 col-sm-3 sm-mb-20px text-center"><img src="https://craftohtml.themezaa.com/images/demo-seo-agency-banner-bottom.png" alt=""/></div>
                                 <div class="col-md-9 text-center text-md-start ps-3">
                                      <span class="fs-18 fw-600 text-dark-gray ls-minus-05px mb-20px d-block">Tipy pro rychlou spolupráci:</span>
                                     <div class="fs-18 lh-26 mb-15px w-90 sm-w-100 mx-auto mx-md-0 text-dark-gray">Používejte běžné formáty: JPG nebo PNG pro obrázky, Google Sheets pro texty. Před nahráním zkontrolujte, že jsou všechny soubory správně pojmenované a uspořádané.</div>
@@ -143,7 +143,7 @@
                     
                     <div class="bg-yellow p-35px mb-9 border-radius-6px mt-9">
                         <div class="row align-items-center justify-content-center justify-content-lg-start">
-                            <div class="col-5 col-sm-3 sm-mb-20px text-center"><img src="https://placehold.co/233x237" alt=""/></div>
+                            <div class="col-5 col-sm-3 sm-mb-20px text-center"><img src="https://craftohtml.themezaa.com/images/demo-seo-agency-banner-bottom.png" alt=""/></div>
                             <div class="col-md-9 text-center text-md-start ps-3">
                                 <span class="fs-18 fw-600 text-dark-gray ls-minus-05px mb-20px d-block">Nevíte si rady s nastavením?</span>
                                 <div class="fs-18 lh-26 mb-15px w-90 sm-w-100 mx-auto mx-md-0 text-dark-gray">Napište nám nebo zavolejte, rádi vám krok za krokem poradíme jak přístup nastavit.</div>
@@ -177,7 +177,7 @@
                     
                     <div class="bg-yellow p-35px border-radius-6px mb-9 mt-9">
                         <div class="row align-items-center justify-content-center justify-content-lg-start">
-                            <div class="col-5 col-sm-3 sm-mb-20px text-center"><img src="https://placehold.co/233x237" alt=""/></div>
+                            <div class="col-5 col-sm-3 sm-mb-20px text-center"><img src="https://craftohtml.themezaa.com/images/demo-seo-agency-banner-bottom.png" alt=""/></div>
                             <div class="col-md-9 text-center text-md-start ps-3">
                                 <span class="fs-18 fw-600 text-dark-gray ls-minus-05px mb-20px d-block">Pokud budete potřebovat další úpravy nebo školení, jsme tu pro vás.</span>
                                 <div class="fs-18 lh-26 mb-15px w-90 sm-w-100 mx-auto mx-md-0 text-dark-gray">Kontaktujte nás kdykoliv na telefonu nebo e-mailu, rádi vám pomůžeme.</div>
