@@ -274,22 +274,22 @@
                             </li>
                             <!-- end portfolio item -->
                             <!-- start portfolio item -->
-                           <li class="grid-item sluzby transition-inner-all">
+                           <li class="grid-item tech transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=barber"> <img src="https://placehold.co/960x540" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview?template=aplikace"> <img src="images/demo-app.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
-                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
+                                                <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Aplikace</span>
                                                 <div class="social-icon hover-text mt-20px social-icon-style-05">
-                                                <a href="checkout.php?sablona=Barber Shop" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                                                <a href="checkout.php?sablona=Aplikace" class="btn btn-medium btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                                                     <span> 
                                                         <span class="btn-text">Vybrat</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=barber" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview?template=aplikace" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>

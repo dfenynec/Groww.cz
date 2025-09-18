@@ -48,9 +48,9 @@
                     <div class="container-fluid"> 
                         <div class="col-auto">
                             <a class="navbar-brand" href="demo-logistics.html">
-                                <img src="images/demo-logistics-logo-black.png" data-at2x="images/demo-logistics-logo-black@2x.png" alt="" class="default-logo">
-                                <img src="images/demo-logistics-logo-black.png" data-at2x="images/demo-logistics-logo-black@2x.png" alt="" class="alt-logo">
-                                <img src="images/demo-logistics-logo-black.png" data-at2x="images/demo-logistics-logo-black@2x.png" alt="" class="mobile-logo">
+                                <img src="https://craftohtml.themezaa.com/images/demo-logistics-logo-black.png" data-at2x="https://craftohtml.themezaa.com/images/demo-logistics-logo-black.png" alt="" class="default-logo">
+                                <img src="https://craftohtml.themezaa.com/images/demo-logistics-logo-black.png" data-at2x="https://craftohtml.themezaa.com/images/demo-logistics-logo-black.png" alt="" class="alt-logo">
+                                <img src="https://craftohtml.themezaa.com/images/demo-logistics-logo-black.png" data-at2x="https://craftohtml.themezaa.com/images/demo-logistics-logo-black.png" alt="" class="mobile-logo">
                             </a>
                         </div>
                         <div class="col-auto menu-order left-nav">
@@ -102,7 +102,7 @@
                 <div class="swiper h-100 magic-cursor swiper-light-pagination" data-slider-options='{ "slidesPerView": 1, "loop": true, "pagination": { "el": ".swiper-pagination-bullets", "clickable": true }, "navigation": { "nextEl": ".slider-one-slide-next-1", "prevEl": ".slider-one-slide-prev-1" }, "autoplay": { "delay": 4000, "disableOnInteraction": false },  "keyboard": { "enabled": true, "onlyInViewport": true }, "effect": "slide" }'>
                     <div class="swiper-wrapper">
                         <!-- start slider item -->
-                        <div class="swiper-slide cover-background" style="background-image:url('https://placehold.co/1920x850');"> 
+                        <div class="swiper-slide cover-background" style="background-image:url('https://craftohtml.themezaa.com/images/demo-logistics-slider-01.jpg');"> 
                             <div class="container h-100">
                                 <div class="row align-items-center h-100 xl-ps-10 sm-ps-0">
                                     <div class="col-xxl-7 col-xl-10 text-white">
@@ -126,7 +126,7 @@
                         </div>
                         <!-- end slider item -->
                         <!-- start slider item -->
-                        <div class="swiper-slide cover-background" style="background-image:url('https://placehold.co/1920x850');"> 
+                        <div class="swiper-slide cover-background" style="background-image:url('https://craftohtml.themezaa.com/images/demo-logistics-slider-02.jpg');"> 
                             <div class="container h-100">
                                 <div class="row align-items-center h-100 xl-ps-10 sm-ps-0">
                                     <div class="col-xxl-7 col-xl-10 text-white">
@@ -150,7 +150,7 @@
                         </div>
                         <!-- end slider item -->
                         <!-- start slider item -->
-                        <div class="swiper-slide cover-background" style="background-image:url('https://placehold.co/1920x850');"> 
+                        <div class="swiper-slide cover-background" style="background-image:url('https://craftohtml.themezaa.com/images/demo-logistics-slider-03.jpg');"> 
                             <div class="container h-100">
                                 <div class="row align-items-center h-100 xl-ps-10 sm-ps-0">
                                     <div class="col-xxl-7 col-xl-10 text-white">
@@ -194,7 +194,7 @@
                                     <span class="text-dark-gray opacity-8 fw-500 d-block mb-5px">Důvěryhodná logistická agentura</span>
                                     <h5 class="mb-0 fw-700 text-dark-gray">Bezpečný kurýr pro každou zásilku</h5>
                                     <div class="position-absolute top-0 end-0">
-                                        <img src="images/demo-logistics-diagonal-line-01.svg" alt="" height="100" width="100">
+                                        <img src="https://craftohtml.themezaa.com/images/demo-logistics-diagonal-line-01.svg" alt="" height="100" width="100">
                                     </div>
                                 </div>
                                 <div class="bg-dark-gray ps-50px pe-50px pt-20px pb-20px sm-ps-30px sm-pe-30px">
@@ -209,10 +209,10 @@
             <!-- start section --> 
             <section class="position-relative">
                 <div class="container">
-                    <img src="images/demo-logistics-home-bg-01.jpg" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
+                    <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-bg-01.jpg" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
                     <div class="row align-items-center justify-content-center">
                         <div class="col-lg-6 col-md-10 md-mb-50px" data-anime='{ "translate": [0, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
-                            <img src="https://placehold.co/580x580" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
+                            <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-01.jpg" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
                         </div>
                         <div class="col-xl-5 col-lg-6 col-md-10 offset-xl-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
                             <h2 class="fw-700 ls-minus-1px text-dark-gray mb-20px">Špičková logistická a přepravní řešení</h2>
@@ -267,42 +267,42 @@
                         <!-- start client item -->
                         <div class="col text-center border-end border-color-transparent-dark-very-light sm-border-end-0 sm-border-top transition-inner-all pt-45px pb-45px sm-pt-30px sm-pb-30px">
                             <div class="client-box">
-                                <a href="#"><img src="images/demo-logistics-client-01.svg" alt="" /></a>
+                                <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-client-01.svg" alt="" /></a>
                             </div>
                         </div>
                         <!-- end client item -->
                         <!-- start client item -->
                         <div class="col text-center border-end border-color-transparent-dark-very-light sm-border-end-0 sm-border-top transition-inner-all pt-45px pb-45px sm-pt-30px sm-pb-30px">
                             <div class="client-box">
-                                <a href="#"><img src="images/demo-logistics-client-02.svg" alt="" /></a>
+                                <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-client-02.svg" alt="" /></a>
                             </div>
                         </div>
                         <!-- end client item -->
                         <!-- start client item -->
                         <div class="col text-center border-end border-color-transparent-dark-very-light sm-border-end-0 sm-border-top transition-inner-all pt-45px pb-45px sm-pt-30px sm-pb-30px">
                             <div class="client-box">
-                                <a href="#"><img src="images/demo-logistics-client-03.svg" alt="" /></a>
+                                <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-client-03.svg" alt="" /></a>
                             </div>
                         </div>
                         <!-- end client item -->
                         <!-- start client item -->
                         <div class="col text-center border-end border-color-transparent-dark-very-light sm-border-end-0 md-border-top transition-inner-all pt-45px pb-45px sm-pt-30px sm-pb-30px">
                             <div class="client-box">
-                                <a href="#"><img src="images/demo-logistics-client-04.svg" alt="" /></a>
+                                <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-client-04.svg" alt="" /></a>
                             </div>
                         </div>
                         <!-- end client item -->
                         <!-- start client item -->
                         <div class="col text-center border-end border-color-transparent-dark-very-light sm-border-end-0 md-border-top transition-inner-all pt-45px pb-45px sm-pt-30px sm-pb-30px">
                             <div class="client-box">
-                                <a href="#"><img src="images/demo-logistics-client-05.svg" alt="" /></a>
+                                <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-client-05.svg" alt="" /></a>
                             </div>
                         </div>
                         <!-- end client item -->
                         <!-- start client item -->
                         <div class="col text-center border-end border-color-transparent-dark-very-light sm-border-end-0 md-border-top transition-inner-all pt-45px pb-45px sm-pt-30px sm-pb-30px">
                             <div class="client-box">
-                                <a href="#"><img src="images/demo-logistics-client-06.svg" alt="" /></a>
+                                <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-client-06.svg" alt="" /></a>
                             </div>
                         </div>
                         <!-- end client item -->
@@ -338,7 +338,7 @@
                                                     </div> 
                                                 </div> 
                                                 <div class="col-sm-6 services-box-img xs-h-300px">
-                                                    <div class="h-100 cover-background" style="background-image: url(https://placehold.co/600x670)"></div>
+                                                    <div class="h-100 cover-background" style="background-image: url(https://craftohtml.themezaa.com/images/demo-logistics-home-08.jpg)"></div>
                                                 </div> 
                                             </div>
                                         </div>
@@ -357,7 +357,7 @@
                                                     </div> 
                                                 </div> 
                                                 <div class="col-sm-6 services-box-img xs-h-300px">
-                                                    <div class="h-100 cover-background" style="background-image: url(https://placehold.co/600x670)"></div>
+                                                    <div class="h-100 cover-background" style="background-image: url(https://craftohtml.themezaa.com/images/demo-logistics-home-03.jpg)"></div>
                                                 </div> 
                                             </div>
                                         </div>
@@ -376,7 +376,7 @@
                                                     </div> 
                                                 </div> 
                                                 <div class="col-sm-6 services-box-img xs-h-300px">
-                                                    <div class="h-100 cover-background" style="background-image: url(https://placehold.co/600x670)"></div>
+                                                    <div class="h-100 cover-background" style="background-image: url(https://craftohtml.themezaa.com/images/demo-logistics-home-02.jpg)"></div>
                                                 </div> 
                                             </div>
                                         </div>
@@ -395,7 +395,7 @@
                                                     </div> 
                                                 </div> 
                                                 <div class="col-sm-6 services-box-img xs-h-300px">
-                                                    <div class="h-100 cover-background" style="background-image: url(https://placehold.co/600x670)"></div>
+                                                    <div class="h-100 cover-background" style="background-image: url(https://craftohtml.themezaa.com/images/demo-logistics-home-09.jpg)"></div>
                                                 </div> 
                                             </div>
                                         </div>
@@ -416,7 +416,7 @@
                 <div class="container">
                     <div class="row align-items-center justify-content-center g-0">
                         <div class="col-auto d-flex align-items-center" data-anime='{ "translateY": [0, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                            <img src="https://placehold.co/156x113" alt="" / class="xs-w-120px">
+                            <img src="https://placehold.co/156x113" alt="" class="xs-w-120px">
                             <div class="fs-22 last-paragraph-no-margin fw-500 text-dark-gray pt-15px pb-15px">
                                 <p>Šetřete čas i úsilí při hledání řešení. <a href="demo-logistics-contact-us.html" class="text-decoration-line-bottom fw-700 text-dark-gray">Kontaktujte nás nyní</a></p>
                             </div>
@@ -440,7 +440,7 @@
                                             <div class="accordion-header border-bottom">
                                                 <a href="#" data-bs-toggle="collapse" data-bs-target="#accordion-style-02-01" aria-expanded="true" data-bs-parent="#accordion-style-02">
                                                     <div class="accordion-title text-dark-gray sm-pe-0">
-                                                        <img src="https://placehold.co/36x36" class="me-10px" alt="">
+                                                        <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-icon-01.jpg" class="me-10px" alt="">
                                                         <span class="fw-600 fs-20">Pojištění zásilek a kurýrů</span>
                                                     </div>
                                                 </a>
@@ -457,7 +457,7 @@
                                             <div class="accordion-header border-bottom">
                                                 <a href="#" data-bs-toggle="collapse" data-bs-target="#accordion-style-02-02" aria-expanded="false" data-bs-parent="#accordion-style-02">
                                                     <div class="accordion-title text-dark-gray sm-pe-0">
-                                                        <img src="https://placehold.co/36x36" class="me-10px" alt="">
+                                                        <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-icon-02.jpg" class="me-10px" alt="">
                                                         <span class="fw-600 fs-20">On‑line sledování zásilek</span>
                                                     </div>
                                                 </a>
@@ -474,7 +474,7 @@
                                             <div class="accordion-header">
                                                 <a href="#" data-bs-toggle="collapse" data-bs-target="#accordion-style-02-03" aria-expanded="false" data-bs-parent="#accordion-style-02">
                                                     <div class="accordion-title text-dark-gray sm-pe-0">
-                                                        <img src="https://placehold.co/36x36" class="me-10px" alt="">
+                                                        <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-icon-03.jpg" class="me-10px" alt="">
                                                         <span class="fw-600 fs-20">Kontrola doručených zásilek</span>
                                                     </div>
                                                 </a>
@@ -508,10 +508,10 @@
                         </div>
                         <div class="col-xl-6 col-lg-6 offset-xl-1 position-relative">
                             <div class="w-80 ms-auto" data-animation-delay="500" data-shadow-animation="true" data-bottom-top="transform: translateY(50px)" data-top-bottom="transform: translateY(-50px)">
-                                <img src="https://placehold.co/480x565" alt="" class="border-radius-10px w-100">
+                                <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-05.jpg" alt="" class="border-radius-10px w-100">
                             </div>
                             <div class="w-60 overflow-hidden position-absolute left-15px bottom-20px" data-shadow-animation="true" data-animation-delay="500" data-bottom-top="transform: translateY(-20px)" data-top-bottom="transform: translateY(50px)">
-                                <img src="https://placehold.co/330x399" alt="" class="border-radius-10px box-shadow-quadruple-large" />
+                                <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-04.jpg" alt="" class="border-radius-10px box-shadow-quadruple-large" />
                             </div>
                         </div>
                     </div>
@@ -553,7 +553,7 @@
             </section>
             <!-- end section -->
             <!-- start section -->
-            <section class="cover-background" style="background-image: url('https://placehold.co/1920x703')">
+            <section class="cover-background" style="background-image: url('https://craftohtml.themezaa.com/images/demo-logistics-home-bg-02.jpg')">
                 <div class="opacity-extra-medium bg-dark-gray d-xl-none d-block"></div>
                 <div class="container position-relative z-index-1">
                     <div class="row">
@@ -622,7 +622,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 md-mb-30px p-0"> 
-                            <div class="h-100 md-h-400px xs-h-300px cover-background background-position-right" style="background-image: url(images/demo-logistics-home-06.jpg)"></div>
+                            <div class="h-100 md-h-400px xs-h-300px cover-background background-position-right" style="background-image: url(https://craftohtml.themezaa.com/images/demo-logistics-home-06.jpg)"></div>
                         </div>
                         <div class="col-xl-5 col-lg-6 ps-70px lg-ps-15px" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 300, "staggervalue": 300, "easing": "easeOutQuad" }'> 
                             <span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom border-2 border-color-base-color">Přednosti logistických služeb</span>
@@ -727,7 +727,7 @@
                             <!-- end contact form -->
                         </div>
                         <div class="col-lg-4 md-h-700px sm-h-500px">
-                            <div class="cover-background background-position-center-top h-100" style="background-image: url('https://placehold.co/564x788');">
+                            <div class="cover-background background-position-center-top h-100" style="background-image: url('https://craftohtml.themezaa.com/images/demo-logistics-home-07.jpg');">
                             </div>
                         </div>
                     </div>
@@ -751,7 +751,7 @@
                                 <li class="grid-item">
                                     <div class="card border-0 border-radius-4px box-shadow-quadruple-large">
                                         <div class="blog-image">
-                                            <a href="demo-logistics-blog-single-modern.html" class="d-block"><img src="https://placehold.co/600x430" alt="" /></a>
+                                            <a href="demo-logistics-blog-single-modern.html" class="d-block"><img src="	https://craftohtml.themezaa.com/images/demo-logistics-blog-01.jpg" alt="" /></a>
                                         </div>
                                         <div class="card-body p-13 md-p-11">
                                             <a href="demo-logistics-blog-single-modern.html" class="card-title mb-15px fw-600 fs-20 text-dark-gray d-inline-block">Trendy, které formují logistiku a dopravu.</a>
@@ -773,7 +773,7 @@
                                 <li class="grid-item">
                                     <div class="card border-0 border-radius-4px box-shadow-quadruple-large">
                                         <div class="blog-image">
-                                            <a href="demo-logistics-blog-single-modern.html" class="d-block"><img src="https://placehold.co/600x430" alt="" /></a>
+                                            <a href="demo-logistics-blog-single-modern.html" class="d-block"><img src="https://craftohtml.themezaa.com/images/demo-logistics-blog-02.jpg" alt="" /></a>
                                         </div>
                                         <div class="card-body p-13 md-p-11">
                                             <a href="demo-logistics-blog-single-modern.html" class="card-title mb-15px fw-600 fs-20 text-dark-gray d-inline-block">Integrace technologií do logistických procesů.</a>
@@ -795,7 +795,7 @@
                                 <li class="grid-item">
                                     <div class="card border-0 border-radius-4px box-shadow-quadruple-large">
                                         <div class="blog-image">
-                                            <a href="demo-logistics-blog-single-modern.html" class="d-block"><img src="https://placehold.co/600x430" alt="" /></a>
+                                            <a href="demo-logistics-blog-single-modern.html" class="d-block"><img src="https://craftohtml.themezaa.com/images/demo-logistics-blog-03.jpg" alt="" /></a>
                                         </div>
                                         <div class="card-body p-13 md-p-11">
                                             <a href="demo-logistics-blog-single-modern.html" class="card-title mb-15px fw-600 fs-20 text-dark-gray d-inline-block">Globální obchod, logistika a přepravní strategie.</a>
@@ -826,7 +826,7 @@
                         <div class="col-xl-8 col-lg-9 col-md-11 icon-with-text-style-08 md-mb-20px">
                             <div class="feature-box feature-box-left-icon-middle overflow-hidden">
                                 <div class="feature-box-icon feature-box-icon-rounded w-90px h-90px lg-w-75px lg-h-75px sm-w-65px sm-h-65px rounded-circle bg-white me-20px">
-                                    <img src="https://placehold.co/50x50" class="w-50px h-50px lg-w-35px lg-h-35px" alt=""> 
+                                    <img src="https://craftohtml.themezaa.com/images/demo-logistics-home-icon-04.png" class="w-50px h-50px lg-w-35px lg-h-35px" alt=""> 
                                 </div>
                                 <div class="feature-box-content last-paragraph-no-margin">
                                     <h3 class="d-inline-block fw-700 text-dark-gray mb-5px ls-minus-1px">Podpora zákazníků na live chatu</h3>
@@ -835,7 +835,7 @@
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-3 text-center text-lg-end">
-                            <a href="#"><img src="https://placehold.co/212x69" alt=""></a>
+                            <a href="#"><img src="https://craftohtml.themezaa.com/images/demo-logistics-home-10.jpg" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -848,7 +848,7 @@
                         <!-- start footer column -->
                         <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 md-mb-30px">
                             <a href="demo-logistics.html" class="footer-logo mb-20px d-inline-block"> 
-                                <img src="images/demo-logistics-logo-white.png" data-at2x="images/demo-logistics-logo-white.png" alt="">
+                                <img src="https://craftohtml.themezaa.com/images/demo-logistics-logo-white.png" data-at2x="https://craftohtml.themezaa.com/images/demo-logistics-logo-white.png" alt="">
                             </a>
                             <p class="fs-17 mx-auto xs-w-90">Profesionální logistická řešení na míru. Rychle, spolehlivě a za férových podmínek.</p> 
                             <div class="row align-items-center border border-color-transparent-white-light g-0 border-radius-4px">
@@ -926,7 +926,7 @@
             <!-- start scroll progress -->
             <div class="scroll-progress d-none d-xxl-block">
                 <a href="#" class="scroll-top" aria-label="scroll">
-                    <span class="scroll-text">Posunout</span><span class="scroll-line"><span class="scroll-point"></span></span>
+                    <span class="scroll-text">Nahoru</span><span class="scroll-line"><span class="scroll-point"></span></span>
                 </a>
             </div>
             <!-- end scroll progress -->
