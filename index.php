@@ -143,7 +143,7 @@
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                             </span>
                         </a>
-                        <a href="contact.php" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
+                        <a href="checkout-ads.php?sablona=Reklama" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
                             <span>
                                 <span class="btn-text">Chci reklamu</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -499,14 +499,14 @@
                                 </div>
                             </div>
                         </div> 
-                        <a href="contact.php" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
+                        <a href="sablony.php" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-rounded btn-box-shadow me-30px">
                             <span> 
                                 <span class="btn-text">Chci web</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                             </span>
                         </a>
-                        <a href="contact.php" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
+                        <a href="checkout-ads.php?sablona=Reklama" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600 p-0">
                             <span>
                                 <span class="btn-text">Chci reklamu</span>
                                 <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
