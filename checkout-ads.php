@@ -87,41 +87,9 @@
               <label class="mb-10px">Příjmení <span class="text-red">*</span></label>
               <input class="border-radius-4px required input-small form-control" type="text" name="prijmeni" id="prijmeni" >
             </div>
-            
-            <div class="col-md-6 mb-20px">
+            <div class="col-12 mb-20px">
               <label class="mb-10px">Email <span class="text-red">*</span></label>
               <input class="border-radius-4px required input-small form-control" type="email" name="email" id="email" >
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">Telefon <span class="text-red">*</span></label>
-              <input class="border-radius-4px required input-small form-control" type="text" name="telefon" id="telefon" >
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">Ulice a číslo popisné <span class="text-red">*</span></label>
-              <input class="border-radius-4px required input-small form-control" type="text" name="adresa" id="adresa" >
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">Město <span class="text-red">*</span></label>
-              <input class="border-radius-4px required input-small form-control" type="text" name="mesto" id="mesto" >
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">PSČ <span class="text-red">*</span></label>
-               <input class="border-radius-4px required input-small form-control" type="text" name="psc" id="psc" >
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">Stát <span class="text-red">*</span></label>
-              <select class="form-select select-small required form-control" name="stat" id="stat" value="Česká republika" >
-                <option value="CZ">Česká republika</option>
-                <option value="SK">Slovensko</option>
-              </select>
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">Firma (nepovinné)</label>
-              <input class="border-radius-4px input-small" type="text" name="firma" id="firma">
-            </div>
-            <div class="col-md-6 mb-20px">
-              <label class="mb-10px">IČ / DIČ (nepovinné)</label>
-              <input class="border-radius-4px input-small" type="text" name="ic" id="ic">
             </div>
             <div class="col-12 mb-20px">
               <label class="mb-10px">Web pro reklamu <span class="text-red">*</span></label>
@@ -176,7 +144,7 @@
               </div>
             </div>
           </div>
-          <p class="fs-14 mb-5 lh-24"> <b>Upozornění:</b> První měsíc správy reklam je zdarma. Po objednání vás budeme kontaktovat ohledně nastavení přístupu k reklamním systémům. Od druhého měsíce je služba zpoplatněna dle platného ceníku, můžete ji kdykoliv zrušit.</p>
+          <p class="fs-14 mb-5 lh-24"> <b>Upozornění:</b> První měsíc správy reklam je zdarma. Po objednání budete přesměrováni na platební bránu a budeme vás kontaktovat ohledně nastavení přístupu k reklamním systémům. Od druhého měsíce je služba zpoplatněna dle platného ceníku, můžete ji kdykoliv zrušit.</p>
           <div class="position-relative terms-condition-box text-start d-flex align-items-center">
             <label>
               <input type="checkbox" form="objednavka-form" name="terms_condition" value="1" id="terms_condition" class="check-box terms-condition-box required align-middle" required>
@@ -250,80 +218,80 @@
             // Insert your Google Analytics/gtag code here
         }
         </script>
+        <script>
+// Najdi potřebné prvky
+const sablonaInput = document.getElementById('sablona');
+const orderSablona = document.getElementById('order-sablona');
+const orderHosting = document.getElementById('order-hosting');
+const potvrzeni = document.getElementById('potvrzeni');
+const form = document.getElementById('objednavka-form');
 
-<script>
-  // Předvyplnění šablony z URL parametru
-  const params = new URLSearchParams(window.location.search);
-  const sablonaParam = params.get('sablona') || '';
-  const sablonaInput = document.getElementById('sablona');
-  const orderSablona = document.getElementById('order-sablona');
-  const orderHosting = document.getElementById('order-hosting');
-  const potvrzeni = document.getElementById('potvrzeni');
+// Dynamicky zobraz vybraný hosting v objednávce
+const hostingSelect = document.getElementById('hosting');
+if (hostingSelect) {
+  hostingSelect.addEventListener('change', function() {
+    if (orderHosting) orderHosting.textContent = this.options[this.selectedIndex].text;
+  });
+}
 
-  if (sablonaInput) sablonaInput.value = sablonaParam;
-  if (orderSablona) orderSablona.textContent = sablonaParam;
+// Submit handler s validací a přesměrováním na Stripe
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
 
-  // Dynamicky zobrazit vybraný hosting v objednávce
-  const hostingSelect = document.getElementById('hosting');
-  if (hostingSelect) {
-    hostingSelect.addEventListener('change', function() {
-      if (orderHosting) orderHosting.textContent = this.options[this.selectedIndex].text;
-    });
+  // 1) Spusť nativní validaci. Pokud něco chybí, ukonči a nic neodesílej.
+  if (!form.reportValidity()) {
+    return;
   }
 
-  // Submit handler s validací
-  document.getElementById('objednavka-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const form = e.target;
+  // 2) Odešli data na PHP endpoint
+  const formData = new FormData(form);
 
-    // 1) Spusť nativní validaci. Pokud něco chybí, ukonči a nic neodesílej.
-    if (!form.reportValidity()) {
-      return;
+  // Volitelně: disable tlačítko během odesílání
+  const submitBtn = document.querySelector('button[form="objednavka-form"], button#order-submit, button[type="submit"]');
+  if (submitBtn) submitBtn.disabled = true;
+
+  fetch('assets/php/objednavka-reklama.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(r => r.json()) // Očekáváme JSON s platebním linkem
+  .then(response => {
+    // Zobrazit potvrzení
+    if (potvrzeni) {
+      potvrzeni.classList.remove('d-none');
+      potvrzeni.innerHTML = response.message || "Objednávka byla úspěšně odeslána.";
     }
+    // Reset formuláře
+    form.reset();
+    if (sablonaInput) sablonaInput.value = '';
+    if (orderSablona) orderSablona.textContent = '';
+    if (orderHosting) orderHosting.textContent = '';
 
-    // 2) Odešli data na PHP endpoint
-    const formData = new FormData(form);
-
-    // Volitelně: disable tlačítko během odesílání
-    const submitBtn = document.querySelector('button[form="objednavka-form"], button#order-submit, button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
-
-    fetch('assets/php/objednavka.php', {
-      method: 'POST',
-      body: formData
-    })
-    .then(r => r.text())
-    .then(response => {
-      if (potvrzeni) {
-        potvrzeni.classList.remove('d-none');
-        potvrzeni.innerHTML = response;
-      }
-      // 3) Reset pouze po úspěšné odpovědi
-      form.reset();
-
-      // Znovu předvyplň šablonu a vyprázdni rekapitulaci hostingu
-      if (sablonaInput) sablonaInput.value = sablonaParam;
-      if (orderSablona) orderSablona.textContent = sablonaParam;
-      if (orderHosting) orderHosting.textContent = '';
-    })
-    .catch(() => {
-      if (potvrzeni) {
-        potvrzeni.classList.remove('d-none');
-        potvrzeni.innerHTML = "<b>Chyba při odesílání. Zkuste to prosím znovu.</b>";
-      }
-    })
-    .finally(() => {
-      if (submitBtn) submitBtn.disabled = false;
-    });
-  });
-
-  // Při načtení předvyplň hosting v rekapitulaci, pokud je zvolen
-  document.addEventListener('DOMContentLoaded', function() {
-    if (hostingSelect && hostingSelect.value && orderHosting) {
-      orderHosting.textContent = hostingSelect.options[hostingSelect.selectedIndex].text;
+    // 3) Přesměrování na Stripe platební link
+    if (response.stripe_url) {
+      window.location.href = response.stripe_url;
+    } else {
+      potvrzeni.innerHTML += "<br><b>Platební odkaz nebyl vygenerován.</b>";
     }
+  })
+  .catch(() => {
+    if (potvrzeni) {
+      potvrzeni.classList.remove('d-none');
+      potvrzeni.innerHTML = "<b>Chyba při odesílání. Zkuste to prosím znovu.</b>";
+    }
+  })
+  .finally(() => {
+    if (submitBtn) submitBtn.disabled = false;
   });
-</script>
+});
+
+// Při načtení předvyplň hosting v rekapitulaci, pokud je zvolen
+document.addEventListener('DOMContentLoaded', function() {
+  if (hostingSelect && hostingSelect.value && orderHosting) {
+    orderHosting.textContent = hostingSelect.options[hostingSelect.selectedIndex].text;
+  }
+});
+        </script>
        
         <!-- javascript libraries -->
           <script src="js/cookie-consent.js"></script>
