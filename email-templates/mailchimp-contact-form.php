@@ -9,16 +9,16 @@ if (!empty($_POST['email'])) {
     $list_id = 'e67d5c9e49';
 
     // Enable / Disable SMTP
-    $enable_smtp = 'no'; // yes OR no
+    $enable_smtp = 'yes'; // yes OR no
 
     // Email Receiver Address
-    $receiver_email = 'info@domain.com';
+    $receiver_email = 'info@groww.cz';
 
     // Email Receiver Name for SMTP Email
-    $receiver_name = 'Your Name';
+    $receiver_name = 'David Fenynec';
 
     // Email Subject
-    $subject = 'Contact form details';
+    $subject = 'Kontaktní formulář Groww.cz';
 
     // Google reCaptcha secret Key
     $grecaptcha_secret_key = '6Le3G7krAAAAAPQ9z5AQFgSSBsNrHlujxCgVbYSC';
@@ -124,7 +124,7 @@ if (!empty($_POST['email'])) {
             }
         }
 
-        $sheetdb_url = 'https://sheetdb.io/api/v1/1e589fzq733tq';
+        $sheetdb_url = 'https://sheetdb.io/api/v1/l0r8v5gi9g726';
 $data = [
     'data' => [
         'name' => $name,
@@ -172,10 +172,10 @@ $result = file_get_contents($sheetdb_url, false, $context);
             require 'phpmailer/SMTP.php';
             $mail = new PHPMailer\PHPMailer\PHPMailer();
             $mail->isSMTP();
-            $mail->Host = 'YOUR_SMTP_HOST';
+            $mail->Host = 'mail.webglobe.cz';
             $mail->SMTPAuth = true;
-            $mail->Username = 'YOUR_SMTP_USERNAME';
-            $mail->Password = 'YOUR_SMTP_PASSWORD';
+            $mail->Username = 'info@groww.cz';
+            $mail->Password = 'G0cfOwjP';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
             $mail->setFrom($fields['Email'], $fields['Name']);
