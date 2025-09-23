@@ -131,6 +131,55 @@ try {
         throw new Exception('Nepodařilo se uložit objednávku do Google Sheets.');
     }
 
+    // --- Odeslání e-mailu zákazníkovi + kopie tobě ---
+require 'phpmailer/Exception.php';
+require 'phpmailer/PHPMailer.php';
+require 'phpmailer/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$mail = new PHPMailer(true);
+
+try {
+    // SMTP nastavení
+    $mail->isSMTP();
+    $mail->Host = 'mail.webglobe.cz';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'info@groww.cz'; // zde zadej svůj e-mail
+    $mail->Password = 'G0cfOwjP';      // zde zadej heslo k e-mailu
+    $mail->SMTPSecure = 'ssl';          // nebo 'tls' pro port 587
+    $mail->Port = 465;                  // nebo 587
+
+    $mail->setFrom('info@groww.cz', 'Groww.cz'); // odesílatel
+    $mail->addAddress($email, $jmeno . ' ' . $prijmeni); // zákazník
+    $mail->addBCC('info@groww.cz', ' '); // kopie tobě
+
+    $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
+
+    // Sestavení těla e-mailu
+    $mailBody = "<h2>Děkujeme za objednávku!</h2>";
+    $mailBody .= "<p>Číslo objednávky: <b>$orderId</b></p>";
+    $mailBody .= "<p>Jméno: <b>$jmeno $prijmeni</b></p>";
+    $mailBody .= "<p>Vybraná šablona: <b>$template</b></p>";
+    $mailBody .= "<p>Cena: <b>$cena Kč</b></p>";
+    $mailBody .= "<p>Brzy Vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.</p>";
+    $mailBody .= "<hr>";
+    $mailBody .= "<p>Pokud máte dotazy, kontaktujte nás na info@domena.cz nebo tel. 608909981.</p>";
+
+    $mail->isHTML(true);
+    $mail->Body = $mailBody;
+
+    if ($mail->send()) {
+        $mail_status = 'odeslán';
+    } else {
+        $mail_status = 'neodeslán';
+    }
+} catch (Exception $e) {
+    $mail_status = 'neodeslán';
+    // Volitelně: logování chyby $e->getMessage()
+}
+
     // Výstup pro uživatele
     echo '<div class="alert alert-success alert-dismissable">';
     echo "<h5>Děkujeme za objednávku!</h5>";
