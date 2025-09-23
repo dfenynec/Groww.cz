@@ -175,74 +175,62 @@ try {
 
         $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 // Nový HTML e-mail ve stylu Groww digital
-$mailBody = '<!DOCTYPE html>
-
+$mailBody = '<!-- Moderní HTML šablona e-mailu pro Groww digital podle Mailchimp stylu a tvých barev -->
+<!DOCTYPE html>
 <html lang="cs" style="margin:0;padding:0;">
-
-  <head>
-
-    <meta charset="UTF-8">
-
-    <title>Potvrzení objednávky – Groww.</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-
-      body { background: #f9fafb; margin: 0; padding: 0; font-family: "Segoe UI", Arial, sans-serif; color: #222; }
-
-      .email-container { max-width: 520px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 40px 32px 32px 32px; }
-
-      .header { text-align: center; margin-bottom: 24px; }
-
-      .header-logo { height: 38px; margin-bottom: 6px; }
-
-      .celebrate { font-size: 2.1rem; }
-
-      h1 { font-size: 1.5rem; color: #2e7d32; margin: 0 0 18px 0; font-weight: bold; }
-
-      p { font-size: 1.1rem; margin: 0 0 18px 0; }
-
-      .button { display: inline-block; background: #2e7d32; color: #fff; text-decoration: none; font-weight: 600; padding: 13px 32px; border-radius: 6px; margin: 18px 0; font-size: 1.1rem; letter-spacing: 0.01em;}
-
-      .section { margin: 32px 0 18px 0; }
-
-      ul { padding-left: 20px; }
-
-      .footer { margin-top: 36px; font-size: 0.95rem; color: #888; text-align: center; }
-
-      .footer a { color: #2e7d32; text-decoration: underline; }
-
-      @media (max-width: 600px) {
-
-        .email-container { padding: 18px 5vw; }
-
-        .header-logo { height: 28px; }
-
-      }
-
-    </style>
-
-  </head>
-
-  <body>
-
-    <div class="email-container">
-
-      <div class="header">
-
-        <img src="https://groww.cz/images/logo.svg" class="header-logo" alt="Groww logo" />
-
-        <div class="celebrate">🎉</div>
-
-      </div>
-
-      <h1>Děkujeme za objednávku!</h1>
-
-      <p>
-
-        Dobrý den <b>' . htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) . '</b>,<br>
-
+<head>
+  <meta charset="UTF-8">
+  <title>Začínáme s vaším webem – Groww.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { background: #FEFBFB; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; color: #222; }
+    .email-container { max-width: 520px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 40px 32px 32px 32px; }
+    .header { text-align: center; margin-bottom: 24px; }
+    .header-logo { height: 38px; margin-bottom: 6px; }
+    .celebrate { font-size: 2.1rem; }
+    h1 { font-size: 1.5rem; color: #FF6B43; margin: 0 0 18px 0; font-weight: bold; }
+    p { font-size: 1.1rem; margin: 0 0 18px 0; }
+    ul { padding-left: 20px; }
+    .button-wrap { text-align: center; margin: 28px 0 18px 0; }
+    .button {
+      display: inline-block;
+      background: #FF6B43;
+      color: #FEFBFB !important;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
+      border: none;
+    }
+    .section { margin: 32px 0 18px 0; }
+    .footer {
+      margin-top: 36px;
+      font-size: 0.95rem;
+      color: #FEFBFB;
+      background: #1F232E;
+      border-radius: 0 0 14px 14px;
+      padding: 24px 18px 18px 18px;
+      text-align: center;
+    }
+    .footer a { color: #FF6B43; text-decoration: underline; }
+    .guide-link { font-size: 1rem; color: #FF6B43; font-weight: 500; }
+    @media (max-width: 600px) {
+      .email-container { padding: 18px 5vw; }
+      .header-logo { height: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="header">
+      <img src="https://groww.cz/images/Logo@2x.png" class="header-logo" alt="Groww logo" />
+      <div class="celebrate">🎉</div>
+    </div>
+    <h1>Začínáme s vaším webem</h1>
+    <p>
+      Dobrý den <b>. htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) .</b>,<br>
         děkujeme za vaši objednávku na Groww.cz.<br>
 
         Potvrzujeme přijetí poptávky a brzy vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.
@@ -258,27 +246,24 @@ $mailBody = '<!DOCTYPE html>
         <li><b>Cena:</b> ' . htmlspecialchars($cena) . ' Kč</li>
 
       </ul>
-
-      <div class="section">
-
-        <p>Pokud budete mít jakékoliv dotazy, kontaktujte nás na <a href="mailto:info@groww.cz">info@groww.cz</a> nebo tel. <a href="tel:608909981">608 909 981</a>.</p>
-
-        <p>S pozdravem,<br>tým Groww digital</p>
-
-      </div>
-
-      <div class="footer">
-
-        &copy; 2025 Groww. Všechna práva vyhrazena.<br>
-
-        <a href="https://groww.cz/navod">Návod na celý proces</a>
-
-      </div>
-
+    Také pro vás připravím Google Disk složku, do které můžete vkládat podklady k vašemu novému webu:
+    </p>
+    <ul>
+      <li>Strukturu webu (seznam stránek)</li>
+      <li>Fotografie a obrázky</li>
+      <li>Texty ke stránkám</li>
+    </ul>
+    <div class="section">
+      <p>Pokud budete mít jakékoliv dotazy, rádi vám poradíme.</p>
+      <p>S pozdravem,<br>David z Groww.cz</p>
     </div>
-
-  </body>
-
+  </div>
+  <div class="footer">
+    <a class="guide-link" href="https://groww.cz/navody-dokumenty.php">Návod na celý proces</a>
+    <br><br>
+    &copy; 2025 Groww. Všechna práva vyhrazena.<br>
+  </div>
+</body>
 </html>';$mail->isHTML(true);
 $mail->Body = $mailBody;
 
