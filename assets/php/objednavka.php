@@ -1,11 +1,47 @@
-
 <?php
 // assets/php/objednavka.php
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/logs/error.log');
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-trigger_error("Testovací chyba: kontrola logování", E_USER_ERROR);
+
+// Funkce pro zápis do JSON logu
+function json_log($data) {
+    $file = __DIR__ . '/debug.json';
+    $log = [];
+
+    // Pokud soubor existuje a není prázdný, načti stávající obsah
+    if (file_exists($file) && filesize($file) > 0) {
+        $log = json_decode(file_get_contents($file), true);
+        if (!is_array($log)) $log = [];
+    }
+
+    // Přidej nový záznam s časem
+    $log[] = [
+        'time' => date('Y-m-d H:i:s'),
+        'data' => $data
+    ];
+
+    // Ulož zpět do souboru
+    file_put_contents($file, json_encode($log, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+// Globální handler pro fatální chyby
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error !== null) {
+        json_log(['Fatal error' => $error]);
+    }
+});
+
+// Handler pro běžné PHP chyby
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    json_log(['PHP error' => compact('errno', 'errstr', 'errfile', 'errline')]);
+});
+
+// Handler pro neodchycené výjimky
+set_exception_handler(function($exception) {
+    json_log(['Uncaught exception' => $exception->getMessage()]);
+});
+
+json_log('Start objednavka.php');
+json_log(['POST' => $_POST]);
 
 $csvFile = __DIR__ . '/objednavky.csv';
 
@@ -74,6 +110,10 @@ try {
     $cena = $_POST['cena'] ?? '';
     $payment_option = $_POST['payment_option'] ?? '';
 
+    json_log(['Objednávka' => compact(
+        'orderId', 'template', 'jmeno', 'prijmeni', 'firma', 'ic', 'email', 'telefon', 'adresa', 'mesto', 'psc', 'stat', 'domena', 'hosting', 'gdpr', 'cena', 'payment_option'
+    )]);
+
     // Zápis do CSV včetně statusu e-mailu
     $radek = [
         $orderId,
@@ -133,58 +173,62 @@ try {
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
+    json_log(['SheetsDB response' => $sheetsdb_response, 'HTTP code' => $http_code]);
+
     if ($http_code < 200 || $http_code >= 300) {
         throw new Exception('Nepodařilo se uložit objednávku do Google Sheets.');
     }
 
     // --- Odeslání e-mailu zákazníkovi + kopie tobě ---
-require 'phpmailer/Exception.php';
-require 'phpmailer/PHPMailer.php';
-require 'phpmailer/SMTP.php';
+    require 'phpmailer/Exception.php';
+    require 'phpmailer/PHPMailer.php';
+    require 'phpmailer/SMTP.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-$mail = new PHPMailer(true);
+    $mail = new PHPMailer(true);
 
-try {
-    // SMTP nastavení
-    $mail->isSMTP();
-    $mail->Host = 'mail.webglobe.cz';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'info@groww.cz'; // zde zadej svůj e-mail
-    $mail->Password = 'G0cfOwjP';      // zde zadej heslo k e-mailu
-    $mail->SMTPSecure = 'ssl';          // nebo 'tls' pro port 587
-    $mail->Port = 465;                  // nebo 587
+    try {
+        // SMTP nastavení
+        $mail->isSMTP();
+        $mail->Host = 'mail.webglobe.cz';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'info@groww.cz'; // zde zadej svůj e-mail
+        $mail->Password = 'G0cfOwjP';      // zde zadej heslo k e-mailu
+        $mail->SMTPSecure = 'ssl';          // nebo 'tls' pro port 587
+        $mail->Port = 465;                  // nebo 587
 
-    $mail->setFrom('info@groww.cz', 'Groww.cz'); // odesílatel
-    $mail->addAddress($email, $jmeno . ' ' . $prijmeni); // zákazník
-    $mail->addBCC('info@groww.cz', ' '); // kopie tobě
+        $mail->setFrom('info@groww.cz', 'Groww.cz'); // odesílatel
+        $mail->addAddress($email, $jmeno . ' ' . $prijmeni); // zákazník
+        $mail->addBCC('info@groww.cz', ' '); // kopie tobě
 
-    $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
+        $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 
-    // Sestavení těla e-mailu
-    $mailBody = "<h2>Děkujeme za objednávku!</h2>";
-    $mailBody .= "<p>Číslo objednávky: <b>$orderId</b></p>";
-    $mailBody .= "<p>Jméno: <b>$jmeno $prijmeni</b></p>";
-    $mailBody .= "<p>Vybraná šablona: <b>$template</b></p>";
-    $mailBody .= "<p>Cena: <b>$cena Kč</b></p>";
-    $mailBody .= "<p>Brzy Vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.</p>";
-    $mailBody .= "<hr>";
-    $mailBody .= "<p>Pokud máte dotazy, kontaktujte nás na info@domena.cz nebo tel. 608909981.</p>";
+        // Sestavení těla e-mailu
+        $mailBody = "<h2>Děkujeme za objednávku!</h2>";
+        $mailBody .= "<p>Číslo objednávky: <b>$orderId</b></p>";
+        $mailBody .= "<p>Jméno: <b>$jmeno $prijmeni</b></p>";
+        $mailBody .= "<p>Vybraná šablona: <b>$template</b></p>";
+        $mailBody .= "<p>Cena: <b>$cena Kč</b></p>";
+        $mailBody .= "<p>Brzy Vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.</p>";
+        $mailBody .= "<hr>";
+        $mailBody .= "<p>Pokud máte dotazy, kontaktujte nás na info@domena.cz nebo tel. 608909981.</p>";
 
-    $mail->isHTML(true);
-    $mail->Body = $mailBody;
+        $mail->isHTML(true);
+        $mail->Body = $mailBody;
 
-    if ($mail->send()) {
-        $mail_status = 'odeslán';
-    } else {
+        if ($mail->send()) {
+            $mail_status = 'odeslán';
+            json_log('E-mail odeslán');
+        } else {
+            $mail_status = 'neodeslán';
+            json_log('E-mail NEODESLÁN');
+        }
+    } catch (Exception $e) {
         $mail_status = 'neodeslán';
+        json_log(['PHPMailer error' => $e->getMessage()]);
     }
-} catch (Exception $e) {
-    $mail_status = 'neodeslán';
-    // Volitelně: logování chyby $e->getMessage()
-}
 
     // Výstup pro uživatele
     echo '<div class="alert alert-success alert-dismissable">';
@@ -195,6 +239,7 @@ try {
     echo '</div>';
 
 } catch (Exception $e) {
+    json_log(['Exception' => $e->getMessage()]);
     // Výstup pro uživatele při chybě
     echo '<div class="alert alert-danger alert-dismissable">';
     echo "<h5>Chyba při odesílání objednávky!</h5>";
