@@ -1,6 +1,12 @@
 <?php
 // assets/php/objednavka.php
+   require 'phpmailer/Exception.php';
+    require 'phpmailer/PHPMailer.php';
+    require 'phpmailer/SMTP.php';
 
+    // USE musí být zde, ne uvnitř try/catch!
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 // --- LOGOVÁNÍ DO JSON ---
 function json_log($data) {
     $file = __DIR__ . '/debug.json';
@@ -150,13 +156,7 @@ try {
     }
 
     // --- Odeslání e-mailu zákazníkovi + kopie tobě ---
-    require 'phpmailer/Exception.php';
-    require 'phpmailer/PHPMailer.php';
-    require 'phpmailer/SMTP.php';
-
-    // USE musí být zde, ne uvnitř try/catch!
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
+ 
 
     $mail = new PHPMailer(true);
 
