@@ -183,7 +183,7 @@ $mailBody = '<!-- Moderní HTML šablona e-mailu pro Groww digital podle Mailchi
   <title>Začínáme s vaším webem – Groww.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { background: #FEFBFB; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; color: #222; }
+    body { background: #FEFBFB; margin: 0; padding: 0; font-family: Arial, sans-serif; color: #222; }
     .email-container { max-width: 520px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 40px 32px 32px 32px; }
     .header { text-align: center; margin-bottom: 24px; }
     .header-logo { height: 38px; margin-bottom: 6px; }
