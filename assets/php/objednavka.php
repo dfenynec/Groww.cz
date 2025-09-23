@@ -159,45 +159,140 @@ try {
 
     $mail = new PHPMailer(true);
 
-    try {
-        // SMTP nastavení
-        $mail->isSMTP();
-        $mail->Host = 'mail.webglobe.cz';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'info@groww.cz';
-        $mail->Password = 'G0cfOwjP';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
+ try {
+// SMTP nastavení
+$mail->isSMTP();
+$mail->Host = ‘mail.webglobe.cz’;
+$mail->SMTPAuth = true;
+$mail->Username = ‘info@groww.cz’;
+$mail->Password = ‘G0cfOwjP’;
+$mail->SMTPSecure = ‘ssl’;
+$mail->Port = 465;$mail->setFrom('info@groww.cz', 'Groww.cz');
+$mail->addAddress($email, $jmeno . ' ' . $prijmeni);
+$mail->addBCC('info@groww.cz', ' ');
 
-        $mail->setFrom('info@groww.cz', 'Groww.cz');
-        $mail->addAddress($email, $jmeno . ' ' . $prijmeni);
-        $mail->addBCC('info@groww.cz', ' ');
+$mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 
-        $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
+// Nový HTML e-mail ve stylu Groww digital
+$mailBody = '<!DOCTYPE html>
 
-        $mailBody = "<h2>Děkujeme za objednávku!</h2>";
-        $mailBody .= "<p>Číslo objednávky: <b>$orderId</b></p>";
-        $mailBody .= "<p>Jméno: <b>$jmeno $prijmeni</b></p>";
-        $mailBody .= "<p>Vybraná šablona: <b>$template</b></p>";
-        $mailBody .= "<p>Cena: <b>$cena Kč</b></p>";
-        $mailBody .= "<p>Brzy Vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.</p>";
-        $mailBody .= "<hr>";
-        $mailBody .= "<p>Pokud máte dotazy, kontaktujte nás na info@domena.cz nebo tel. 608909981.</p>";
+<html lang="cs" style="margin:0;padding:0;">
 
-        $mail->isHTML(true);
-        $mail->Body = $mailBody;
+  <head>
 
-        if ($mail->send()) {
-            $mail_status = 'odeslán';
-            json_log('E-mail odeslán');
-        } else {
-            $mail_status = 'neodeslán';
-            json_log('E-mail NEODESLÁN');
-        }
-    } catch (Exception $e) {
-        $mail_status = 'neodeslán';
-        json_log(['PHPMailer error' => $e->getMessage()]);
-    }
+    <meta charset="UTF-8">
+
+    <title>Potvrzení objednávky – Groww.</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+      body { background: #f9fafb; margin: 0; padding: 0; font-family: "Segoe UI", Arial, sans-serif; color: #222; }
+
+      .email-container { max-width: 520px; margin: 32px auto; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 40px 32px 32px 32px; }
+
+      .header { text-align: center; margin-bottom: 24px; }
+
+      .header-logo { height: 38px; margin-bottom: 6px; }
+
+      .celebrate { font-size: 2.1rem; }
+
+      h1 { font-size: 1.5rem; color: #2e7d32; margin: 0 0 18px 0; font-weight: bold; }
+
+      p { font-size: 1.1rem; margin: 0 0 18px 0; }
+
+      .button { display: inline-block; background: #2e7d32; color: #fff; text-decoration: none; font-weight: 600; padding: 13px 32px; border-radius: 6px; margin: 18px 0; font-size: 1.1rem; letter-spacing: 0.01em;}
+
+      .section { margin: 32px 0 18px 0; }
+
+      ul { padding-left: 20px; }
+
+      .footer { margin-top: 36px; font-size: 0.95rem; color: #888; text-align: center; }
+
+      .footer a { color: #2e7d32; text-decoration: underline; }
+
+      @media (max-width: 600px) {
+
+        .email-container { padding: 18px 5vw; }
+
+        .header-logo { height: 28px; }
+
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="email-container">
+
+      <div class="header">
+
+        <img src="https://groww.cz/images/logo.svg" class="header-logo" alt="Groww logo" />
+
+        <div class="celebrate">🎉</div>
+
+      </div>
+
+      <h1>Děkujeme za objednávku!</h1>
+
+      <p>
+
+        Dobrý den <b>' . htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) . '</b>,<br>
+
+        děkujeme za vaši objednávku na Groww.cz.<br>
+
+        Potvrzujeme přijetí poptávky a brzy vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.
+
+      </p>
+
+      <ul>
+
+        <li><b>Číslo objednávky:</b> ' . htmlspecialchars($orderId) . '</li>
+
+        <li><b>Vybraná šablona:</b> ' . htmlspecialchars($template) . '</li>
+
+        <li><b>Cena:</b> ' . htmlspecialchars($cena) . ' Kč</li>
+
+      </ul>
+
+      <div class="section">
+
+        <p>Pokud budete mít jakékoliv dotazy, kontaktujte nás na <a href="mailto:info@groww.cz">info@groww.cz</a> nebo tel. <a href="tel:608909981">608 909 981</a>.</p>
+
+        <p>S pozdravem,<br>tým Groww digital</p>
+
+      </div>
+
+      <div class="footer">
+
+        &copy; 2025 Groww. Všechna práva vyhrazena.<br>
+
+        <a href="https://groww.cz/navod">Návod na celý proces</a>
+
+      </div>
+
+    </div>
+
+  </body>
+
+</html>';$mail->isHTML(true);
+$mail->Body = $mailBody;
+
+if ($mail->send()) {
+    $mail_status = 'odeslán';
+    json_log('E-mail odeslán');
+} else {
+    $mail_status = 'neodeslán';
+    json_log('E-mail NEODESLÁN');
+}
+
+} catch (Exception $e) {
+$mail_status = ‘neodeslán’;
+json_log([‘PHPMailer error’ => $e->getMessage()]);
+}
 
     // Výstup pro uživatele
     echo '<div class="alert alert-success alert-dismissable">';
