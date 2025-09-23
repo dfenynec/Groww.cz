@@ -1,9 +1,11 @@
 
 <?php
 // assets/php/objednavka.php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../logs/php_error.log');
+ini_set('display_errors', 1); // pro jistotu, pokud by to hosting povolil
 error_reporting(E_ALL);
+trigger_error("Testovací chyba: kontrola logování", E_USER_ERROR);
 
 $csvFile = __DIR__ . '/objednavky.csv';
 
