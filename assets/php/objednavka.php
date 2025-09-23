@@ -109,7 +109,7 @@ try {
         $gdpr,
         $cena,
         $payment_option,
-        $mail_status
+        $mail_status,
     ];
     if (file_put_contents($csvFile, implode(';', $radek) . "\n", FILE_APPEND) === false) {
         throw new Exception('Nepodařilo se uložit objednávku do CSV.');
@@ -136,7 +136,7 @@ try {
         'gdpr' => $gdpr,
         'cena' => $cena,
         'payment_option' => $payment_option,
-        'mail_status' => $mail_status
+        'mail_status' => $mail_status,
     ];
 
     $ch = curl_init($sheetsdb_url);
@@ -176,7 +176,7 @@ try {
 
         $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 // Nový HTML e-mail ve stylu Groww digital
-$$mailBody = '
+$mailBody = '
 <!DOCTYPE html>
 <html lang="cs">
 <head>
