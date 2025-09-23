@@ -1,41 +1,29 @@
 <?php
 // assets/php/objednavka.php
 
-// Funkce pro zápis do JSON logu
+// --- LOGOVÁNÍ DO JSON ---
 function json_log($data) {
     $file = __DIR__ . '/debug.json';
     $log = [];
-
-    // Pokud soubor existuje a není prázdný, načti stávající obsah
     if (file_exists($file) && filesize($file) > 0) {
         $log = json_decode(file_get_contents($file), true);
         if (!is_array($log)) $log = [];
     }
-
-    // Přidej nový záznam s časem
     $log[] = [
         'time' => date('Y-m-d H:i:s'),
         'data' => $data
     ];
-
-    // Ulož zpět do souboru
     file_put_contents($file, json_encode($log, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
-// Globální handler pro fatální chyby
+// Globální handlery pro chyby a výjimky
 register_shutdown_function(function() {
     $error = error_get_last();
-    if ($error !== null) {
-        json_log(['Fatal error' => $error]);
-    }
+    if ($error !== null) json_log(['Fatal error' => $error]);
 });
-
-// Handler pro běžné PHP chyby
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
     json_log(['PHP error' => compact('errno', 'errstr', 'errfile', 'errline')]);
 });
-
-// Handler pro neodchycené výjimky
 set_exception_handler(function($exception) {
     json_log(['Uncaught exception' => $exception->getMessage()]);
 });
@@ -45,27 +33,9 @@ json_log(['POST' => $_POST]);
 
 $csvFile = __DIR__ . '/objednavky.csv';
 
-// Hlavička CSV souboru (nové pole mail_status)
+// Hlavička CSV souboru
 $header = [
-    'cislo_objednavky',
-    'datum',
-    'sablona',
-    'jmeno',
-    'prijmeni',
-    'firma',
-    'ic',
-    'email',
-    'telefon',
-    'adresa',
-    'mesto',
-    'psc',
-    'stat',
-    'domena',
-    'hosting',
-    'gdpr',
-    'cena',
-    'payment_option',
-    'mail_status'
+    'cislo_objednavky','datum','sablona','jmeno','prijmeni','firma','ic','email','telefon','adresa','mesto','psc','stat','domena','hosting','gdpr','cena','payment_option','mail_status'
 ];
 
 $mail_status = 'neodeslán';
@@ -184,6 +154,7 @@ try {
     require 'phpmailer/PHPMailer.php';
     require 'phpmailer/SMTP.php';
 
+    // USE musí být zde, ne uvnitř try/catch!
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
@@ -194,18 +165,17 @@ try {
         $mail->isSMTP();
         $mail->Host = 'mail.webglobe.cz';
         $mail->SMTPAuth = true;
-        $mail->Username = 'info@groww.cz'; // zde zadej svůj e-mail
-        $mail->Password = 'G0cfOwjP';      // zde zadej heslo k e-mailu
-        $mail->SMTPSecure = 'ssl';          // nebo 'tls' pro port 587
-        $mail->Port = 465;                  // nebo 587
+        $mail->Username = 'info@groww.cz';
+        $mail->Password = 'G0cfOwjP';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
 
-        $mail->setFrom('info@groww.cz', 'Groww.cz'); // odesílatel
-        $mail->addAddress($email, $jmeno . ' ' . $prijmeni); // zákazník
-        $mail->addBCC('info@groww.cz', ' '); // kopie tobě
+        $mail->setFrom('info@groww.cz', 'Groww.cz');
+        $mail->addAddress($email, $jmeno . ' ' . $prijmeni);
+        $mail->addBCC('info@groww.cz', ' ');
 
         $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 
-        // Sestavení těla e-mailu
         $mailBody = "<h2>Děkujeme za objednávku!</h2>";
         $mailBody .= "<p>Číslo objednávky: <b>$orderId</b></p>";
         $mailBody .= "<p>Jméno: <b>$jmeno $prijmeni</b></p>";
@@ -240,7 +210,6 @@ try {
 
 } catch (Exception $e) {
     json_log(['Exception' => $e->getMessage()]);
-    // Výstup pro uživatele při chybě
     echo '<div class="alert alert-danger alert-dismissable">';
     echo "<h5>Chyba při odesílání objednávky!</h5>";
     echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
