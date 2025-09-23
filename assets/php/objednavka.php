@@ -159,20 +159,21 @@ try {
 
     $mail = new PHPMailer(true);
 
- try {
-// SMTP nastavení
-$mail->isSMTP();
-$mail->Host = ‘mail.webglobe.cz’;
-$mail->SMTPAuth = true;
-$mail->Username = ‘info@groww.cz’;
-$mail->Password = ‘G0cfOwjP’;
-$mail->SMTPSecure = ‘ssl’;
-$mail->Port = 465;$mail->setFrom('info@groww.cz', 'Groww.cz');
-$mail->addAddress($email, $jmeno . ' ' . $prijmeni);
-$mail->addBCC('info@groww.cz', ' ');
+    try {
+        // SMTP nastavení
+        $mail->isSMTP();
+        $mail->Host = 'mail.webglobe.cz';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'info@groww.cz';
+        $mail->Password = 'G0cfOwjP';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
 
-$mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
+        $mail->setFrom('info@groww.cz', 'Groww.cz');
+        $mail->addAddress($email, $jmeno . ' ' . $prijmeni);
+        $mail->addBCC('info@groww.cz', ' ');
 
+        $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 // Nový HTML e-mail ve stylu Groww digital
 $mailBody = '<!DOCTYPE html>
 
@@ -281,18 +282,17 @@ $mailBody = '<!DOCTYPE html>
 </html>';$mail->isHTML(true);
 $mail->Body = $mailBody;
 
-if ($mail->send()) {
-    $mail_status = 'odeslán';
-    json_log('E-mail odeslán');
-} else {
-    $mail_status = 'neodeslán';
-    json_log('E-mail NEODESLÁN');
-}
-
-} catch (Exception $e) {
-$mail_status = ‘neodeslán’;
-json_log([‘PHPMailer error’ => $e->getMessage()]);
-}
+        if ($mail->send()) {
+            $mail_status = 'odeslán';
+            json_log('E-mail odeslán');
+        } else {
+            $mail_status = 'neodeslán';
+            json_log('E-mail NEODESLÁN');
+        }
+    } catch (Exception $e) {
+        $mail_status = 'neodeslán';
+        json_log(['PHPMailer error' => $e->getMessage()]);
+    }
 
     // Výstup pro uživatele
     echo '<div class="alert alert-success alert-dismissable">';
