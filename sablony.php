@@ -119,7 +119,7 @@
                             <li class="grid-item doporucujeme design transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=architektura"><img src="images/architektura.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview.html?template=architektura"><img src="images/architektura.png" alt="" class="border-radius-6px" /></a>
                                         
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
@@ -133,7 +133,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=architektura" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=architektura" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -152,7 +152,7 @@
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                         <a href="preview?template=salon"> <img src="images/salonkrasy.png" alt="" class="border-radius-6px" /></a>
+                                         <a href="preview.html?template=salon"> <img src="images/salonkrasy.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Salon krásy</span>
@@ -164,7 +164,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=salon" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=salon" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -183,7 +183,7 @@
                            <li class="grid-item doporucujeme design transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=logistika"> <img src="images/logistika.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview.html?template=logistika"> <img src="images/logistika.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Logistika</span>
@@ -195,7 +195,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=logistika" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=logistika" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -214,7 +214,7 @@
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=barber"> <img src="images/barber.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview.html?template=barber"> <img src="images/barber.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Barber Shop</span>
@@ -227,7 +227,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=barber" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=barber" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -246,7 +246,7 @@
                            <li class="grid-item sluzby transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=konzultace"> <img src="images/konzultace.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview.html?template=konzultace"> <img src="images/konzultace.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Konzultace</span>
@@ -258,7 +258,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=konzultace" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=konzultace" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -277,7 +277,7 @@
                            <li class="grid-item tech design doporucujeme transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=aplikace"> <img src="images/demo-app.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview.html?template=aplikace"> <img src="images/demo-app.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Aplikace</span>
@@ -289,7 +289,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=aplikace" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=aplikace" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
@@ -308,7 +308,7 @@
                            <li class="grid-item tech design transition-inner-all">
                                 <div class="col text-center team-style-01 mb-15 md-mb-30px">
                                     <figure class="mb-0 hover-box box-hover position-relative">
-                                        <a href="preview?template=produkt"> <img src="images/product.png" alt="" class="border-radius-6px" /></a>
+                                        <a href="preview.html?template=produkt"> <img src="images/product.png" alt="" class="border-radius-6px" /></a>
                                         <figcaption class="w-100 p-30px bg-white">
                                             <div class="position-relative z-index-1 overflow-hidden">
                                                 <span class="d-block fw-600 fs-18 text-dark-gray lh-26 ls-minus-05px">Produkt</span>
@@ -320,7 +320,7 @@
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
                                                     </span>
                                                 </a>
-                                                <a href="preview?template=produkt" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
+                                                <a href="preview.html?template=produkt" class="btn btn-link btn-hover-animation-switch btn-large text-dark-gray fw-600 p-0">
                                                     <span>
                                                         <span class="btn-text">Prohlédnout</span>
                                                         <span class="btn-icon"><i class="bi bi-caret-right-fill"></i></span>
