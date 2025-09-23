@@ -139,7 +139,14 @@
               <label class="mb-10px">Doména pro web </label><span class="text-red">*</span>
               <input class="border-radius-4px required input-small form-control" type="text" name="domena" id="domena" placeholder="např. mojedomena.cz" >
             </div>
-            
+            <div class="col-12 mb-20px">
+              <div class="position-relative terms-condition-box text-start d-flex align-items-center">
+                <label>
+                  <input type="checkbox" form="objednavka-form" name="terms_condition" value="1" id="terms_condition" class="check-box terms-condition-box required align-middle" required>
+                  <span class="box required fs-14 lh-28">Souhlasím s <a href="#" class="text-decoration-line-bottom text-dark-gray fw-500">obchodními podmínkami</a> a <a href="#" class="text-decoration-line-bottom text-dark-gray fw-500">zásadami zpracování osobních údajů</a>.<span class="text-red">*</span></span>
+                </label>
+              </div>
+            </div>
             
           </div>
           
@@ -198,12 +205,7 @@
             </div>
           </div>
           <p class="fs-14 mb-5 lh-24"> <b>Upozornění:</b> Při objednávce webu platíte pouze zálohu ve výši <span class="text-decoration-line-bottom text-dark-gray fw-500">  50&nbsp;% z ceny</span>. Doplatek uhradíte až po předání hotového webu.</p>
-          <div class="position-relative terms-condition-box text-start d-flex align-items-center">
-            <label>
-              <input type="checkbox" form="objednavka-form" name="terms_condition" value="1" id="terms_condition" class="check-box terms-condition-box required align-middle" required>
-              <span class="box required fs-14 lh-28">Souhlasím s <a href="#" class="text-decoration-line-bottom text-dark-gray fw-500">obchodními podmínkami</a> a <a href="#" class="text-decoration-line-bottom text-dark-gray fw-500">zásadami zpracování osobních údajů</a>.<span class="text-red">*</span></span>
-            </label>
-          </div>
+         
           <p class="fs-14 lh-24"><span class="text-red">*</span> Povinné.</p>
          <button type="submit" form="objednavka-form" class="btn btn-dark-gray btn-large btn-switch-text btn-round-edge btn-box-shadow w-100 mt-30px">
 <span>
