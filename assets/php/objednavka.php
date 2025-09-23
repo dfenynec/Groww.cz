@@ -175,9 +175,9 @@ try {
 
         $mail->Subject = 'Potvrzení objednávky #' . $orderId . ' - Groww.cz';
 // Nový HTML e-mail ve stylu Groww digital
-$mailBody = '<!-- Moderní HTML šablona e-mailu pro Groww digital podle Mailchimp stylu a tvých barev -->
+$$mailBody = '
 <!DOCTYPE html>
-<html lang="cs" style="margin:0;padding:0;">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <title>Začínáme s vaším webem – Groww.</title>
@@ -226,32 +226,26 @@ $mailBody = '<!-- Moderní HTML šablona e-mailu pro Groww digital podle Mailchi
   <div class="email-container">
     <div class="header">
       <img src="https://groww.cz/images/Logo@2x.png" class="header-logo" alt="Groww logo" />
-      <div class="celebrate">🎉</div>
+      <div class="celebrate">🥳</div>
     </div>
     <h1>Začínáme s vaším webem</h1>
     <p>
-      Dobrý den <b>.' htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) .'</b>,<br>
-        děkujeme za vaši objednávku na Groww.cz.<br>
-
-        Potvrzujeme přijetí poptávky a brzy vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.
-
-      </p>
-
-      <ul>
-
-        <li><b>Číslo objednávky:</b> ' . htmlspecialchars($orderId) . '</li>
-
-        <li><b>Vybraná šablona:</b> ' . htmlspecialchars($template) . '</li>
-
-        <li><b>Cena:</b> ' . htmlspecialchars($cena) . ' Kč</li>
-
-      </ul>
-    Také pro vás připravím Google Disk složku, do které můžete vkládat podklady k vašemu novému webu:
+      Dobrý den <b>' . htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) . '</b>,<br>
+      děkujeme, že jste vyplnili kontaktní formulář na webu Groww. digital.<br>
+      Připravili jsme pro vás Google Disk složku, do které můžete vkládat podklady k vašemu novému webu:
     </p>
     <ul>
       <li>Strukturu webu (seznam stránek)</li>
       <li>Fotografie a obrázky</li>
       <li>Texty ke stránkám</li>
+    </ul>
+    <div class="button-wrap">
+      <a href="' . htmlspecialchars($drive_link) . '" class="button" target="_blank">Vaše složka</a>
+    </div>
+    <ul>
+      <li><b>Číslo objednávky:</b> ' . htmlspecialchars($orderId) . '</li>
+      <li><b>Vybraná šablona:</b> ' . htmlspecialchars($template) . '</li>
+      <li><b>Cena:</b> ' . htmlspecialchars($cena) . ' Kč</li>
     </ul>
     <div class="section">
       <p>Pokud budete mít jakékoliv dotazy, rádi vám poradíme.</p>
@@ -264,7 +258,10 @@ $mailBody = '<!-- Moderní HTML šablona e-mailu pro Groww digital podle Mailchi
     &copy; 2025 Groww. Všechna práva vyhrazena.<br>
   </div>
 </body>
-</html>';$mail->isHTML(true);
+</html>
+';
+
+$mail->isHTML(true);
 $mail->Body = $mailBody;
 
         if ($mail->send()) {
