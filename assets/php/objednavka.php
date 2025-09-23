@@ -230,7 +230,7 @@ $mailBody = '<!-- Moderní HTML šablona e-mailu pro Groww digital podle Mailchi
     </div>
     <h1>Začínáme s vaším webem</h1>
     <p>
-      Dobrý den <b>. htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) .</b>,<br>
+      Dobrý den <b>.' htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) .'</b>,<br>
         děkujeme za vaši objednávku na Groww.cz.<br>
 
         Potvrzujeme přijetí poptávky a brzy vám zašleme odkaz na platební bránu Stripe nebo bankovní převod.
