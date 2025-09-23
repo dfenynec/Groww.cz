@@ -2,8 +2,8 @@
 <?php
 // assets/php/objednavka.php
 ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/../logs/php_error.log');
-ini_set('display_errors', 1); // pro jistotu, pokud by to hosting povolil
+ini_set('error_log', $_SERVER['DOCUMENT_ROOT'] . '/../logs/error.log');
+ini_set('display_errors', 1);
 error_reporting(E_ALL);
 trigger_error("Testovací chyba: kontrola logování", E_USER_ERROR);
 
