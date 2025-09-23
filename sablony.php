@@ -393,20 +393,6 @@
 
 
         <!-- end cookies model -->
-        <!-- javascript libraries -->
-       <script>
-        function getConsentCookie() {
-            const match = document.cookie.match(/(^|;) ?cookie_consent=([^;]*)(;|$)/);
-            return match ? match[2] : null;
-        }
-
-        // Only load Google Analytics if user accepted all cookies
-        if (getConsentCookie() === 'all') {
-            // Insert your Google Analytics/gtag code here
-        }
-        </script>
-
-
        
         <!-- javascript libraries -->
           <script src="js/cookie-consent.js"></script>
