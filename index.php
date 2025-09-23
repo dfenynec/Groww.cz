@@ -272,7 +272,7 @@
                             <img src="images/iphoneadmin.png" alt="">
                             <figcaption class="position-absolute bottom-90px right-0px" data-anime='{ "translateY": [-50, 0], "opacity": [0,1], "duration": 800, "delay": 1000, "staggervalue": 300, "easing": "easeOutQuad" }'> 
                             
-                                <img src="" width="200" height="100" class="animation-float box-shadow-quadruple-large border-radius-6px p-8" alt="">
+                                <img src="activecarts.png" width="200" height="100" class="animation-float box-shadow-quadruple-large border-radius-6px p-8" alt="">
 
                             </figcaption>
                         </figure>
@@ -280,19 +280,19 @@
                 </div>
                 <div class="row row-cols-1 row-cols-md-4 row-cols-sm-2 justify-content-center counter-style-04">
                     <div class="col last-paragraph-no-margin text-center sm-mb-40px">
-                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-700 ls-minus-3px m-0" data-text="+" data-to="362"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
+                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-600 ls-minus-3px m-0" data-text="+" data-to="362"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
                         <p>hodin ušetřených klientům</p>
                     </div>
                     <div class="col last-paragraph-no-margin text-center sm-mb-40px">
-                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-700 ls-minus-3px m-0" data-text="" data-to="3"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
-                        <p>kontinentů, kde působíme</p>
+                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-600 ls-minus-3px m-0" data-text="" data-to="8"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
+                        <p>let, v oboru</p>
                     </div> 
                     <div class="col last-paragraph-no-margin text-center xs-mb-40px">
-                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-700 ls-minus-3px m-0" data-text="+" data-to="12401"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
+                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-600 ls-minus-3px m-0" data-text="+" data-to="12401"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
                         <p>návštěvníků na webech</p>
                     </div> 
                     <div class="col last-paragraph-no-margin text-center">
-                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-700 ls-minus-3px m-0" data-text="+" data-to="197"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
+                        <h3 class="vertical-counter d-inline-flex alt-font text-dark-gray fw-600 ls-minus-3px m-0" data-text="+" data-to="197"><sup class="text-jungle-green top-0"><i class="bi bi-arrow-up icon-extra-medium"></i></sup></h3>
                         <p>měřených cílů měsíčně</p>
                     </div> 
                 </div>
