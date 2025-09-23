@@ -99,7 +99,7 @@
                     <!-- end footer menu -->
                     <!-- start copyright -->
                     <div class="col-lg-4 last-paragraph-no-margin text-center text-lg-end">
-                        <p class="fs-15">&copy; 2025 by<a href="index.php"> <img src="images/Logo_allwhite.png" class="w-90px" data-at2x="images/Logo_allwhite@2x.png" alt=""></a></p>
+                        <p class="fs-15">&copy; 2025 by<a href="index.php"> <img src="images/Logo_allwhite.png" class="m-2 w-90px" data-at2x="images/Logo_allwhite@2x.png" alt=""></a></p>
                     </div>
                     <!-- start copyright -->  
                 </div>

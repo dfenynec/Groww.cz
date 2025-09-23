@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-lg-5 offset-lg-1 col-md-3 align-self-end d-none d-md-inline-block">
                         <div class="position-absolute right-0px top-80px md-right-minus-250px lg-right-minus-150px w-45 xl-w-55 lg-w-65 md-w-75 overflow-hidden">
-                            <img src="images/contact_banner.png" class="w-100" alt="" style="object-fit: contain; max-height: 110vh;" data-anime='{ "opacity": [0, 1], "translateX": [100, 0], "duration": 1000, "delay": 200, "easing": "easeOutQuad" }'>
+                           <!-- <img src="images/contact_banner.png" class="w-100" alt="" style="object-fit: contain; max-height: 110vh;" data-anime='{ "opacity": [0, 1], "translateX": [100, 0], "duration": 1000, "delay": 200, "easing": "easeOutQuad" }'> -->
                         </div>
 
                     </div>
