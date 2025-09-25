@@ -232,8 +232,9 @@ $mailBody = '
     <h1>Začínáme s vaším webem</h1>
     <p>
       Dobrý den <b>' . htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) . '</b>,<br>
-      děkujeme, že jste vyplnili kontaktní formulář na webu Groww. digital.<br>
-      Připravili jsme pro vás Google Disk složku, do které můžete vkládat podklady k vašemu novému webu:
+     děkujeme za vaši objednávku na Groww.cz.<br>
+     Potvrzujeme přijetí poptávky a brzy vám zašleme odkaz na platební bránu Stripe nebo bankovní převod..<br>
+     Než pro Vás připravíme sdílenou složku na Google Drive, prosíme můžete si připravit následující podklady:
     </p>
     <ul>
       <li>Strukturu webu (seznam stránek)</li>
@@ -241,7 +242,7 @@ $mailBody = '
       <li>Texty ke stránkám</li>
     </ul>
     <div class="button-wrap">
-      <a href="' . htmlspecialchars($drive_link) . '" class="button" target="_blank">Vaše složka</a>
+      <a href="https://groww.cz/navody-dokumenty.php" class="button" target="_blank">Návod na přípravu</a>
     </div>
     <ul>
       <li><b>Číslo objednávky:</b> ' . htmlspecialchars($orderId) . '</li>
@@ -254,7 +255,7 @@ $mailBody = '
     </div>
   </div>
   <div class="footer">
-    <a class="guide-link" href="https://groww.cz/navody-dokumenty.php">Návod na celý proces</a>
+    <a class="guide-link" href="https://groww.cz/navody-dokumenty.php">Všechny návody a důležité dokumentys</a>
     <br><br>
     &copy; 2025 Groww. Všechna práva vyhrazena.<br>
   </div>
