@@ -233,8 +233,8 @@ $mailBody = '
     <p>
       Dobrý den <b>' . htmlspecialchars($jmeno) . ' ' . htmlspecialchars($prijmeni) . '</b>,<br>
      děkujeme za vaši objednávku na Groww.cz.<br>
-     Potvrzujeme přijetí poptávky a brzy vám zašleme odkaz na platební bránu Stripe nebo bankovní převod..<br>
-     Než pro Vás připravíme sdílenou složku na Google Drive, prosíme můžete si připravit následující podklady:
+     Potvrzuji přijetí poptávky a brzy vám zašlu odkaz na platební bránu Stripe nebo bankovní převod.<br>
+     Než pro Vás připravím sdílenou složku na Google Drive, můžete si prosím připravit následující podklady:
     </p>
     <ul>
       <li>Strukturu webu (seznam stránek)</li>
@@ -250,7 +250,7 @@ $mailBody = '
       <li><b>Cena:</b> ' . htmlspecialchars($cena) . ' Kč</li>
     </ul>
     <div class="section">
-      <p>Pokud budete mít jakékoliv dotazy, rádi vám poradíme.</p>
+      <p>Pokud budete mít jakékoliv dotazy, jsem na telefonu i mailu.</p>
       <p>S pozdravem,<br>David z Groww.cz</p>
     </div>
   </div>
