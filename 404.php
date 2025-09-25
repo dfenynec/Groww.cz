@@ -46,6 +46,8 @@
     
         <!-- javascript libraries -->
          
+        <script src="js/tab-title.js"></script>
+         
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>

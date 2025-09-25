@@ -214,6 +214,8 @@
 
         <!-- end cookies model -->
         <!-- javascript libraries -->
+         
+        <script src="js/tab-title.js"></script>
           <script src="js/cookie-consent.js"></script>
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
