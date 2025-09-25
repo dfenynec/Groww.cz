@@ -90,7 +90,7 @@
                         <ul class="footer-navbar fs-15 lh-normal"> 
                             <li class="nav-item active"><a href="index.php" class="nav-link ps-0">Domů</a></li>
                             <li class="nav-item"><a href="sablony.php" class="nav-link">Šablony</a></li>
-                            <li class="nav-item"><a href="about.php" class="nav-link">O nás</a></li>
+                            <li class="nav-item"><a href="about.php" class="nav-link">O mně</a></li>
                             <li class="nav-item"><a href="contact.php" class="nav-link">Kontakt</a></li>
                             <li class="nav-item"><a href="navody-dokumenty.php" class="nav-link">Návody a dokumentace</a></li>
                           

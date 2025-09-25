@@ -1,12 +1,12 @@
 ﻿<!doctype html>
 <html class="no-js" lang="cs">
     <head>
-        <title>Groww. - O nás</title>
+        <title>Groww. - O mně</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="author" content="David Fenynec">
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <meta name="description" content="Tvoříme rychlé a spolehlivé webové stránky pro klienty z celého světa. Spusťte moderní web, který přivádí zákazníky.">
+        <meta name="description" content="Tvořím rychlé a spolehlivé webové stránky pro klienty z celého světa. Spusťte moderní web, který přivádí zákazníky.">
         <!-- favicon icon -->
         <link rel="shortcut icon" href="images/favicon.png">
         <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.png">
@@ -166,7 +166,7 @@
             <div class="container">
                 <div class="row justify-content-center align-items-end mb-6">
                     <div class="col-xl-6 col-lg-7 md-mb-20px text-center text-lg-start" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                        <h3 class="fw-700 text-dark-gray ls-minus-1px mb-0 w-90 md-w-100">Jsme kvalifikovaný specialista</h3>
+                        <h3 class="fw-700 text-dark-gray ls-minus-1px mb-0 w-90 md-w-100">Jsem kvalifikovaný specialista</h3>
                     </div> 
                     <div class="col-lg-5 offset-xl-1 last-paragraph-no-margin text-center text-lg-start" data-anime='{"el": "lines",  "translateX": [30, 0], "opacity": [0,1], "duration": 800, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'> 
                          <p>Mám oficiální <span class="fw-600 text-dark-gray">certifikaci Google Ads</span>, která potvrzuje mou odbornost a zkušenost v oblasti online reklamy. Díky tomu spravuju vaše kampaně efektivně a podle nejnovějších standardů Googlu.</p>

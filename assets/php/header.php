@@ -20,7 +20,7 @@
                             <ul class="navbar-nav"> 
                                 <li class="nav-item"><a href="index.php" class="nav-link">Domů</a></li>
                                 <li class="nav-item"><a href="sablony.php" class="nav-link">Šablony</a></li>
-                                <li class="nav-item"><a href="about.php" class="nav-link">O nás</a></li>
+                                <li class="nav-item"><a href="about.php" class="nav-link">O mně</a></li>
                                 <li class="nav-item"><a href="contact.php" class="nav-link">Kontakt</a></li></ul>
                         </div>
                     </div>
