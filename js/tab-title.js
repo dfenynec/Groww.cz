@@ -4,9 +4,9 @@ const originalTitle = document.title;
 
 document.addEventListener('visibilitychange', function () {
   if (document.hidden) {
-    document.title = 'Neodcházej! 🚀';
+    document.title = 'Tvůj web čeká! 🚀';
   } else {
-    document.title = 'Vítejte zpět! 👋';
+    document.title = 'Vítej zpět! 👋';
     setTimeout(() => {
       document.title = originalTitle;
     }, 2000);
