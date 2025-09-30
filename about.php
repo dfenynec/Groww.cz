@@ -83,7 +83,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     <div class="feature-box-content last-paragraph-no-margin">
                         <span class="d-block fs-18 fw-600 text-dark-gray mb-5px ls-minus-05px">Jednoduchost</span>
-                        <p>Nekomplikujue to. Weby i reklamy stavíme tak, aby fungovaly.</p>
+                        <p>Nekomplikuju to. Weby i reklamy stavím tak, aby fungovaly.</p>
                     </div>
                 </div>
             </div>
