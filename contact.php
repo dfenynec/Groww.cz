@@ -217,7 +217,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </a>
             </div>
             <div class="fs-14 text-center align-items-center ">
-                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="#">Více o Cookies</a>
+                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="groww.cz/navody-dokumenty">Více o Cookies</a>
             </div>
             
         </div>

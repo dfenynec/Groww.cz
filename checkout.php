@@ -185,7 +185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </span>
                     <td data-title="Total">
                         <h6 class="d-block fw-700 mb-0 text-dark-gray alt-font" data-title="Price" id="order-cena">14&nbsp;995 Kč</h6>
-                        <span class="fs-14">(50 % ceny, bez DPH)</span>
+                        <span class="fs-14">(50 % ceny, nejsem plátce DPH)</span>
                     </td>
                 </tr>
             </tbody>
@@ -262,7 +262,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </a>
             </div>
             <div class="fs-14 text-center align-items-center ">
-                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="#">Více o Cookies</a>
+                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="groww.cz/navody-dokumenty">Více o Cookies</a>
             </div>
             
         </div>

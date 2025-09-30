@@ -159,7 +159,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="position-relative terms-condition-box text-start d-flex align-items-center">
             <label>
               <input type="checkbox" form="objednavka-form" name="terms_condition" value="1" id="terms_condition" class="check-box terms-condition-box required align-middle" required>
-              <span class="box required fs-14 lh-28">Souhlasím s <a href="#" class="text-decoration-line-bottom text-dark-gray fw-500">obchodními podmínkami</a> a <a href="#" class="text-decoration-line-bottom text-dark-gray fw-500">zásadami zpracování osobních údajů</a>.<span class="text-red">*</span></span>
+              <span class="box required fs-14 lh-28">Souhlasím s <a href="groww.cz/navody-dokumenty" class="text-decoration-line-bottom text-dark-gray fw-500">obchodními podmínkami</a> a <a href="groww.cz/navody-dokumenty" class="text-decoration-line-bottom text-dark-gray fw-500">zásadami zpracování osobních údajů</a>.<span class="text-red">*</span></span>
             </label>
           </div>
           <p class="fs-14 lh-24"><span class="text-red">*</span> Povinné.</p>
@@ -207,7 +207,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </a>
             </div>
             <div class="fs-14 text-center align-items-center ">
-                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="#">Více o Cookies</a>
+                <a class="text-decoration-line-bottom fs-12 cookie_policy_link" href="groww.cz/navody-dokumenty">Více o Cookies</a>
             </div>
             
         </div>
