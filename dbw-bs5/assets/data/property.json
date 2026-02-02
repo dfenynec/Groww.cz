@@ -1,0 +1,30 @@
+{
+  "brand": { "name": "Nissi Golden Sands A15", "logoText": "Nissi A15", "primaryCta": "Book direct" },
+  "property": {
+    "slug": "nissi-golden-sands-a15",
+    "title": "Sunny apartment near Nissi Beach",
+    "subtitle": "Pool • Terrace • Fast Wi-Fi • Walk to beach",
+    "location": { "city": "Ayia Napa", "country": "Cyprus", "addressLine": "Nissi Golden Sands A15", "mapEmbedUrl": "" },
+    "highlights": ["300m to Nissi Beach","Pool access","Fast Wi-Fi","Terrace","A/C"],
+    "gallery": ["assets/img/hero.jpg","assets/img/g1.jpg","assets/img/g2.jpg","assets/img/g3.jpg"],
+    "description": [
+      "Bright, cozy apartment ideal for couples or a small family.",
+      "Walk to the beach, restaurants, and shops. Quiet at night."
+    ],
+    "amenities": ["Wi-Fi","Air conditioning","Kitchen","Washing machine","Pool","Free parking nearby"],
+    "houseRules": ["No smoking","No parties","Quiet hours 22:00–08:00"],
+    "faq": [
+      { "q": "What time is check-in?", "a": "Check-in from 15:00. Early check-in subject to availability." },
+      { "q": "Is parking available?", "a": "Free street parking is usually available nearby." }
+    ]
+  },
+  "booking": {
+    "mode": "request",
+    "currency": "EUR",
+    "minNights": 2,
+    "contactEmail": "hello@example.com",
+    "contactPhone": "+420000000000",
+    "policiesUrl": "#",
+    "stripeEnabled": false
+  }
+}
