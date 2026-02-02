@@ -5,9 +5,14 @@ $slug = $_GET['property'] ?? '';
 $slug = preg_replace('~[^a-z0-9\-]~', '', strtolower($slug));
 if (!$slug) { http_response_code(400); echo json_encode(['error'=>'missing property']); exit; }
 
-$configPath = __DIR__ . 'private/ical-config.json';
+$configPath = dirname(__DIR__) . '/private/ical-config.json';
+
 $raw = @file_get_contents($configPath);
-if (!$raw) { http_response_code(500); echo json_encode(['error'=>'config missing']); exit; }
+if (!$raw) {
+  http_response_code(500);
+  echo json_encode(['error'=>'config missing', 'path' => $configPath]); // dočasně pro debug
+  exit;
+}
 
 $cfg = json_decode($raw, true);
 if (!is_array($cfg) || empty($cfg[$slug])) {
@@ -21,6 +26,8 @@ if (!empty($cfg[$slug]['airbnb']))  $urls[] = $cfg[$slug]['airbnb'];
 if (!empty($cfg[$slug]['booking'])) $urls[] = $cfg[$slug]['booking'];
 
 if (!$urls) { echo json_encode(['booked'=>[]]); exit; }
+
+// ... zbytek parsování ICS ...
 $urls = array_filter(array_map('trim', explode('|', $ICAL[$slug])));
 
 $booked = [];

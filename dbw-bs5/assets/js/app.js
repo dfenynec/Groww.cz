@@ -120,7 +120,7 @@
 
   // ---------- Availability ----------
   async function fetchAvailability(slug) {
-    const res = await fetch(`/api/availability.php?property=${encodeURIComponent(slug)}`, { cache: "no-store" });
+    const res = await fetch(`./api/availability.php?property=${encodeURIComponent(slug)}`, { cache: "no-store" });
     if (!res.ok) throw new Error("Availability API failed");
     return res.json();
   }
@@ -280,8 +280,7 @@
   // ---------- Main ----------
   async function init() {
     const slug = getParam("p", "nissi-golden-sands-a15");
-    const jsonUrl = `/data/properties/${encodeURIComponent(slug)}.json`;
-
+    const jsonUrl = `./data/properties/${encodeURIComponent(slug)}.json`;
     const property = await fetch(jsonUrl, { cache: "no-store" }).then(r => {
       if (!r.ok) throw new Error(`Property JSON not found: ${jsonUrl}`);
       return r.json();
