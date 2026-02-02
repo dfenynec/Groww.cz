@@ -1,0 +1,59 @@
+{
+  "slug": "nissi-golden-sands-a15",
+  "title": "Nissi Golden Sands A15 • Ayia Napa",
+  "heroImage": "https://placehold.co/1600x900",
+  "gallery": [
+    "https://placehold.co/626x600",
+    "https://placehold.co/626x600",
+    "https://placehold.co/626x600"
+  ],
+  "chips": ["Near Nissi Beach", "Free parking", "Fast Wi-Fi", "Pool", "Terrace"],
+  "description": "Bright, cozy apartment near Nissi Beach. Perfect for couples or families.",
+  "quickFacts": [
+    { "label": "Guests", "value": "Up to 4" },
+    { "label": "Beds", "value": "1 bed + sofa" },
+    { "label": "Check-in", "value": "from 15:00" },
+    { "label": "Check-out", "value": "by 11:00" }
+  ],
+  "amenitiesTop": [
+    { "icon": "📶", "label": "Fast Wi-Fi" },
+    { "icon": "🏊", "label": "Pool" },
+    { "icon": "🚗", "label": "Parking" },
+    { "icon": "🌅", "label": "Terrace" }
+  ],
+  "amenitiesColumns": [
+    ["Air conditioning", "Kitchen", "Washing machine", "Hair dryer"],
+    ["Coffee machine", "TV", "Iron", "Microwave"],
+    ["Elevator", "Towels & linens", "Shower", "Outdoor seating"]
+  ],
+  "houseRules": ["No smoking", "No parties", "Quiet hours after 22:00"],
+  "location": {
+    "addressLine": "Sotou Chatziprokopiou 6, Ayia Napa",
+    "mapsEmbedUrl": "https://www.google.com/maps?q=Ayia%20Napa&output=embed"
+  },
+  "reviews": {
+    "rating": 4.92,
+    "count": 128,
+    "items": [
+      { "name": "Alena", "stars": 5, "text": "Amazing location and very clean." },
+      { "name": "Tom", "stars": 5, "text": "Great host, quick communication." }
+    ]
+  },
+  "faq": [
+    { "q": "Is there self check-in?", "a": "Yes, via keybox. Details after booking." },
+    { "q": "How far is the beach?", "a": "About 5 minutes walking distance." }
+  ],
+  "booking": { "maxGuests": 4 },
+  "pricing": {
+    "currency": "EUR",
+    "baseNight": 120,
+    "weekendNight": 140,
+    "weekendDays": [5, 6],
+    "cleaningFee": 40,
+    "minNightsDefault": 2,
+    "rules": [
+      { "from": "2026-06-01", "to": "2026-08-31", "night": 190, "minNights": 4 },
+      { "from": "2026-12-20", "to": "2027-01-05", "night": 220, "minNights": 5 }
+    ]
+  }
+}

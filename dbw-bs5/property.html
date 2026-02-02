@@ -1,0 +1,297 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <title data-bind="pageTitle">Direct Booking</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="description" content="Direct booking page" data-bind="metaDescription">
+
+  <!-- Crafto / Template assets -->
+  <link rel="stylesheet" href="css/vendors.min.css"/>
+  <link rel="stylesheet" href="css/icon.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <link rel="stylesheet" href="assets/css/real-estate.css" />
+
+  <!-- Flatpickr -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- Your theme overrides (must be last) -->
+  <link rel="stylesheet" href="css/dbw-theme.css"/>
+</head>
+
+<body data-mobile-nav-style="classic">
+<header>
+  <nav class="navbar navbar-expand-lg header-light bg-white border-bottom border-color-extra-medium-gray header-reverse" data-header-hover="light">
+    <div class="container-fluid">
+      <div class="col-auto">
+        <a class="navbar-brand" href="#" data-bind="brandLink">
+          <span class="alt-font fw-800 text-dark-gray" style="letter-spacing:-.02em">DBW</span>
+        </a>
+      </div>
+
+      <div class="col-auto menu-order left-nav ps-60px lg-ps-20px">
+        <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
+          <span class="navbar-toggler-line"></span>
+          <span class="navbar-toggler-line"></span>
+          <span class="navbar-toggler-line"></span>
+          <span class="navbar-toggler-line"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav alt-font">
+            <li class="nav-item"><a href="#photos" class="nav-link">Photos</a></li>
+            <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#amenities" class="nav-link">Amenities</a></li>
+            <li class="nav-item"><a href="#location" class="nav-link">Location</a></li>
+            <li class="nav-item"><a href="#reviews" class="nav-link">Reviews</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-auto ms-auto ps-lg-0 d-none d-sm-flex">
+        <div class="header-icon">
+          <div class="header-button">
+            <a href="#book" class="btn btn-base-color btn-small btn-round-edge btn-hover-animation-switch">
+              <span>
+                <span class="btn-text">Book direct</span>
+                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
+                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+<!-- PAGE TITLE -->
+<section class="cover-background page-title-big-typography ipad-top-space-margin dbw-hero" style="background-image:url('https://via.placeholder.com/1600x900')" data-bind-style="heroBg">
+  <div class="container">
+    <div class="row align-items-center align-items-lg-end justify-content-center extra-very-small-screen g-0">
+      <div class="col-xl-7 col-lg-8 position-relative page-title-extra-small md-mb-30px md-mt-auto">
+        <h3 class="alt-font fw-600 text-dark-gray mb-15px ls-minus-1px" data-bind="title">Property name</h3>
+        <h1 class="mb-0 d-flex">
+          <i class="feather icon-feather-map-pin icon-extra-medium text-base-color me-5px"></i>
+          <span data-bind="addressLine">Address line</span>
+        </h1>
+
+        <div class="mt-20px d-flex flex-wrap gap-10px" data-bind-list="chips">
+          <!-- chips inserted here -->
+        </div>
+      </div>
+
+      <div class="col-lg-3 offset-xl-2 offset-lg-1 border-start border-2 border-color-base-color ps-40px sm-ps-25px md-mb-auto">
+        <div class="d-flex align-items-center mb-8px">
+          <span class="fs-18 fw-700 text-dark-gray me-10px" data-bind="fromPriceText">From €—</span>
+          <span class="fs-15 text-medium-gray">/ night</span>
+        </div>
+        <div class="d-flex align-items-center">
+          <span class="text-base-color me-6px"><i class="fa-solid fa-star"></i></span>
+          <span class="fw-600 text-dark-gray me-8px" data-bind="rating">—</span>
+          <span class="text-medium-gray" data-bind="reviewsCountText">(— reviews)</span>
+        </div>
+        <div class="mt-10px fs-14 text-medium-gray">
+          No platform fees • Best price guarantee
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOS (Swiper) -->
+<section class="p-0 overflow-hidden" id="photos">
+  <div class="container-fluid p-0">
+    <div class="row row-cols-1 justify-content-center">
+      <div class="col">
+        <div class="swiper magic-cursor slider-four-slide swiper-dark-pagination swiper-pagination-style-3"
+             data-slider-options='{ "slidesPerView": 1, "spaceBetween": 20, "loop": true,
+               "pagination": { "el": ".slider-four-slide-pagination", "clickable": true },
+               "autoplay": { "delay": 3500, "disableOnInteraction": false },
+               "breakpoints": { "1200": { "slidesPerView": 3 }, "992": { "slidesPerView": 3 }, "768": { "slidesPerView": 2 } },
+               "effect": "slide" }'>
+          <div class="swiper-wrapper" data-bind-list="gallery">
+            <!-- slides inserted here -->
+          </div>
+          <div class="slider-four-slide-pagination swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK FACTS -->
+<section class="pt-30px pb-30px border-bottom border-color-extra-medium-gray">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2" id="quickFacts">
+      <!-- quick facts inserted here -->
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="position-relative">
+  <div class="container">
+    <div class="row">
+
+      <!-- LEFT -->
+      <div class="col-lg-7 md-mb-50px">
+
+        <!-- ABOUT -->
+        <div class="row mb-15px" id="about">
+          <div class="col-12">
+            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">About the place</span>
+            <p data-bind="description">—</p>
+          </div>
+        </div>
+
+        <!-- AMENITIES ICON GRID -->
+        <div class="row g-0" id="amenities">
+          <div class="col bg-very-light-gray p-35px lg-ps-15px lg-pe-15px border-radius-6px fs-16">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-sm-2" data-bind-list="amenitiesTop">
+              <!-- amenity cards inserted -->
+            </div>
+          </div>
+        </div>
+
+        <!-- FULL AMENITIES LIST -->
+        <div class="row mt-7">
+          <div class="col-12">
+            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">Amenities</span>
+          </div>
+
+          <div class="col-12">
+            <div class="row" data-bind-list="amenitiesColumns">
+              <!-- columns inserted -->
+            </div>
+          </div>
+        </div>
+
+        <!-- HOUSE RULES -->
+        <div class="row mt-7" id="rules">
+          <div class="col-12">
+            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">House rules</span>
+            <ul class="list-style-02 ps-0 mb-0" data-bind-list="houseRules">
+              <!-- list inserted -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- LOCATION -->
+        <div class="row mt-7" id="location">
+          <div class="col-12">
+            <span class="text-dark-gray fs-24 fw-600 alt-font mb-25px d-block">Location</span>
+          </div>
+          <div class="col-12">
+            <iframe class="border-radius-6px w-100" style="height:360px;border:0"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              data-bind-attr="mapsEmbedSrc"
+              src="https://www.google.com/maps?q=New%20York&output=embed">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- REVIEWS -->
+        <div class="row mt-7" id="reviews">
+          <div class="col-12">
+            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">Reviews</span>
+          </div>
+          <div class="col-12">
+            <div class="row" data-bind-list="reviews">
+              <!-- review cards inserted -->
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="row mt-7" id="faq">
+          <div class="col-12">
+            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">FAQ</span>
+          </div>
+          <div class="col-12" data-bind-list="faq">
+            <!-- accordion inserted -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT / BOOKING CARD -->
+      <div class="col-xl-4 offset-xl-1 col-lg-5">
+        <div class="border-radius-10px bg-white box-shadow-double-large position-sticky top-120px" id="book">
+          <div class="p-35px border-bottom border-color-extra-medium-gray">
+            <div class="d-flex align-items-baseline justify-content-between">
+              <div>
+                <span class="fs-24 fw-700 text-dark-gray" data-bind="nightPriceText">€—</span>
+                <span class="text-medium-gray"> / night</span>
+              </div>
+              <div class="fs-14 text-medium-gray">
+                <i class="fa-solid fa-star text-base-color"></i>
+                <span class="fw-600 text-dark-gray" data-bind="ratingSmall">—</span>
+                <span data-bind="reviewsCountSmall">(—)</span>
+              </div>
+            </div>
+            <div class="mt-10px fs-13 text-medium-gray" data-bind="bookingHint">
+              No platform fees • Confirm after payment
+            </div>
+          </div>
+
+          <div class="p-35px">
+            <div class="row g-2">
+              <div class="col-6">
+                <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Check-in</label>
+                <input id="checkin" type="text" class="form-control border-color-extra-medium-gray" placeholder="Select" />
+              </div>
+              <div class="col-6">
+                <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Check-out</label>
+                <input id="checkout" type="text" class="form-control border-color-extra-medium-gray" placeholder="Select" />
+              </div>
+              <div class="col-12 mt-10px">
+                <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Guests</label>
+                <select id="guests" class="form-select border-color-extra-medium-gray"></select>
+              </div>
+            </div>
+
+            <div class="mt-15px p-20px bg-very-light-gray border-radius-6px" id="priceBox">
+              <div class="small text-medium-gray">Select dates to see total price.</div>
+            </div>
+
+            <button id="requestBtn" class="btn btn-base-color btn-large btn-round-edge w-100 mt-20px" disabled>
+              Select dates
+            </button>
+
+            <div class="text-center mt-12px fs-13 text-medium-gray" id="paymentNote">
+              You won’t be charged yet
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer-light bg-gradient-very-light-gray pb-0">
+  <div class="container">
+    <div class="border-top border-color-extra-medium-gray pt-35px pb-35px text-center">
+      <span class="fs-13 w-60 lg-w-70 md-w-90 sm-w-100 d-block mx-auto lh-22">
+        © <span data-bind="year"></span> Direct Booking Website • Powered by DBW
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- JS -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/vendors.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+<!-- Flatpickr -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Our app (must be last) -->
+<script type="text/javascript" src="assets/js/app.js"></script>
+</body>
+</html>
