@@ -15,7 +15,7 @@ if (empty($_SESSION['ok'])) {
   exit;
 }
 
-$configPath = __DIR__ . '/../../private/ical-config.json'; // uprav podle sebe
+$configPath = __DIR__ . '/private/ical-config.json'; // uprav podle sebe
 $cfg = [];
 if (file_exists($configPath)) {
   $cfg = json_decode(file_get_contents($configPath), true) ?: [];
