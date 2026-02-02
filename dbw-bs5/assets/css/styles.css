@@ -104,7 +104,7 @@ textarea{resize:vertical}
   border-radius:14px;
   padding:12px 14px;
   background:rgba(17,24,38,.55);
-  margin-bottom:10px;
+  margin-bottom:10px;   
 }
 .faq__item summary{cursor:pointer; font-weight:700}
 .faq__a{margin-top:10px; color:var(--muted)}
