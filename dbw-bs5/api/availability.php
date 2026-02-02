@@ -5,7 +5,17 @@ $slug = $_GET['property'] ?? '';
 $slug = preg_replace('~[^a-z0-9\-]~', '', strtolower($slug));
 if (!$slug) { http_response_code(400); echo json_encode(['error'=>'missing property']); exit; }
 
-$configPath = dirname(__DIR__) . './private/ical-config.json';
+$base = dirname(__DIR__);          // .../public_html/dbw-bs5  (nebo dbw-bs5.)
+$base = rtrim($base, ".");         // odstraní případnou tečku na konci
+$configPath = $base . '/private/ical-config.json';
+
+echo json_encode([
+  'base' => $base,
+  'configPath' => $configPath,
+  'exists' => file_exists($configPath),
+  'readable' => is_readable($configPath),
+]);
+exit;
 
 $raw = @file_get_contents($configPath);
 if (!$raw) {
