@@ -1,233 +1,392 @@
-const DATA_SOURCE_URL = "data/property.json"; // později API endpoint
+(function () {
+  // ---------- Helpers ----------
+  const $ = (sel, root = document) => root.querySelector(sel);
 
-async function loadData() {
-  const res = await fetch(DATA_SOURCE_URL, { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load property data");
-  return await res.json();
-}
+  function escapeHtml(s = "") {
+    return String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
-function getByPath(obj, path) {
-  return path.split(".").reduce((acc, key) => (acc ? acc[key] : null), obj);
-}
+  function getParam(name, fallback = "") {
+    const u = new URL(window.location.href);
+    return u.searchParams.get(name) || fallback;
+  }
 
-function bindSimple(data) {
-  document.querySelectorAll("[data-bind]").forEach(el => {
-    const path = el.getAttribute("data-bind");
-    const value = getByPath(data, path);
-    if (value !== null && value !== undefined) el.textContent = value;
-  });
-}
+  function parseISODate(s) {
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d));
+  }
 
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+  function dateToISO(d) {
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
 
-function renderHero(data) {
-  const first = data.property.gallery?.[0];
-  const hero = document.getElementById("heroMedia");
-  hero.innerHTML = first ? `<img src="${first}" alt="" />` : "";
+  function daysBetween(checkin, checkout) {
+    const a = parseISODate(checkin);
+    const b = parseISODate(checkout);
+    return Math.round((b - a) / (24 * 60 * 60 * 1000));
+  }
 
-  const highlights = document.getElementById("highlights");
-  highlights.innerHTML = (data.property.highlights || [])
-    .slice(0, 8)
-    .map(h => `<span class="badge rounded-pill badge-soft">${escapeHtml(h)}</span>`)
-    .join("");
+  function formatMoney(amount, currency) {
+    try {
+      return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(amount);
+    } catch {
+      return `${amount} ${currency}`;
+    }
+  }
 
-  const cityCountry = `${data.property.location?.city || ""}${data.property.location?.city ? " • " : ""}${data.property.location?.country || ""}`;
-  document.getElementById("cityCountry").textContent = cityCountry;
-  document.getElementById("cityCountry2").textContent = cityCountry;
-}
+  // ---------- Pricing ----------
+  function getRuleForDate(pricing, isoDate) {
+    const rules = pricing.rules || [];
+    return rules.find(r => isoDate >= r.from && isoDate <= r.to) || null;
+  }
 
-function renderDescription(data) {
-  const box = document.getElementById("description");
-  box.innerHTML = (data.property.description || [])
-    .map(p => `<p class="text-secondary mb-2">${escapeHtml(p)}</p>`)
-    .join("");
-}
+  function nightPriceForDate(pricing, isoDate) {
+    const rule = getRuleForDate(pricing, isoDate);
+    if (rule?.night != null) return rule.night;
 
-function renderGallery(data) {
-  const box = document.getElementById("gallery");
-  const imgs = (data.property.gallery || []).slice(0, 8);
+    const d = parseISODate(isoDate);
+    const dow = d.getUTCDay(); // 0..6
+    if (pricing.weekendNight != null && (pricing.weekendDays || []).includes(dow)) return pricing.weekendNight;
+    return pricing.baseNight;
+  }
 
-  box.innerHTML = imgs.map((src) => `
-    <div class="col-4 col-md-3">
-      <button class="gallery-btn" type="button" data-src="${src}">
-        <img class="gallery-img shadow-sm" src="${src}" alt="" loading="lazy">
-      </button>
-    </div>
-  `).join("");
+  function minNightsForRange(pricing, checkinISO, checkoutISO) {
+    let min = pricing.minNightsDefault || 1;
+    const nights = daysBetween(checkinISO, checkoutISO);
+    const start = parseISODate(checkinISO);
+    for (let i = 0; i < nights; i++) {
+      const cur = new Date(start);
+      cur.setUTCDate(cur.getUTCDate() + i);
+      const iso = dateToISO(cur);
+      const rule = getRuleForDate(pricing, iso);
+      if (rule?.minNights != null) min = Math.max(min, rule.minNights);
+    }
+    return min;
+  }
 
-  const modalEl = document.getElementById("imageModal");
-  const modal = new bootstrap.Modal(modalEl);
-  const modalImg = document.getElementById("modalImage");
+  function calculateTotal(pricing, checkinISO, checkoutISO) {
+    const nights = daysBetween(checkinISO, checkoutISO);
+    if (nights <= 0) return null;
 
-  box.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-src]");
-    if (!btn) return;
-    modalImg.src = btn.getAttribute("data-src");
-    modal.show();
-  });
-}
+    const start = parseISODate(checkinISO);
+    let subtotal = 0;
 
-function renderAmenities(data) {
-  const box = document.getElementById("amenitiesList");
-  const items = data.property.amenities || [];
-  box.innerHTML = items.map(a => `
-    <div class="col-6 col-md-4">
-      <div class="d-flex gap-2 align-items-start">
-        <div class="text-primary">✓</div>
-        <div class="text-secondary">${escapeHtml(a)}</div>
+    for (let i = 0; i < nights; i++) {
+      const cur = new Date(start);
+      cur.setUTCDate(cur.getUTCDate() + i);
+      const iso = dateToISO(cur);
+      subtotal += nightPriceForDate(pricing, iso);
+    }
+
+    const cleaning = pricing.cleaningFee || 0;
+    return { nights, subtotal, cleaning, total: subtotal + cleaning };
+  }
+
+  function renderPriceBox(priceBox, pricing, calc, minRequired) {
+    if (!calc) {
+      priceBox.innerHTML = `<div class="small text-medium-gray">Select dates to see total price.</div>`;
+      return;
+    }
+    const cur = pricing.currency || "EUR";
+    const ok = calc.nights >= minRequired;
+
+    priceBox.innerHTML = `
+      <div class="d-flex justify-content-between">
+        <div><strong>${calc.nights} nights</strong></div>
+        <div class="text-medium-gray">${escapeHtml(formatMoney(calc.subtotal, cur))}</div>
       </div>
-    </div>
-  `).join("");
-}
-
-function renderRules(data) {
-  const box = document.getElementById("rulesList");
-  box.innerHTML = (data.property.houseRules || [])
-    .map(r => `<li class="mb-2">${escapeHtml(r)}</li>`)
-    .join("");
-}
-
-function renderFaq(data) {
-  const box = document.getElementById("faqList");
-  const items = data.property.faq || [];
-  box.innerHTML = items.map((item, idx) => `
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="h${idx}">
-        <button class="accordion-button ${idx ? "collapsed" : ""}" type="button"
-                data-bs-toggle="collapse" data-bs-target="#c${idx}">
-          ${escapeHtml(item.q)}
-        </button>
-      </h2>
-      <div id="c${idx}" class="accordion-collapse collapse ${idx ? "" : "show"}" data-bs-parent="#faqList">
-        <div class="accordion-body text-secondary">${escapeHtml(item.a)}</div>
+      <div class="d-flex justify-content-between mt-1">
+        <div class="text-medium-gray">Cleaning fee</div>
+        <div class="text-medium-gray">${escapeHtml(formatMoney(calc.cleaning, cur))}</div>
       </div>
-    </div>
-  `).join("");
-}
-
-function renderLocation(data) {
-  document.getElementById("addressLine").textContent = data.property.location?.addressLine || "";
-
-  const mapEmbedUrl = data.property.location?.mapEmbedUrl;
-  if (mapEmbedUrl) {
-    document.getElementById("mapBox").innerHTML = `
-      <iframe title="Map" src="${mapEmbedUrl}" loading="lazy"
-              style="width:100%;height:340px;border:0;display:block;"></iframe>
+      <div class="my-2" style="height:1px;background:rgba(17,24,39,.12)"></div>
+      <div class="d-flex justify-content-between">
+        <div><strong>Total</strong></div>
+        <div><strong>${escapeHtml(formatMoney(calc.total, cur))}</strong></div>
+      </div>
+      <div class="small mt-2 ${ok ? "text-medium-gray" : "text-danger"}">
+        Minimum stay: ${minRequired} nights
+      </div>
     `;
   }
-}
 
-function setupBookingForm(data) {
-  const policies = document.getElementById("policiesLink");
-  policies.href = data.booking.policiesUrl || "#";
+  // ---------- Availability ----------
+  async function fetchAvailability(slug) {
+    const res = await fetch(`/api/availability.php?property=${encodeURIComponent(slug)}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Availability API failed");
+    return res.json();
+  }
 
-  const emailLink = document.getElementById("contactEmailLink");
-  emailLink.textContent = data.booking.contactEmail;
-  emailLink.href = `mailto:${data.booking.contactEmail}`;
+  function initDatepickers(bookedRanges, minNights = 1) {
+    const disableRanges = (bookedRanges || []).map(r => ({ from: r.from, to: r.to }));
+    const checkinEl = $("#checkin");
+    const checkoutEl = $("#checkout");
+    let checkoutPicker = null;
 
-  const phoneLink = document.getElementById("contactPhoneLink");
-  phoneLink.textContent = data.booking.contactPhone;
-  phoneLink.href = `tel:${data.booking.contactPhone.replace(/\s+/g, "")}`;
+    const common = { dateFormat: "Y-m-d", minDate: "today", disable: disableRanges };
 
-  const form = document.getElementById("bookingForm");
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const fd = new FormData(form);
+    flatpickr(checkinEl, {
+      ...common,
+      onChange: function (selectedDates) {
+        const start = selectedDates[0];
+        if (!start || !checkoutPicker) return;
+        const minCheckout = new Date(start);
+        minCheckout.setDate(minCheckout.getDate() + Math.max(1, minNights));
+        checkoutPicker.set("minDate", minCheckout);
 
-    const payload = {
-      propertySlug: data.property.slug,
-      checkin: fd.get("checkin"),
-      checkout: fd.get("checkout"),
-      guests: Number(fd.get("guests")),
-      email: fd.get("email"),
-      message: fd.get("message") || ""
+        const curOut = checkoutPicker.selectedDates?.[0];
+        if (curOut && curOut < minCheckout) checkoutPicker.clear();
+
+        checkinEl.dispatchEvent(new Event("change"));
+      }
+    });
+
+    checkoutPicker = flatpickr(checkoutEl, {
+      ...common,
+      onChange: () => checkoutEl.dispatchEvent(new Event("change"))
+    });
+  }
+
+  // ---------- Bind template ----------
+  function setText(selector, value) {
+    const el = $(selector);
+    if (el) el.textContent = value ?? "";
+  }
+
+  function setAttr(selector, attr, value) {
+    const el = $(selector);
+    if (el) el.setAttribute(attr, value);
+  }
+
+  function setHeroBg(url) {
+    const hero = $(".dbw-hero");
+    if (hero && url) hero.style.backgroundImage = `url('${url}')`;
+  }
+
+  function renderChips(chips = []) {
+    const host = document.querySelector('[data-bind-list="chips"]');
+    if (!host) return;
+    host.innerHTML = chips.slice(0, 6).map(c => `<span class="dbw-chip">${escapeHtml(c)}</span>`).join("");
+  }
+
+  function renderGallery(urls = []) {
+    const host = document.querySelector('[data-bind-list="gallery"]');
+    if (!host) return;
+    host.innerHTML = (urls || []).map(u => `
+      <div class="swiper-slide">
+        <img src="${escapeHtml(u)}" alt="" class="w-100" />
+      </div>
+    `).join("");
+  }
+
+  function renderQuickFacts(facts = []) {
+    const host = $("#quickFacts");
+    if (!host) return;
+    const cols = (facts || []).slice(0, 4);
+    host.innerHTML = cols.map((f, idx) => `
+      <div class="col text-center ${idx < cols.length - 1 ? "border-end" : ""} xs-border-end-0 border-color-extra-medium-gray alt-font md-mb-15px">
+        <span class="fs-19 text-dark-gray fw-600">${escapeHtml(f.label)}:</span> ${escapeHtml(f.value)}
+      </div>
+    `).join("");
+  }
+
+  function renderAmenitiesTop(items = []) {
+    const host = document.querySelector('[data-bind-list="amenitiesTop"]');
+    if (!host) return;
+    host.innerHTML = (items || []).slice(0, 4).map((a, idx) => `
+      <div class="col text-center ${idx < 3 ? "border-end border-color-extra-medium-gray" : ""} sm-mb-30px">
+        <div class="text-base-color fs-28 mb-10px">${escapeHtml(a.icon || "✓")}</div>
+        <span class="text-dark-gray d-block lh-20">${escapeHtml(a.label)}</span>
+      </div>
+    `).join("");
+  }
+
+  function renderAmenitiesColumns(columns = []) {
+    const host = document.querySelector('[data-bind-list="amenitiesColumns"]');
+    if (!host) return;
+
+    host.innerHTML = (columns || []).slice(0, 3).map(col => `
+      <div class="col-6 col-sm-4">
+        <ul class="list-style-02 ps-0 mb-0">
+          ${(col || []).map(item => `<li><i class="bi bi-check-circle icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+      </div>
+    `).join("");
+  }
+
+  function renderHouseRules(rules = []) {
+    const host = document.querySelector('[data-bind-list="houseRules"]');
+    if (!host) return;
+    host.innerHTML = (rules || []).map(r => `<li><i class="bi bi-check-circle icon-small me-10px"></i>${escapeHtml(r)}</li>`).join("");
+  }
+
+  function renderReviews(reviews = []) {
+    const host = document.querySelector('[data-bind-list="reviews"]');
+    if (!host) return;
+    host.innerHTML = (reviews || []).slice(0, 6).map(r => `
+      <div class="col-12 mb-15px">
+        <div class="border-radius-10px bg-white box-shadow-double-large p-25px">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="fw-700 text-dark-gray">${escapeHtml(r.name || "Guest")}</div>
+            <div class="text-base-color">
+              ${"★".repeat(Math.max(0, Math.min(5, r.stars || 5)))}
+            </div>
+          </div>
+          <div class="text-medium-gray mt-8px">${escapeHtml(r.text || "")}</div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function renderFAQ(items = []) {
+    const host = document.querySelector('[data-bind-list="faq"]');
+    if (!host) return;
+    host.innerHTML = (items || []).slice(0, 8).map((q, i) => `
+      <div class="accordion mb-10px" id="faqAcc${i}">
+        <div class="accordion-item border-radius-10px overflow-hidden">
+          <h2 class="accordion-header" id="h${i}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c${i}" aria-expanded="false" aria-controls="c${i}">
+              ${escapeHtml(q.q)}
+            </button>
+          </h2>
+          <div id="c${i}" class="accordion-collapse collapse" aria-labelledby="h${i}">
+            <div class="accordion-body text-medium-gray">${escapeHtml(q.a)}</div>
+          </div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function populateGuests(maxGuests = 4) {
+    const sel = $("#guests");
+    if (!sel) return;
+    sel.innerHTML = "";
+    for (let i = 1; i <= maxGuests; i++) {
+      const opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = i === 1 ? "1 guest" : `${i} guests`;
+      sel.appendChild(opt);
+    }
+  }
+
+  // ---------- Main ----------
+  async function init() {
+    const slug = getParam("p", "nissi-golden-sands-a15");
+    const jsonUrl = `/data/properties/${encodeURIComponent(slug)}.json`;
+
+    const property = await fetch(jsonUrl, { cache: "no-store" }).then(r => {
+      if (!r.ok) throw new Error(`Property JSON not found: ${jsonUrl}`);
+      return r.json();
+    });
+
+    // Basic binds
+    document.title = property.seo?.title || `${property.title} • Direct Booking`;
+    setText('[data-bind="pageTitle"]', document.title);
+    setText('[data-bind="metaDescription"]', property.seo?.description || "");
+    setText('[data-bind="title"]', property.title);
+    setText('[data-bind="addressLine"]', property.location?.addressLine || "");
+    setText('[data-bind="rating"]', property.reviews?.rating ?? "—");
+    setText('[data-bind="ratingSmall"]', property.reviews?.rating ?? "—");
+    setText('[data-bind="reviewsCountText"]', `(${property.reviews?.count ?? 0} reviews)`);
+    setText('[data-bind="reviewsCountSmall"]', `(${property.reviews?.count ?? 0})`);
+    setText('[data-bind="description"]', property.description || "");
+    setText('[data-bind="year"]', String(new Date().getFullYear()));
+
+    // Hero BG
+    setHeroBg(property.heroImage || property.gallery?.[0]);
+
+    // Chips, gallery, facts, amenities, rules, etc.
+    renderChips(property.chips || []);
+    renderGallery(property.gallery || []);
+    renderQuickFacts(property.quickFacts || []);
+    renderAmenitiesTop(property.amenitiesTop || []);
+    renderAmenitiesColumns(property.amenitiesColumns || []);
+    renderHouseRules(property.houseRules || []);
+    renderReviews(property.reviews?.items || []);
+    renderFAQ(property.faq || []);
+
+    // Map embed
+    const mapsUrl = property.location?.mapsEmbedUrl;
+    if (mapsUrl) setAttr('iframe[data-bind-attr="mapsEmbedSrc"]', "src", mapsUrl);
+
+    // Pricing header (from/base)
+    const pricing = property.pricing || null;
+    if (pricing) {
+      const cur = pricing.currency || "EUR";
+      const from = pricing.baseNight ?? 0;
+      setText('[data-bind="fromPriceText"]', `From ${formatMoney(from, cur)}`);
+      setText('[data-bind="nightPriceText"]', formatMoney(from, cur));
+    }
+
+    // Guests select
+    populateGuests(property.booking?.maxGuests || 4);
+
+    // Availability + datepicker
+    const availability = await fetchAvailability(property.slug || slug);
+    initDatepickers(availability.booked || [], pricing?.minNightsDefault || 1);
+
+    // Pricing UI wiring
+    const priceBox = $("#priceBox");
+    const btn = $("#requestBtn");
+    const note = $("#paymentNote");
+
+    const updatePricing = () => {
+      if (!pricing) return;
+      const checkin = $("#checkin")?.value;
+      const checkout = $("#checkout")?.value;
+
+      if (!checkin || !checkout) {
+        renderPriceBox(priceBox, pricing, null, pricing.minNightsDefault || 1);
+        btn.disabled = true;
+        btn.textContent = "Select dates";
+        note.textContent = "You won’t be charged yet";
+        return;
+      }
+
+      const minReq = minNightsForRange(pricing, checkin, checkout);
+      const calc = calculateTotal(pricing, checkin, checkout);
+      renderPriceBox(priceBox, pricing, calc, minReq);
+
+      const ok = calc && calc.nights >= minReq;
+      btn.disabled = !ok;
+      btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
+      note.textContent = ok ? "Request • Pay to confirm" : "Select a longer stay";
     };
 
-    // MVP fallback: mailto. Později nahradíš POSTem na backend.
-    const subject = encodeURIComponent(`Booking request: ${data.property.title}`);
-    const body = encodeURIComponent(
-      `Property: ${data.property.title}\n` +
-      `Dates: ${payload.checkin} to ${payload.checkout}\n` +
-      `Guests: ${payload.guests}\n` +
-      `Email: ${payload.email}\n\n` +
-      `Message:\n${payload.message}\n`
-    );
+    $("#checkin")?.addEventListener("change", updatePricing);
+    $("#checkout")?.addEventListener("change", updatePricing);
+    $("#guests")?.addEventListener("change", updatePricing);
+    updatePricing();
 
-    window.location.href = `mailto:${data.booking.contactEmail}?subject=${subject}&body=${body}`;
-  });
-}
+    // Request button (MVP behaviour)
+    btn?.addEventListener("click", () => {
+      const checkin = $("#checkin")?.value;
+      const checkout = $("#checkout")?.value;
+      const guests = $("#guests")?.value;
 
-async function fetchAvailabilityBySlug(slug) {
-  const res = await fetch(`/api/availability.php?property=${encodeURIComponent(slug)}`, { cache: "no-store" });
-  if (!res.ok) throw new Error("Availability API failed");
-  return await res.json();
-}
+      // Here you later call your backend "create reservation intent"
+      // For now: open email/whatsapp or show modal.
+      const msg = `Booking request:\n${property.title}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}`;
+      alert(msg);
+    });
+  }
 
-function initDatepickers(bookedRanges, minNights = 1) {
-  const disableRanges = (bookedRanges || []).map(r => ({ from: r.from, to: r.to }));
-
-  const checkinEl = document.getElementById("checkin");
-  const checkoutEl = document.getElementById("checkout");
-
-  let checkoutPicker = null;
-
-  const common = {
-    dateFormat: "Y-m-d",
-    minDate: "today",
-    disable: disableRanges
-  };
-
-  flatpickr(checkinEl, {
-    ...common,
-    onChange: function(selectedDates) {
-      const start = selectedDates[0];
-      if (!start || !checkoutPicker) return;
-
-      const minCheckout = new Date(start);
-      minCheckout.setDate(minCheckout.getDate() + Math.max(1, minNights));
-      checkoutPicker.set("minDate", minCheckout);
-
-      const curOut = checkoutPicker.selectedDates?.[0];
-      if (curOut && curOut < minCheckout) checkoutPicker.clear();
-    }
-  });
-
-  checkoutPicker = flatpickr(checkoutEl, { ...common });
-}
-
-(async function init(){
-  try{
-    const data = await loadData();
-    bindSimple(data);
-    renderHero(data);
-    renderDescription(data);
-    renderGallery(data);
-    renderAmenities(data);
-    renderRules(data);
-    renderFaq(data);
-    renderLocation(data);
-    setupBookingForm(data);
-try {
-  const availability = await fetchAvailabilityBySlug(data.property.slug);
-  initDatepickers(availability.booked, data.booking.minNights || 1);
-} catch (e) {
-  console.warn("Availability not loaded; inputs will still work.", e);
-}
-    document.getElementById("year").textContent = new Date().getFullYear();
-  } catch(err){
+  init().catch(err => {
     console.error(err);
     document.body.innerHTML = `
-      <div class="container py-5">
-        <h1 class="h3">Template error</h1>
-        <p class="text-secondary">Could not load <code>${DATA_SOURCE_URL}</code>.</p>
+      <div style="padding:24px;font-family:system-ui">
+        <h2>Page failed to load</h2>
+        <p style="color:#555">${escapeHtml(err.message || String(err))}</p>
+        <p style="color:#777">Check your JSON path and slug.</p>
       </div>
     `;
-  }
+  });
 })();
