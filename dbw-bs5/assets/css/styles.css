@@ -1,13 +1,25 @@
 :root{
-  --bg:#0b0f14;
-  --card:#111826;
-  --text:#e7eefc;
-  --muted:#a9b6cf;
-  --line:rgba(255,255,255,.08);
-  --radius:18px;
-  --max:1080px;
+  --brand: #c65a12;        /* tmavě oranžová */
+  --brand-2: #f08a24;      /* světlejší hover */
 }
 
+.btn-primary{
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: var(--brand-2);
+  --bs-btn-hover-border-color: var(--brand-2);
+  --bs-btn-active-bg: #a94a0f;
+  --bs-btn-active-border-color: #a94a0f;
+}
+
+.text-primary{ color: var(--brand) !important; }
+.bg-primary{ background-color: var(--brand) !important; }
+
+.badge-soft{
+  background: color-mix(in srgb, var(--brand) 14%, white);
+  color: var(--brand);
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, white);
+}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
