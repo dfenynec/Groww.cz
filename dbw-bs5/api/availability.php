@@ -1,23 +1,26 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
 
-// ---- CONFIG ----
-// slug -> "airbnb_ical|booking_ical"  (může být i jen jeden)
-$ICAL = [
- 'nissi-golden-sands-a15' => 'https://www.airbnb.cz/calendar/ical/1582050281655598894.ics?t=0fcfb18f876d4df899eaeb5b9ea257c6',
-];
+$slug = $_GET['property'] ?? '';
+$slug = preg_replace('~[^a-z0-9\-]~', '', strtolower($slug));
+if (!$slug) { http_response_code(400); echo json_encode(['error'=>'missing property']); exit; }
 
-// Pokud chceš, aby byl checkout den volný (typické chování):
-// iCal DTEND je "end-exclusive", takže takhle to sedí.
-// Pokud bys chtěl konzervativní blokaci, nastav false.
-$ALLOW_CHECKOUT_DAY = true;
+$configPath = __DIR__ . '/../private/ical-config.json';
+$raw = @file_get_contents($configPath);
+if (!$raw) { http_response_code(500); echo json_encode(['error'=>'config missing']); exit; }
 
-// ---- INPUT ----
-$slug = isset($_GET['property']) ? $_GET['property'] : '';
-if (!$slug) { http_response_code(400); echo json_encode(['error'=>'Missing property']); exit; }
-if (!isset($ICAL[$slug])) { http_response_code(404); echo json_encode(['error'=>'Unknown property']); exit; }
+$cfg = json_decode($raw, true);
+if (!is_array($cfg) || empty($cfg[$slug])) {
+  http_response_code(400);
+  echo json_encode(['error'=>'unknown property']);
+  exit;
+}
 
+$urls = [];
+if (!empty($cfg[$slug]['airbnb']))  $urls[] = $cfg[$slug]['airbnb'];
+if (!empty($cfg[$slug]['booking'])) $urls[] = $cfg[$slug]['booking'];
+
+if (!$urls) { echo json_encode(['booked'=>[]]); exit; }
 $urls = array_filter(array_map('trim', explode('|', $ICAL[$slug])));
 
 $booked = [];
