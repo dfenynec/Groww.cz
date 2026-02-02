@@ -27,57 +27,6 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
-async function fetchAvailability(data) {
-  // MVP 1: přímo z iCal URL (může narazit na CORS)
-  // return await fetchAvailabilityDirectIcal(data);
-
-  // MVP 2 (doporučeno): přes proxy endpoint na serveru (bez CORS, bez leak iCal URL)
-  const slug = encodeURIComponent(data.property.slug);
-  const res = await fetch(`/api/availability?property=${slug}`, { cache: "no-store" });
-  if (!res.ok) throw new Error("Availability API failed");
-  return await res.json(); 
-  // očekávaný tvar: { booked: [{from:"2026-02-10", to:"2026-02-13"}, ...] }
-}
-
-function initDatepickers(bookedRanges, minNights = 1) {
-  const booked = (bookedRanges || []).map(r => ({ from: r.from, to: r.to }));
-
-  const checkoutEl = document.getElementById("checkout");
-  const checkinEl = document.getElementById("checkin");
-
-  let checkinPicker = null;
-  let checkoutPicker = null;
-
-  const commonOpts = {
-    dateFormat: "Y-m-d",
-    disable: booked.map(r => ({ from: r.from, to: r.to })),
-  };
-
-  checkinPicker = flatpickr(checkinEl, {
-    ...commonOpts,
-    minDate: "today",
-    onChange: function(selectedDates) {
-      const start = selectedDates[0];
-      if (!start) return;
-
-      // nastav checkout minDate = checkin + minNights
-      const minCheckout = new Date(start);
-      minCheckout.setDate(minCheckout.getDate() + Math.max(1, minNights));
-
-      checkoutPicker.set("minDate", minCheckout);
-
-      // pokud je checkout před minCheckout, smaž ho
-      const curOut = checkoutPicker.selectedDates?.[0];
-      if (curOut && curOut < minCheckout) checkoutPicker.clear();
-    }
-  });
-
-  checkoutPicker = flatpickr(checkoutEl, {
-    ...commonOpts,
-    minDate: "today"
-  });
-}
-
 function renderHero(data) {
   const first = data.property.gallery?.[0];
   const hero = document.getElementById("heroMedia");
@@ -215,6 +164,44 @@ function setupBookingForm(data) {
   });
 }
 
+async function fetchAvailabilityBySlug(slug) {
+  const res = await fetch(`/api/availability.php?property=${encodeURIComponent(slug)}`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Availability API failed");
+  return await res.json();
+}
+
+function initDatepickers(bookedRanges, minNights = 1) {
+  const disableRanges = (bookedRanges || []).map(r => ({ from: r.from, to: r.to }));
+
+  const checkinEl = document.getElementById("checkin");
+  const checkoutEl = document.getElementById("checkout");
+
+  let checkoutPicker = null;
+
+  const common = {
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    disable: disableRanges
+  };
+
+  flatpickr(checkinEl, {
+    ...common,
+    onChange: function(selectedDates) {
+      const start = selectedDates[0];
+      if (!start || !checkoutPicker) return;
+
+      const minCheckout = new Date(start);
+      minCheckout.setDate(minCheckout.getDate() + Math.max(1, minNights));
+      checkoutPicker.set("minDate", minCheckout);
+
+      const curOut = checkoutPicker.selectedDates?.[0];
+      if (curOut && curOut < minCheckout) checkoutPicker.clear();
+    }
+  });
+
+  checkoutPicker = flatpickr(checkoutEl, { ...common });
+}
+
 (async function init(){
   try{
     const data = await loadData();
@@ -227,15 +214,12 @@ function setupBookingForm(data) {
     renderFaq(data);
     renderLocation(data);
     setupBookingForm(data);
-
-// availability + calendar UI
 try {
-  const availability = await fetchAvailability(data);
+  const availability = await fetchAvailabilityBySlug(data.property.slug);
   initDatepickers(availability.booked, data.booking.minNights || 1);
 } catch (e) {
-  console.warn("Availability not loaded, falling back to basic inputs.", e);
+  console.warn("Availability not loaded; inputs will still work.", e);
 }
-
     document.getElementById("year").textContent = new Date().getFullYear();
   } catch(err){
     console.error(err);
