@@ -5,7 +5,7 @@ $slug = $_GET['property'] ?? '';
 $slug = preg_replace('~[^a-z0-9\-]~', '', strtolower($slug));
 if (!$slug) { http_response_code(400); echo json_encode(['error'=>'missing property']); exit; }
 
-$configPath = __DIR__ . '/../private/ical-config.json';
+$configPath = __DIR__ . 'private/ical-config.json';
 $raw = @file_get_contents($configPath);
 if (!$raw) { http_response_code(500); echo json_encode(['error'=>'config missing']); exit; }
 
