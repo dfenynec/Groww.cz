@@ -98,7 +98,7 @@ header .btn.btn-small {
     background-color: #6c757d;
 }
 .bg-orange {
-    background-color: #ffa800;
+    background-color: #FFA46B;
 }
 .bg-base-color-transparent {
     background-color: rgba(6, 175, 71,.15);
@@ -115,7 +115,7 @@ header .btn.btn-small {
 }
 /* text */
 .text-orange {
-    color: #ffa800;
+    color: #FFA46B;
 }
 .text-red {
     color: #ec5b54;
