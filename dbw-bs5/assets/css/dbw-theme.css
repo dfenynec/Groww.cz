@@ -52,17 +52,49 @@
   color: #111827;
 }
 
-/* Flatpickr */
+/* Flatpickr – modernější popup */
 .flatpickr-calendar{
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.12);
+  border: 1px solid rgba(0,0,0,.06);
+  overflow: hidden;
 }
-.flatpickr-day.disabled{ opacity:.35; text-decoration: line-through; }
+
+.flatpickr-months{
+  padding: 10px 10px 0;
+}
+
+.flatpickr-current-month{
+  font-weight: 700;
+}
+
+.flatpickr-weekdays{
+  background: rgba(0,0,0,.02);
+  padding: 6px 0;
+}
+
+.flatpickr-day{
+  border-radius: 10px;
+}
+
+.flatpickr-day:hover{
+  border-color: rgba(0,0,0,.12);
+}
+
+/* booked dny (disabled) – víc jasné */
+.flatpickr-day.disabled,
+.flatpickr-day.prevMonthDay.disabled,
+.flatpickr-day.nextMonthDay.disabled{
+  opacity: .35;
+  text-decoration: line-through;
+}
+
+/* vybraný rozsah */
 .flatpickr-day.selected,
 .flatpickr-day.startRange,
 .flatpickr-day.endRange,
 .flatpickr-day.inRange{
-  background: var(--dbw) !important;
-  border-color: var(--dbw) !important;
+  background: var(--brand, #c65a12) !important;
+  border-color: var(--brand, #c65a12) !important;
+  color: #fff !important;
 }
-.flatpickr-day:hover{ border-color: var(--dbw-hover) !important; }
