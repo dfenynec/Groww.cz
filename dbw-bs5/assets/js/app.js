@@ -370,16 +370,16 @@ function renderExternalLinks(links = {}) {
     return { url: x.url, label: x.label || fallbackLabel };
   };
 
-  const airbnb = norm(links.airbnb, "View on Airbnb");
-  const booking = norm(links.booking, "View on Booking.com");
+  const airbnb = norm(links.airbnb, "View on ");
+  const booking = norm(links.booking, "View on ");
 
   const items = [];
 
   if (airbnb?.url) {
     items.push(`
       <a class="dbw-trust-btn" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
-        <img class="dbw-trust-logo" src="./assets/brands/airbnb.svg" alt="Airbnb">
-        <span>${escapeHtml(airbnb.label)}</span>
+        
+        <span>${escapeHtml(airbnb.label)}</span><img class="dbw-trust-logo" src="./images/airbnb.svg" alt="Airbnb">
       </a>
     `);
   }
@@ -387,8 +387,8 @@ function renderExternalLinks(links = {}) {
   if (booking?.url) {
     items.push(`
       <a class="dbw-trust-btn" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
-        <img class="dbw-trust-logo" src="./assets/brands/booking.svg" alt="Booking.com">
-        <span>${escapeHtml(booking.label)}</span>
+        
+        <span>${escapeHtml(booking.label)}</span><img class="dbw-trust-logo" src="./assets/brands/booking.svg" alt="Booking.com">
       </a>
     `);
   }
