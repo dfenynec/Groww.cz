@@ -60,19 +60,24 @@ function addDaysLocal(d, days) {
   return x;
 }
 
-// bookedRanges = [{from:"YYYY-MM-DD", to:"YYYY-MM-DD"}] inclusive
+// bookedRanges = [{from:"YYYY-MM-DD", to:"YYYY-MM-DD"}]
+// PŘEDPOKLAD (běžný iCal): "to" je CHECKOUT den (end-exclusive)
+// => obsazené noci jsou od "from" do (to - 1)
 function buildBookedNightsSet(bookedRanges) {
   const set = new Set();
+
   (bookedRanges || []).forEach(r => {
     const start = isoToLocalDate(r.from);
-    const end = isoToLocalDate(r.to);
-    for (let cur = new Date(start); cur <= end; cur = addDaysLocal(cur, 1)) {
-      set.add(localDateToISO(cur)); // každá booked noc jako iso string
+    const endExclusive = isoToLocalDate(r.to);
+
+    // přidáme všechny noci: [start, endExclusive)
+    for (let cur = new Date(start); cur < endExclusive; cur = addDaysLocal(cur, 1)) {
+      set.add(localDateToISO(cur));
     }
   });
+
   return set;
 }
-
 // Najde první booked noc v intervalu [checkin, checkout) (checkout = odjezd, ne noc)
 function findFirstBookedNightBetween(checkinDate, checkoutDate, bookedNightsSet) {
   // procházíme noci: checkin, checkin+1, ... checkout-1
@@ -186,19 +191,24 @@ function initDatepickers(bookedRanges, minNights = 1) {
   const checkoutEl = $("#checkout");
   if (!checkinEl || !checkoutEl) return;
 
-  // 1) disable booked dny (vizuálně + klikem nepůjdou)
+  // ZABRÁNÍ DOUBLE INIT (Crafto často initne samo)
+  if (checkinEl._flatpickr) {
+    checkinEl._flatpickr.destroy();
+  }
+  if (checkoutEl._flatpickr) {
+    checkoutEl._flatpickr.destroy();
+  }
+
+  // disable ranges pro flatpickr (vizuální + nejde kliknout)
   const disableRanges = (bookedRanges || []).map(r => ({ from: r.from, to: r.to }));
 
-  // 2) set booked nights pro rychlou validaci + trim
+  // set obsazených NOCÍ pro validaci + trim
   const bookedNightsSet = buildBookedNightsSet(bookedRanges);
 
-  // 3) range plugin (1 popup pro oba inputy)
-  const hasRangePlugin = typeof window.rangePlugin !== "undefined" || (window.flatpickr?.rangePlugin);
+  // range plugin (2 inputy, jeden popup)
   const RangePluginCtor = window.rangePlugin || window.flatpickr?.rangePlugin;
-
-  // Když plugin není, aspoň fail-safe: nezabiješ stránku
   if (!RangePluginCtor) {
-    console.warn("rangePlugin not found. Calendar will use two separate pickers.");
+    console.warn("rangePlugin not found → nebude Airbnb-style 1 popup pro oba inputy.");
   }
 
   const fp = flatpickr(checkinEl, {
@@ -207,61 +217,52 @@ function initDatepickers(bookedRanges, minNights = 1) {
     disable: disableRanges,
     mode: "range",
     showMonths: 2,
-    // když plugin existuje, propojí 2 inputy jedním popupem
     plugins: RangePluginCtor ? [new RangePluginCtor({ input: checkoutEl })] : [],
 
-    // Airbnb-ish: po 2. kliku se range uzavře
     onChange: function (selectedDates) {
-      // selectedDates: [checkin, checkout]
       const cin = selectedDates[0] || null;
       const cout = selectedDates[1] || null;
 
-      // zatím jen checkin vybraný -> nic netrimujeme
+      // jen checkin vybraný
       if (!cin || !cout) {
         checkinEl.dispatchEvent(new Event("change"));
         checkoutEl.dispatchEvent(new Event("change"));
         return;
       }
 
-      // A) auto-trim přes booked noci
-      const trimmedCheckout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
+      // 1) AUTO-TRIM: pokud range obsahuje booked noc, usekni checkout
+      let trimmedCheckout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
 
-      // B) enforce min nights (checkout musí být aspoň +minNights)
+      // 2) MIN NIGHTS: checkout musí být aspoň cin + minNights
       const minCheckout = addDaysLocal(cin, Math.max(1, minNights));
 
-      // pokud trim udělal checkout dřív než minimum, výběr je nevalidní
+      // když trim spadne pod minimum, necháme jen checkin a checkout smažeme
       if (trimmedCheckout < minCheckout) {
-        // UX: necháme checkin (uživatel kliknul správně), ale range vyčistíme,
-        // aby si vybral checkout znovu (a rovnou viděl disabled booked dny)
-        fp.setDate([cin], true); // zůstane jen checkin
-        // nastavíme minDate pro druhý klik implicitně přes minCheckout
-        fp.set("minDate", "today"); // checkin to drží
+        fp.setDate([cin], true);
+        checkoutEl.value = "";
         checkinEl.dispatchEvent(new Event("change"));
         checkoutEl.dispatchEvent(new Event("change"));
         return;
       }
 
-      // C) pokud jsme trimovali, nastavíme nová data do pickeru
-      // (tohle je to “auto-trim” chování)
+      // 3) pokud jsme trimovali, nastav to zpět do pickeru
       if (trimmedCheckout.getTime() !== cout.getTime()) {
         fp.setDate([cin, trimmedCheckout], true);
       }
 
-      // Propagace do pricing
+      // update UI
       checkinEl.dispatchEvent(new Event("change"));
       checkoutEl.dispatchEvent(new Event("change"));
     },
 
-    // když uživatel smaže ručně input
     onValueUpdate: function () {
       checkinEl.dispatchEvent(new Event("change"));
       checkoutEl.dispatchEvent(new Event("change"));
     }
   });
 
-  // Bonus: když chceš, aby po výběru checkinu kalendář rovnou “čekal na checkout”
-  // a měl vizuálně minimum, flatpickr tohle v režimu range nehlídá tak agresivně.
-  // My to řešíme až po výběru – minNights enforce.
+  // BONUS: když chceš “Airbnb feel”, otevři kalendář po fokusu:
+  // checkinEl.addEventListener("focus", () => fp.open());
 }
 
 
@@ -439,7 +440,7 @@ function renderGallery(urls = []) {
     renderChips(property.chips || []);
 
     // 1) render gallery
-    renderGallery(property.gallery || [], property.assetsBase || "");
+   renderGallery(property.gallery || []);
 
 
 
