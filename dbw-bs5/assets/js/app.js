@@ -1,13 +1,18 @@
 (function () {
   // ---------- Helpers ----------
   const $ = (sel, root = document) => root.querySelector(sel);
+  
+  function emitDatesUpdated() {
+  document.dispatchEvent(new CustomEvent("dates:updated"));
+}
 
-  function emitChange(el) {
-  if (!el) return;
+ function emitChange(el) {
+  if (!el) return;   // ← klíčový fix
+
   try {
     el.dispatchEvent(new Event("change", { bubbles: true }));
   } catch (e) {
-    // fallback pro starší prostředí
+    // fallback pro starší buildy
     const evt = document.createEvent("HTMLEvents");
     evt.initEvent("change", true, false);
     el.dispatchEvent(evt);
@@ -202,6 +207,12 @@ let lp = null; // Litepicker instance
 function initDatepickers(bookedRanges, minNights = 1) {
   const checkinEl = $("#checkin");
   const checkoutEl = $("#checkout");
+  if (!checkinEl || !checkoutEl) {
+    console.warn("Date inputs not found");
+    return;
+  }
+  const checkinEl = $("#checkin");
+  const checkoutEl = $("#checkout");
   if (!checkinEl || !checkoutEl) return;
 
   // booked set (end-exclusive) – už to máš správně
@@ -238,7 +249,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
     }
     checkinEl.value = "";
     checkoutEl.value = "";
-    emitChange(checkinEl);    emitChange(checkoutEl);
+    emitDatesUpdated();    emitDatesUpdated();
   }
 
   lp = new Litepicker({
@@ -275,7 +286,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
 
         // když je vybrán jen 1 den, necháme to být
         if (!date1 || !date2) {
-          emitChange(checkinEl);          emitChange(checkoutEl);
+          emitDatesUpdated();          emitDatesUpdated();
           return;
         }
 
@@ -316,7 +327,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
 
           checkinEl.value = localDateToISO(cin);
           checkoutEl.value = "";
-          emitChange(checkinEl);          emitChange(checkoutEl);
+          emitDatesUpdated();          emitDatesUpdated();
           return;
         }
 
@@ -333,7 +344,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
           safeSetRange(picker, cin, cout);
         }
 
-        emitChange(checkinEl);        emitChange(checkoutEl);
+        emitDatesUpdated();        emitDatesUpdated();
       });
 
       
@@ -360,8 +371,8 @@ function initDatepickers(bookedRanges, minNights = 1) {
       checkinEl.value = "";
       checkoutEl.value = "";
       console.log("emit", { checkinEl, checkoutEl, cin: checkinEl?.value, cout: checkoutEl?.value });
-      emitChange(checkinEl);      
-      emitChange(checkoutEl);
+      emitDatesUpdated();      
+      emitDatesUpdated();
     }
   };
 
@@ -605,9 +616,13 @@ function renderGallery(urls = []) {
     };
 
     $("#checkin")?.addEventListener("change", updatePricing);
-    $("#checkout")?.addEventListener("change", updatePricing);
-    $("#guests")?.addEventListener("change", updatePricing);
-    updatePricing();
+$("#checkout")?.addEventListener("change", updatePricing);
+$("#guests")?.addEventListener("change", updatePricing);
+
+// nový event z Litepickeru
+document.addEventListener("dates:updated", updatePricing);
+
+updatePricing();
 
     // Request button (MVP behaviour)
     btn?.addEventListener("click", () => {
