@@ -120,6 +120,9 @@ header .btn.btn-small {
 .text-red {
     color: #ec5b54;
 }
+.text-light-gray {
+    color: #fff2ea;
+}
 /* btn */
 .btn {
     letter-spacing: normal;
