@@ -426,7 +426,7 @@ function renderGallery(urls = []) {
     host.innerHTML = (columns || []).slice(0, 3).map(col => `
       <div class="col-6 col-sm-4">
         <ul class="list-style-02 ps-0 mb-0">
-          ${(col || []).map(item => `<li><i class="bi bi-check-circle text-base-color icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
+          ${(col || []).map(item => `<li><i class="bi bi-check-circle text-green icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
         </ul>
       </div>
     `).join("");
