@@ -476,16 +476,26 @@ function renderGallery(urls = []) {
   }
 
   function populateGuests(maxGuests = 4) {
-    const sel = $("#guests");
-    if (!sel) return;
-    sel.innerHTML = "";
-    for (let i = 1; i <= maxGuests; i++) {
-      const opt = document.createElement("option");
-      opt.value = String(i);
-      opt.textContent = i === 1 ? "1 guest" : `${i} guests`;
-      sel.appendChild(opt);
-    }
+  const sel = $("#guests");
+  if (!sel) return;
+
+  sel.innerHTML = "";
+
+  // placeholder – defaultně vybraný
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Select guests";
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  sel.appendChild(placeholder);
+
+  for (let i = 1; i <= maxGuests; i++) {
+    const opt = document.createElement("option");
+    opt.value = String(i);
+    opt.textContent = i === 1 ? "1 guest" : `${i} guests`;
+    sel.appendChild(opt);
   }
+}
 
   // ---------- Main ----------
   async function init() {
@@ -560,6 +570,7 @@ function renderGallery(urls = []) {
 
   const minDefault = pricing.minNightsDefault || 1;
 
+  // 1) nejsou data -> reset UI
   if (!checkin || !checkout) {
     renderPriceBox(priceBox, pricing, null, minDefault);
     btn.disabled = true;
@@ -568,10 +579,10 @@ function renderGallery(urls = []) {
     return;
   }
 
+  // 2) spočti pricing i bez guests (lepší UX)
   const minReq = minNightsForRange(pricing, checkin, checkout);
   const calc = calculateTotal(pricing, checkin, checkout);
 
-  // když calc je null (divné datum), tak stop
   if (!calc) {
     renderPriceBox(priceBox, pricing, null, minReq);
     btn.disabled = true;
@@ -582,11 +593,19 @@ function renderGallery(urls = []) {
 
   renderPriceBox(priceBox, pricing, calc, minReq);
 
-  const ok = calc.nights >= minReq;
+  // 3) guests gating (ať to nezůstává ve starém note)
+  const guests = $("#guests")?.value;
+  if (!guests) {
+    btn.disabled = true;
+    btn.textContent = "Select guests";
+    note.textContent = "Select number of guests to continue";
+    return;
+  }
 
+  // 4) enforce min nights
+  const ok = calc.nights >= minReq;
   btn.disabled = !ok;
   btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
-
   note.textContent = ok
     ? "Request • Pay to confirm"
     : `Minimum stay is ${minReq} nights. Please extend your stay.`;
