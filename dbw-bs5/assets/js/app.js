@@ -155,6 +155,36 @@
     });
   }
 
+  // ---------- Swiper (RE-INIT AFTER RENDER) ----------
+  let photosSwiper = null;
+
+  function initPhotosSwiper() {
+    const el = document.querySelector('#photos .swiper');
+    if (!el) return;
+
+    // Swiper must exist
+    const SwiperCtor = window.Swiper;
+    if (typeof SwiperCtor !== "function") return;
+
+    // read options from attribute
+    const optsStr = el.getAttribute('data-slider-options') || '{}';
+    let opts = {};
+    try { opts = JSON.parse(optsStr); } catch {}
+
+    // IMPORTANT: scope pagination to this section (prevents conflicts)
+    if (opts.pagination && opts.pagination.el) {
+      opts.pagination.el = '#photos .slider-four-slide-pagination';
+    }
+
+    // destroy previous instance
+    if (photosSwiper && typeof photosSwiper.destroy === "function") {
+      photosSwiper.destroy(true, true);
+      photosSwiper = null;
+    }
+
+    photosSwiper = new SwiperCtor(el, opts);
+  }
+
   // ---------- Bind template ----------
   function setText(selector, value) {
     const el = $(selector);
@@ -177,14 +207,25 @@
     host.innerHTML = chips.slice(0, 6).map(c => `<span class="dbw-chip">${escapeHtml(c)}</span>`).join("");
   }
 
-  function renderGallery(urls = []) {
-    const host = document.querySelector('[data-bind-list="gallery"]');
-    if (!host) return;
-    host.innerHTML = (urls || []).map(u => `
-      <div class="swiper-slide">
-        <img src="${escapeHtml(u)}" alt="" class="w-100" />
-      </div>
-    `).join("");
+  function renderGallery(gallery, basePath = "") {
+    const wrap = document.querySelector('#photos .swiper-wrapper[data-bind-list="gallery"]');
+    if (!wrap) return;
+
+    wrap.innerHTML = "";
+
+    (gallery || []).forEach((src) => {
+      const slide = document.createElement("div");
+      slide.className = "swiper-slide";
+
+      const img = document.createElement("img");
+      img.className = "w-100";
+      img.alt = "";
+      img.loading = "lazy";
+      img.src = src.startsWith("http") ? src : (basePath + src);
+
+      slide.appendChild(img);
+      wrap.appendChild(slide);
+    });
   }
 
   function renderQuickFacts(facts = []) {
@@ -304,7 +345,13 @@
 
     // Chips, gallery, facts, amenities, rules, etc.
     renderChips(property.chips || []);
-    renderGallery(property.gallery || []);
+
+    // 1) render gallery
+    renderGallery(property.gallery || [], property.assetsBase || "");
+
+    // 2) re-init swiper AFTER gallery is rendered
+    initPhotosSwiper();
+
     renderQuickFacts(property.quickFacts || []);
     renderAmenitiesTop(property.amenitiesTop || []);
     renderAmenitiesColumns(property.amenitiesColumns || []);
@@ -371,8 +418,6 @@
       const checkout = $("#checkout")?.value;
       const guests = $("#guests")?.value;
 
-      // Here you later call your backend "create reservation intent"
-      // For now: open email/whatsapp or show modal.
       const msg = `Booking request:\n${property.title}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}`;
       alert(msg);
     });
