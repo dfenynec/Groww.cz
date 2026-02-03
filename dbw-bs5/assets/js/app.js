@@ -2,6 +2,17 @@
   // ---------- Helpers ----------
   const $ = (sel, root = document) => root.querySelector(sel);
 
+  function emitChange(el) {
+  if (!el) return;
+  try {
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+  } catch (e) {
+    // fallback pro starší prostředí
+    const evt = document.createEvent("HTMLEvents");
+    evt.initEvent("change", true, false);
+    el.dispatchEvent(evt);
+  }
+}
   function escapeHtml(s = "") {
     return String(s)
       .replaceAll("&", "&amp;")
@@ -227,8 +238,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
     }
     checkinEl.value = "";
     checkoutEl.value = "";
-    checkinEl.dispatchEvent(new Event("change"));
-    checkoutEl.dispatchEvent(new Event("change"));
+    emitChange(checkinEl);    emitChange(checkoutEl);
   }
 
   lp = new Litepicker({
@@ -265,8 +275,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
 
         // když je vybrán jen 1 den, necháme to být
         if (!date1 || !date2) {
-          checkinEl.dispatchEvent(new Event("change"));
-          checkoutEl.dispatchEvent(new Event("change"));
+          emitChange(checkinEl);          emitChange(checkoutEl);
           return;
         }
 
@@ -307,8 +316,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
 
           checkinEl.value = localDateToISO(cin);
           checkoutEl.value = "";
-          checkinEl.dispatchEvent(new Event("change"));
-          checkoutEl.dispatchEvent(new Event("change"));
+          emitChange(checkinEl);          emitChange(checkoutEl);
           return;
         }
 
@@ -325,8 +333,7 @@ function initDatepickers(bookedRanges, minNights = 1) {
           safeSetRange(picker, cin, cout);
         }
 
-        checkinEl.dispatchEvent(new Event("change"));
-        checkoutEl.dispatchEvent(new Event("change"));
+        emitChange(checkinEl);        emitChange(checkoutEl);
       });
 
       
@@ -352,8 +359,9 @@ function initDatepickers(bookedRanges, minNights = 1) {
       picker.clearSelection();
       checkinEl.value = "";
       checkoutEl.value = "";
-      checkinEl.dispatchEvent(new Event("change"));
-      checkoutEl.dispatchEvent(new Event("change"));
+      console.log("emit", { checkinEl, checkoutEl, cin: checkinEl?.value, cout: checkoutEl?.value });
+      emitChange(checkinEl);      
+      emitChange(checkoutEl);
     }
   };
 
