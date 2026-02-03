@@ -3,7 +3,7 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   
   function emitDatesUpdated() {
-  document.dispatchEvent(new CustomEvent("dates:updated"));
+  document.dispatchEvent(new CustomEvent("dates:updated", { detail }));
 }
 
   function escapeHtml(s = "") {
@@ -260,8 +260,28 @@ function initDatepickers(bookedRanges, minNights = 1) {
 
         if (cout <= cin) cout = addDaysLocal(cin, 1);
 
-        const minCheckout = addDaysLocal(cin, Math.max(1, minNights));
-        if (cout < minCheckout) cout = minCheckout;
+        picker.on("selected", (date1, date2) => {
+  if (isProgrammaticSet) return;
+
+  if (!date1 || !date2) {
+    emitDatesUpdated({ status: "incomplete" });
+    return;
+  }
+
+  const cin = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+  let cout = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+
+  if (cout <= cin) cout = addDaysLocal(cin, 1);
+
+  // auto-trim proti booked nocím (tohle nech – je fail-safe)
+  cout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
+
+  // zapiš to, co uživatel vybral (neposouvej mu to potichu)
+  checkinEl.value = localDateToISO(cin);
+  checkoutEl.value = localDateToISO(cout);
+
+  emitDatesUpdated({ status: "selected" });
+});
 
         cout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
 
@@ -532,41 +552,45 @@ function renderGallery(urls = []) {
     const btn = $("#requestBtn");
     const note = $("#paymentNote");
 
-    const updatePricing = () => {
+  const updatePricing = () => {
   if (!pricing) return;
 
   const checkin = $("#checkin")?.value;
   const checkout = $("#checkout")?.value;
 
-  const hint = $("#stayHint");
+  const minDefault = pricing.minNightsDefault || 1;
 
   if (!checkin || !checkout) {
-    renderPriceBox(priceBox, pricing, null, pricing.minNightsDefault || 1);
+    renderPriceBox(priceBox, pricing, null, minDefault);
     btn.disabled = true;
     btn.textContent = "Select dates";
     note.textContent = "You won’t be charged yet";
-    if (hint) hint.textContent = "";
     return;
   }
 
   const minReq = minNightsForRange(pricing, checkin, checkout);
   const calc = calculateTotal(pricing, checkin, checkout);
+
+  // když calc je null (divné datum), tak stop
+  if (!calc) {
+    renderPriceBox(priceBox, pricing, null, minReq);
+    btn.disabled = true;
+    btn.textContent = "Select dates";
+    note.textContent = "Select valid dates";
+    return;
+  }
+
   renderPriceBox(priceBox, pricing, calc, minReq);
 
-  const nights = calc?.nights ?? 0;
-  const ok = calc && nights >= minReq;
+  const ok = calc.nights >= minReq;
 
   btn.disabled = !ok;
   btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
-  note.textContent = ok ? "Request • Pay to confirm" : "Select a longer stay";
 
-  if (hint) {
-    hint.textContent = ok
-      ? `${nights} night${nights === 1 ? "" : "s"} selected`
-      : `Minimum stay is ${minReq} nights (you selected ${nights})`;
-  }
+  note.textContent = ok
+    ? "Request • Pay to confirm"
+    : `Minimum stay is ${minReq} nights. Please extend your stay.`;
 };
-
 
 // stačí jen guests (uživatel ho fakt mění ručně)
 $("#guests")?.addEventListener("change", updatePricing);
