@@ -461,7 +461,7 @@ function renderGallery(urls = []) {
     if (!host) return;
     host.innerHTML = (items || []).slice(0, 8).map((q, i) => `
       <div class="accordion mb-10px" id="faqAcc${i}">
-        <div class="accordion-item border-radius-10px overflow-hidden">
+        <div class="accordion-item border border-radius-10px overflow-hidden">
           <h2 class="accordion-header" id="h${i}">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c${i}" aria-expanded="false" aria-controls="c${i}">
               ${escapeHtml(q.q)}
