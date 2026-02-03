@@ -388,7 +388,7 @@ function renderExternalLinks(links = {}) {
     items.push(`
       <a class="dbw-trust-btn" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
         
-        <span>${escapeHtml(booking.label)}</span><img class="dbw-trust-logo" src="./assets/brands/booking.svg" alt="Booking.com">
+        <span>${escapeHtml(booking.label)}</span><img class="dbw-trust-logo" src="./images/booking.svg" alt="Booking.com">
       </a>
     `);
   }
