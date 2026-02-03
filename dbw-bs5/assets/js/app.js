@@ -191,25 +191,17 @@ function initDatepickers(bookedRanges, minNights = 1) {
   const checkoutEl = $("#checkout");
   if (!checkinEl || !checkoutEl) return;
 
-  // ZABRÁNÍ DOUBLE INIT (Crafto často initne samo)
-  if (checkinEl._flatpickr) {
-    checkinEl._flatpickr.destroy();
-  }
-  if (checkoutEl._flatpickr) {
-    checkoutEl._flatpickr.destroy();
-  }
+  // ZABRÁNÍ DOUBLE INIT (Crafto někdy initne samo)
+  if (checkinEl._flatpickr) checkinEl._flatpickr.destroy();
+  if (checkoutEl._flatpickr) checkoutEl._flatpickr.destroy();
 
-  // disable ranges pro flatpickr (vizuální + nejde kliknout)
   const disableRanges = (bookedRanges || []).map(r => ({ from: r.from, to: r.to }));
-
-  // set obsazených NOCÍ pro validaci + trim
   const bookedNightsSet = buildBookedNightsSet(bookedRanges);
 
-  // range plugin (2 inputy, jeden popup)
   const RangePluginCtor = window.rangePlugin || window.flatpickr?.rangePlugin;
-  if (!RangePluginCtor) {
-    console.warn("rangePlugin not found → nebude Airbnb-style 1 popup pro oba inputy.");
-  }
+  if (!RangePluginCtor) console.warn("rangePlugin not found → nebude 1 popup pro oba inputy.");
+
+  let programmatic = false; // <-- GUARD proti rekurzi
 
   const fp = flatpickr(checkinEl, {
     dateFormat: "Y-m-d",
@@ -217,52 +209,88 @@ function initDatepickers(bookedRanges, minNights = 1) {
     disable: disableRanges,
     mode: "range",
     showMonths: 2,
+    allowInput: true,
     plugins: RangePluginCtor ? [new RangePluginCtor({ input: checkoutEl })] : [],
 
+    onOpen: function () {
+      // UX: když už je vybrán celý range a user klikne do inputu,
+      // chceme, aby mohl hned vybírat nový (bez “zaseknutí”)
+      // (samotné vymazání děláme na click/focus níž)
+    },
+
     onChange: function (selectedDates) {
+      if (programmatic) return;
+
       const cin = selectedDates[0] || null;
       const cout = selectedDates[1] || null;
 
-      // jen checkin vybraný
+      // jen checkin
       if (!cin || !cout) {
         checkinEl.dispatchEvent(new Event("change"));
         checkoutEl.dispatchEvent(new Event("change"));
         return;
       }
 
-      // 1) AUTO-TRIM: pokud range obsahuje booked noc, usekni checkout
+      // 1) auto-trim přes booked noci
       let trimmedCheckout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
 
-      // 2) MIN NIGHTS: checkout musí být aspoň cin + minNights
+      // 2) enforce min nights
       const minCheckout = addDaysLocal(cin, Math.max(1, minNights));
 
-      // když trim spadne pod minimum, necháme jen checkin a checkout smažeme
+      // když trim spadne pod minimum -> nech jen checkin
       if (trimmedCheckout < minCheckout) {
-        fp.setDate([cin], true);
+        programmatic = true;
+        fp.setDate([cin], false);     // <-- důležité: false (bez triggeru)
         checkoutEl.value = "";
+        programmatic = false;
+
         checkinEl.dispatchEvent(new Event("change"));
         checkoutEl.dispatchEvent(new Event("change"));
         return;
       }
 
-      // 3) pokud jsme trimovali, nastav to zpět do pickeru
+      // 3) pokud jsme trimovali, nastav zpět (bez triggeru, ať se to nezacyklí)
       if (trimmedCheckout.getTime() !== cout.getTime()) {
-        fp.setDate([cin, trimmedCheckout], true);
+        programmatic = true;
+        fp.setDate([cin, trimmedCheckout], false); // <-- false
+        programmatic = false;
       }
 
-      // update UI
-      checkinEl.dispatchEvent(new Event("change"));
-      checkoutEl.dispatchEvent(new Event("change"));
-    },
-
-    onValueUpdate: function () {
+      // propagate do pricing
       checkinEl.dispatchEvent(new Event("change"));
       checkoutEl.dispatchEvent(new Event("change"));
     }
   });
 
-  // BONUS: když chceš “Airbnb feel”, otevři kalendář po fokusu:
-  // checkinEl.addEventListener("focus", () => fp.open());
+  // ✅ UX FIX: Klik na input, když už je vybraný celý range → smaž a hned znovu vybírej
+  const restart = () => {
+    if (!fp) return;
+    if ((checkinEl.value && checkoutEl.value) || (fp.selectedDates?.length === 2)) {
+      programmatic = true;
+      fp.clear();
+      checkinEl.value = "";
+      checkoutEl.value = "";
+      programmatic = false;
+      fp.open();
+      checkinEl.dispatchEvent(new Event("change"));
+      checkoutEl.dispatchEvent(new Event("change"));
+    }
+  };
+
+  checkinEl.addEventListener("click", restart);
+  checkoutEl.addEventListener("click", restart);
+
+  // když uživatel ručně smaže hodnotu v inputu
+  checkinEl.addEventListener("input", () => {
+    if (!checkinEl.value) {
+      programmatic = true;
+      fp.clear();
+      checkoutEl.value = "";
+      programmatic = false;
+      checkinEl.dispatchEvent(new Event("change"));
+      checkoutEl.dispatchEvent(new Event("change"));
+    }
+  });
 }
 
 

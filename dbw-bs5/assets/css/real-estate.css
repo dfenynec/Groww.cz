@@ -266,3 +266,84 @@ footer .footer-logo img {
 @media (max-width: 576px){
   #photos .swiper-slide img{ height: 300px; }
 }
+
+.dbw-hero{
+  position: relative;
+}
+.dbw-hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.70) 100%);
+  pointer-events:none;
+}
+.dbw-hero > .container{ position:relative; z-index:1; }
+
+/* booking card polish */
+#book .form-control, #book .form-select{
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+#book .btn{ border-radius: 999px; font-weight: 700; }
+
+/* swiper images */
+.swiper img{ border-radius: 14px; }
+
+/* chips */
+.dbw-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(17,24,39,.12);
+  background: rgba(255,255,255,.75);
+  font-size: 13px;
+  color: #111827;
+}
+
+/* Flatpickr – modernější popup */
+.flatpickr-calendar{
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.12);
+  border: 1px solid rgba(0,0,0,.06);
+  overflow: hidden;
+}
+
+.flatpickr-months{
+  padding: 10px 10px 0;
+}
+
+.flatpickr-current-month{
+  font-weight: 700;
+}
+
+.flatpickr-weekdays{
+  background: rgba(0,0,0,.02);
+  padding: 6px 0;
+}
+
+.flatpickr-day{
+  border-radius: 10px;
+}
+
+.flatpickr-day:hover{
+  border-color: rgba(0,0,0,.12);
+}
+
+/* booked dny (disabled) – víc jasné */
+.flatpickr-day.disabled,
+.flatpickr-day.prevMonthDay.disabled,
+.flatpickr-day.nextMonthDay.disabled{
+  opacity: .35;
+  text-decoration: line-through;
+}
+
+/* vybraný rozsah */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.inRange{
+  background: var(--brand, #c65a12) !important;
+  border-color: var(--brand, #c65a12) !important;
+  color: #fff !important;
+}
