@@ -435,7 +435,7 @@ function renderGallery(urls = []) {
   function renderHouseRules(rules = []) {
     const host = document.querySelector('[data-bind-list="houseRules"]');
     if (!host) return;
-    host.innerHTML = (rules || []).map(r => `<li><i class="bi bi-check-exclamation text-base-color icon-small me-10px"></i>${escapeHtml(r)}</li>`).join("");
+    host.innerHTML = (rules || []).map(r => `<li><i class="bi bi-exclamation text-red icon-small me-10px"></i>${escapeHtml(r)}</li>`).join("");
   }
 
   function renderReviews(reviews = []) {
