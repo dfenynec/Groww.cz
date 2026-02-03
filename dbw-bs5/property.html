@@ -110,19 +110,30 @@
         <div class="swiper magic-cursor slider-four-slide swiper-dark-pagination swiper-pagination-style-3"
              data-slider-options='{ "slidesPerView": 1, "spaceBetween": 20, "loop": true,
                "pagination": { "el": ".slider-four-slide-pagination", "clickable": true },
-               "autoplay": { "delay": 3500, "disableOnInteraction": false },
+               "autoplay": { "delay": 3000, "disableOnInteraction": false },
+               "navigation": { "nextEl": ".slider-one-slide-next-1", "prevEl": ".slider-one-slide-prev-1" },
+               "keyboard": { "enabled": true, "onlyInViewport": true },
                "breakpoints": { "1200": { "slidesPerView": 3 }, "992": { "slidesPerView": 3 }, "768": { "slidesPerView": 2 } },
                "effect": "slide" }'>
-          <div class="swiper-wrapper" data-bind-list="gallery">
-            <!-- slides inserted here -->
-          </div>
+
+         <div class="swiper-wrapper">
+  <div class="swiper-slide"><img data-gallery-index="0" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="1" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="2" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="3" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="4" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="5" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="6" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="7" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="8" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+  <div class="swiper-slide"><img data-gallery-index="9" src="https://placehold.co/626x600" class="w-100" alt=""></div>
+</div>
           <div class="slider-four-slide-pagination swiper-pagination"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <!-- QUICK FACTS -->
 <section class="pt-30px pb-30px border-bottom border-color-extra-medium-gray">
   <div class="container">

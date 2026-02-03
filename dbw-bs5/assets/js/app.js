@@ -155,36 +155,8 @@
     });
   }
 
-  // ---------- Swiper (RE-INIT AFTER RENDER) ----------
-  let photosSwiper = null;
 
-  function initPhotosSwiper() {
-    const el = document.querySelector('#photos .swiper');
-    if (!el) return;
-
-    // Swiper must exist
-    const SwiperCtor = window.Swiper;
-    if (typeof SwiperCtor !== "function") return;
-
-    // read options from attribute
-    const optsStr = el.getAttribute('data-slider-options') || '{}';
-    let opts = {};
-    try { opts = JSON.parse(optsStr); } catch {}
-
-    // IMPORTANT: scope pagination to this section (prevents conflicts)
-    if (opts.pagination && opts.pagination.el) {
-      opts.pagination.el = '#photos .slider-four-slide-pagination';
-    }
-
-    // destroy previous instance
-    if (photosSwiper && typeof photosSwiper.destroy === "function") {
-      photosSwiper.destroy(true, true);
-      photosSwiper = null;
-    }
-
-    photosSwiper = new SwiperCtor(el, opts);
-  }
-
+  
   // ---------- Bind template ----------
   function setText(selector, value) {
     const el = $(selector);
@@ -207,26 +179,37 @@
     host.innerHTML = chips.slice(0, 6).map(c => `<span class="dbw-chip">${escapeHtml(c)}</span>`).join("");
   }
 
-  function renderGallery(gallery, basePath = "") {
-    const wrap = document.querySelector('#photos .swiper-wrapper[data-bind-list="gallery"]');
-    if (!wrap) return;
+ function normalizeUrl(u) {
+  if (!u) return "";
+  // absolutní URL necháme
+  if (/^https?:\/\//i.test(u)) return u;
 
-    wrap.innerHTML = "";
+  // relativní cesta -> uděláme absolutní vůči aktuální stránce (/dbw-bs5/property.html)
+  // takže "images/..." bude /dbw-bs5/images/...
+  return new URL(u, window.location.href).toString();
+}
 
-    (gallery || []).forEach((src) => {
-      const slide = document.createElement("div");
-      slide.className = "swiper-slide";
+function renderGallery(urls = []) {
+  const imgs = document.querySelectorAll('#photos img[data-gallery-index]');
+  if (!imgs.length) return;
 
-      const img = document.createElement("img");
-      img.className = "w-100";
-      img.alt = "";
-      img.loading = "lazy";
-      img.src = src.startsWith("http") ? src : (basePath + src);
+  const list = (urls || []).slice(0, imgs.length);
 
-      slide.appendChild(img);
-      wrap.appendChild(slide);
-    });
-  }
+  imgs.forEach((img, i) => {
+    const slide = img.closest(".swiper-slide");
+    const u = list[i];
+
+    if (!u) {
+      // nemáme fotku pro ten slot -> schovej slide
+      if (slide) slide.style.display = "none";
+      return;
+    }
+
+    if (slide) slide.style.display = "";
+    img.src = normalizeUrl(u);
+    img.loading = "lazy";
+  });
+}
 
   function renderQuickFacts(facts = []) {
     const host = $("#quickFacts");
@@ -349,8 +332,7 @@
     // 1) render gallery
     renderGallery(property.gallery || [], property.assetsBase || "");
 
-    // 2) re-init swiper AFTER gallery is rendered
-    initPhotosSwiper();
+
 
     renderQuickFacts(property.quickFacts || []);
     renderAmenitiesTop(property.amenitiesTop || []);
