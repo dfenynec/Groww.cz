@@ -533,33 +533,45 @@ function renderGallery(urls = []) {
     const note = $("#paymentNote");
 
     const updatePricing = () => {
-      if (!pricing) return;
-      const checkin = $("#checkin")?.value;
-      const checkout = $("#checkout")?.value;
+  if (!pricing) return;
 
-      if (!checkin || !checkout) {
-        renderPriceBox(priceBox, pricing, null, pricing.minNightsDefault || 1);
-        btn.disabled = true;
-        btn.textContent = "Select dates";
-        note.textContent = "You won’t be charged yet";
-        return;
-      }
+  const checkin = $("#checkin")?.value;
+  const checkout = $("#checkout")?.value;
 
-      const minReq = minNightsForRange(pricing, checkin, checkout);
-      const calc = calculateTotal(pricing, checkin, checkout);
-      renderPriceBox(priceBox, pricing, calc, minReq);
+  const hint = $("#stayHint");
 
-      const ok = calc && calc.nights >= minReq;
-      btn.disabled = !ok;
-      btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
-      note.textContent = ok ? "Request • Pay to confirm" : "Select a longer stay";
-    };
+  if (!checkin || !checkout) {
+    renderPriceBox(priceBox, pricing, null, pricing.minNightsDefault || 1);
+    btn.disabled = true;
+    btn.textContent = "Select dates";
+    note.textContent = "You won’t be charged yet";
+    if (hint) hint.textContent = "";
+    return;
+  }
 
-    $("#checkin")?.addEventListener("change", updatePricing);
-$("#checkout")?.addEventListener("change", updatePricing);
+  const minReq = minNightsForRange(pricing, checkin, checkout);
+  const calc = calculateTotal(pricing, checkin, checkout);
+  renderPriceBox(priceBox, pricing, calc, minReq);
+
+  const nights = calc?.nights ?? 0;
+  const ok = calc && nights >= minReq;
+
+  btn.disabled = !ok;
+  btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
+  note.textContent = ok ? "Request • Pay to confirm" : "Select a longer stay";
+
+  if (hint) {
+    hint.textContent = ok
+      ? `${nights} night${nights === 1 ? "" : "s"} selected`
+      : `Minimum stay is ${minReq} nights (you selected ${nights})`;
+  }
+};
+
+
+// stačí jen guests (uživatel ho fakt mění ručně)
 $("#guests")?.addEventListener("change", updatePricing);
 
-// nový event z Litepickeru
+// Litepicker commit event (tvůj “source of truth”)
 document.addEventListener("dates:updated", updatePricing);
 
 updatePricing();
