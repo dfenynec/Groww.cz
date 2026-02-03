@@ -426,7 +426,7 @@ function renderGallery(urls = []) {
     host.innerHTML = (columns || []).slice(0, 3).map(col => `
       <div class="col-6 col-sm-4">
         <ul class="list-style-02 ps-0 mb-0">
-          ${(col || []).map(item => `<li><i class="bi bi-check-circle icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
+          ${(col || []).map(item => `<li><i class="bi bi-check-circle text-base-color icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
         </ul>
       </div>
     `).join("");
@@ -435,7 +435,7 @@ function renderGallery(urls = []) {
   function renderHouseRules(rules = []) {
     const host = document.querySelector('[data-bind-list="houseRules"]');
     if (!host) return;
-    host.innerHTML = (rules || []).map(r => `<li><i class="bi bi-check-circle icon-small me-10px"></i>${escapeHtml(r)}</li>`).join("");
+    host.innerHTML = (rules || []).map(r => `<li><i class="bi bi-check-exclamation text-base-color icon-small me-10px"></i>${escapeHtml(r)}</li>`).join("");
   }
 
   function renderReviews(reviews = []) {
