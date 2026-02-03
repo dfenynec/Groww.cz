@@ -202,32 +202,25 @@ function trimCheckoutToAvoidBooked(checkinDate, checkoutDate, bookedNightsSet) {
     return res.json();
   }
 
-let lp = null; // Litepicker instance
+let lp = null;
 
 function initDatepickers(bookedRanges, minNights = 1) {
   const checkinEl = $("#checkin");
   const checkoutEl = $("#checkout");
+
   if (!checkinEl || !checkoutEl) {
     console.warn("Date inputs not found");
     return;
   }
-  const checkinEl = $("#checkin");
-  const checkoutEl = $("#checkout");
-  if (!checkinEl || !checkoutEl) return;
 
-  // booked set (end-exclusive) – už to máš správně
   const bookedNightsSet = buildBookedNightsSet(bookedRanges);
-
-  // lockDays = jednotlivé BOOKED NOCI
   const lockDays = Array.from(bookedNightsSet).map(isoToLocalDate);
 
-  // destroy old
   if (lp && typeof lp.destroy === "function") {
     lp.destroy();
     lp = null;
   }
 
-  // ochrana proti “nekonečnému” selected handleru při programovém setu
   let isProgrammaticSet = false;
 
   function safeSetRange(picker, startDate, endDate) {
@@ -235,7 +228,6 @@ function initDatepickers(bookedRanges, minNights = 1) {
     try {
       picker.setDateRange(startDate, endDate);
     } finally {
-      // malý delay, aby Litepicker doběhl UI
       setTimeout(() => (isProgrammaticSet = false), 0);
     }
   }
@@ -249,13 +241,12 @@ function initDatepickers(bookedRanges, minNights = 1) {
     }
     checkinEl.value = "";
     checkoutEl.value = "";
-    emitDatesUpdated();    emitDatesUpdated();
+    emitDatesUpdated(); // jen jednou
   }
 
   lp = new Litepicker({
     element: checkinEl,
     elementEnd: checkoutEl,
-
     singleMode: false,
     autoApply: true,
     numberOfMonths: 2,
@@ -263,97 +254,59 @@ function initDatepickers(bookedRanges, minNights = 1) {
     showTooltip: true,
     format: "YYYY-MM-DD",
     minDate: new Date(),
-
     lockDays,
     disallowLockDaysInRange: true,
     lockDaysInclusivity: "[]",
 
     setup: (picker) => {
-      // 1) UX: když už je vybraný range a user klikne nový den,
-      // začneme nový výběr (Airbnb-like).
-      picker.on("show", () => {
-        // nic
-      });
-
-      picker.on("preselect", (date1, date2) => {
-        // preselect se volá při “hoverování / průběžném výběru”
-        // tady můžeš později přidat live kontrolu min nights.
-      });
-
-      // 2) Hlavní commit: user vybral 2 dny
       picker.on("selected", (date1, date2) => {
         if (isProgrammaticSet) return;
 
-        // když je vybrán jen 1 den, necháme to být
         if (!date1 || !date2) {
-          emitDatesUpdated();          emitDatesUpdated();
+          emitDatesUpdated();
           return;
         }
 
-        // Litepicker dává Date v lokálu
         const cin = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
         let cout = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
 
-        // Pokud user kliknul end <= start, Litepicker to občas swapne,
-        // ale pro jistotu:
-        if (cout <= cin) {
-          // minimálně +1 den
-          cout = addDaysLocal(cin, 1);
-        }
+        if (cout <= cin) cout = addDaysLocal(cin, 1);
 
-        // A) enforce min nights
         const minCheckout = addDaysLocal(cin, Math.max(1, minNights));
-        if (cout < minCheckout) {
-          // nech checkin, vynutíme minimální checkout (lepší UX než mazat)
-          cout = minCheckout;
-        }
+        if (cout < minCheckout) cout = minCheckout;
 
-        // B) auto-trim proti booked nocím
-        const trimmed = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
-        cout = trimmed;
+        cout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
 
-        // C) když trim spadl pod min nights, tak je to invalid (kvůli blokům)
         if (cout < minCheckout) {
-          // tady je nejlepší UX: vyčistit checkout a nechat vybraný checkin
+          // invalid kvůli blokům -> nech start, vymaž end
           isProgrammaticSet = true;
           try {
-            picker.setDate(cin);          // nech start
-            // některé buildy neumí setDateRange(start, null), tak raději clearSelection + setDate
             picker.clearSelection();
             picker.setDate(cin);
           } finally {
             setTimeout(() => (isProgrammaticSet = false), 0);
           }
-
           checkinEl.value = localDateToISO(cin);
           checkoutEl.value = "";
-          emitDatesUpdated();          emitDatesUpdated();
+          emitDatesUpdated();
           return;
         }
 
-        // D) zapiš do inputů (tohle je “source of truth” pro pricing)
         const startISO = localDateToISO(cin);
         const endISO = localDateToISO(cout);
         checkinEl.value = startISO;
         checkoutEl.value = endISO;
 
-        // E) pokud Litepicker drží něco jiného (kvůli našemu trim/min), nastav to programově
-        // (jen když to je jiné, a přes safe wrapper)
         const pickedEndISO = localDateToISO(new Date(date2.getFullYear(), date2.getMonth(), date2.getDate()));
-        if (pickedEndISO !== endISO) {
-          safeSetRange(picker, cin, cout);
-        }
+        if (pickedEndISO !== endISO) safeSetRange(picker, cin, cout);
 
-        emitDatesUpdated();        emitDatesUpdated();
+        emitDatesUpdated();
       });
 
-      
-
-      // 4) Otevři picker při focusu (když klikne do checkout)
       checkinEl.addEventListener("focus", () => picker.show());
       checkoutEl.addEventListener("focus", () => picker.show());
 
-      attachSafeClearByKey(picker, checkinEl, checkoutEl);
+      // pokud chceš mít clear tlačítko, dej ho mimo a zavolej clearRange(lp)
     }
   });
 }
@@ -372,7 +325,6 @@ function initDatepickers(bookedRanges, minNights = 1) {
       checkoutEl.value = "";
       console.log("emit", { checkinEl, checkoutEl, cin: checkinEl?.value, cout: checkoutEl?.value });
       emitDatesUpdated();      
-      emitDatesUpdated();
     }
   };
 
