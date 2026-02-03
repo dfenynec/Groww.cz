@@ -1,6 +1,6 @@
 {
   "slug": "nissi-golden-sands-a15",
-  "title": "Nissi Golden Sands A15 • Ayia Napa",
+  "title": "300m to Nissi Beach • Cozy Apartment with Pool",
   "heroImage": "https://placehold.co/1600x900",
   "gallery": [
     "images/nissi-golden-sands-a15/1.jpg",
@@ -11,14 +11,14 @@
   "description": "Bright, cozy apartment near Nissi Beach. Perfect for couples or families.",
   "quickFacts": [
     { "label": "Guests", "value": "Up to 4" },
-    { "label": "Beds", "value": "1 bed + sofa" },
+    { "label": "Beds", "value": "1 king size bed + sofabed" },
     { "label": "Check-in", "value": "from 15:00" },
-    { "label": "Check-out", "value": "by 11:00" }
+    { "label": "Check-out", "value": "by 10:00" }
   ],
   "amenitiesTop": [
     { "icon": "📶", "label": "Fast Wi-Fi" },
     { "icon": "🏊", "label": "Pool" },
-    { "icon": "🚗", "label": "Parking" },
+    { "icon": "🚗", "label": "Free Parking" },
     { "icon": "🌅", "label": "Terrace" }
   ],
   "amenitiesColumns": [
@@ -32,11 +32,11 @@
     "mapsEmbedUrl": "https://www.google.com/maps?q=Ayia%20Napa&output=embed"
   },
   "reviews": {
-    "rating": 4.92,
-    "count": 128,
+    "rating": 4.94,
+    "count": 23,
     "items": [
-      { "name": "Alena", "stars": 5, "text": "Amazing location and very clean." },
-      { "name": "Tom", "stars": 5, "text": "Great host, quick communication." }
+      { "name": "Travis", "stars": 5, "text": "So close to the beach and really well equipped. It was the perfect place for what we needed and David was great to talk to." },
+      { "name": "Alena", "stars": 5, "text": "We had a great stay in David's place. It's very nice and very clean apartment with eveerything you need. Great location, close to Nissi beach and also bus stops. Lot's of restaurants nearby. I would definitely recommend." }
     ]
   },
   "faq": [
