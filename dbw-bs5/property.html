@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
+
 <head>
   <title data-bind="pageTitle">Direct Booking</title>
   <meta charset="utf-8">
@@ -8,107 +9,111 @@
   <meta name="description" content="Direct booking page" data-bind="metaDescription">
 
   <!-- Crafto / Template assets -->
-  <link rel="stylesheet" href="assets/css/vendors.min.css"/>
-  <link rel="stylesheet" href="assets/css/icon.min.css"/>
-  <link rel="stylesheet" href="assets/css/style.css"/>
-  <link rel="stylesheet" href="assets/css/responsive.css"/>
+  <link rel="stylesheet" href="assets/css/vendors.min.css" />
+  <link rel="stylesheet" href="assets/css/icon.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
   <link rel="stylesheet" href="assets/css/real-estate.css" />
 
   <!-- Flatpickr -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <!-- Your theme overrides (must be last) -->
-  <link rel="stylesheet" href="css/dbw-theme.css"/>
+  <link rel="stylesheet" href="css/dbw-theme.css" />
 </head>
 
 <body data-mobile-nav-style="classic">
-<header>
-  <nav class="navbar navbar-expand-lg header-light bg-white border-bottom border-color-extra-medium-gray header-reverse" data-header-hover="light">
-    <div class="container-fluid">
-      <div class="col-auto">
-        <a class="navbar-brand" href="#" data-bind="brandLink">
-          <span class="alt-font fw-800 text-dark-gray" style="letter-spacing:-.02em">DBW</span>
-        </a>
-      </div>
-
-      <div class="col-auto menu-order left-nav ps-60px lg-ps-20px">
-        <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
-          <span class="navbar-toggler-line"></span>
-          <span class="navbar-toggler-line"></span>
-          <span class="navbar-toggler-line"></span>
-          <span class="navbar-toggler-line"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-          <ul class="navbar-nav alt-font">
-            <li class="nav-item"><a href="#photos" class="nav-link">Photos</a></li>
-            <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-            <li class="nav-item"><a href="#amenities" class="nav-link">Amenities</a></li>
-            <li class="nav-item"><a href="#location" class="nav-link">Location</a></li>
-            <li class="nav-item"><a href="#reviews" class="nav-link">Reviews</a></li>
-          </ul>
+  <header>
+    <nav
+      class="navbar navbar-expand-lg header-light bg-white border-bottom border-color-extra-medium-gray header-reverse"
+      data-header-hover="light">
+      <div class="container-fluid">
+        <div class="col-auto">
+          <a class="navbar-brand" href="#" data-bind="brandLink">
+            <span class="alt-font fw-800 text-dark-gray" style="letter-spacing:-.02em">DBW</span>
+          </a>
         </div>
-      </div>
 
-      <div class="col-auto ms-auto ps-lg-0 d-none d-sm-flex">
-        <div class="header-icon">
-          <div class="header-button">
-            <a href="#book" class="btn btn-base-color btn-small btn-round-edge btn-hover-animation-switch">
-              <span>
-                <span class="btn-text">Book direct</span>
-                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
-                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
-              </span>
-            </a>
+        <div class="col-auto menu-order left-nav ps-60px lg-ps-20px">
+          <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-label="Toggle navigation">
+            <span class="navbar-toggler-line"></span>
+            <span class="navbar-toggler-line"></span>
+            <span class="navbar-toggler-line"></span>
+            <span class="navbar-toggler-line"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav alt-font">
+              <li class="nav-item"><a href="#photos" class="nav-link">Photos</a></li>
+              <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+              <li class="nav-item"><a href="#amenities" class="nav-link">Amenities</a></li>
+              <li class="nav-item"><a href="#location" class="nav-link">Location</a></li>
+              <li class="nav-item"><a href="#reviews" class="nav-link">Reviews</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-auto ms-auto ps-lg-0 d-none d-sm-flex">
+          <div class="header-icon">
+            <div class="header-button">
+              <a href="#book" class="btn btn-base-color btn-small btn-round-edge btn-hover-animation-switch">
+                <span>
+                  <span class="btn-text">Book direct</span>
+                  <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
+                  <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- PAGE TITLE -->
+  <section class="cover-background page-title-big-typography ipad-top-space-margin dbw-hero">
+    <div class="container">
+      <div class="row align-items-center align-items-lg-end justify-content-center extra-very-small-screen g-0">
+        <div class="col-xl-7 col-lg-8 position-relative page-title-extra-small md-mb-30px md-mt-auto">
+          <h3 class="alt-font fw-600 text-dark-gray mb-15px ls-minus-1px" data-bind="title">Property name</h3>
+          <h1 class="mb-0 d-flex">
+            <i class="feather icon-feather-map-pin icon-extra-medium text-base-color me-5px"></i>
+            <span data-bind="addressLine">Address line</span>
+          </h1>
+
+          <div class="mt-20px d-flex flex-wrap gap-10px" data-bind-list="chips">
+            <!-- chips inserted here -->
+          </div>
+        </div>
+
+        <div
+          class="col-lg-3 offset-xl-2 offset-lg-1 border-start border-2 border-color-base-color ps-40px sm-ps-25px md-mb-auto">
+          <div class="d-flex align-items-center mb-8px">
+            <span class="fs-18 fw-700 text-dark-gray me-10px" data-bind="fromPriceText">From €—</span>
+            <span class="fs-15 text-medium-gray">/ night</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="text-base-color me-6px"><i class="fa-solid fa-star"></i></span>
+            <span class="fw-600 text-dark-gray me-8px" data-bind="rating">—</span>
+            <span class="text-medium-gray" data-bind="reviewsCountText">(— reviews)</span>
+          </div>
+          <div class="mt-10px fs-14 text-medium-gray">
+            No platform fees • Best price guarantee
           </div>
         </div>
       </div>
-
     </div>
-  </nav>
-</header>
+  </section>
 
-<!-- PAGE TITLE -->
-<section class="cover-background page-title-big-typography ipad-top-space-margin dbw-hero">
-  <div class="container">
-    <div class="row align-items-center align-items-lg-end justify-content-center extra-very-small-screen g-0">
-      <div class="col-xl-7 col-lg-8 position-relative page-title-extra-small md-mb-30px md-mt-auto">
-        <h3 class="alt-font fw-600 text-dark-gray mb-15px ls-minus-1px" data-bind="title">Property name</h3>
-        <h1 class="mb-0 d-flex">
-          <i class="feather icon-feather-map-pin icon-extra-medium text-base-color me-5px"></i>
-          <span data-bind="addressLine">Address line</span>
-        </h1>
-
-        <div class="mt-20px d-flex flex-wrap gap-10px" data-bind-list="chips">
-          <!-- chips inserted here -->
-        </div>
-      </div>
-
-      <div class="col-lg-3 offset-xl-2 offset-lg-1 border-start border-2 border-color-base-color ps-40px sm-ps-25px md-mb-auto">
-        <div class="d-flex align-items-center mb-8px">
-          <span class="fs-18 fw-700 text-dark-gray me-10px" data-bind="fromPriceText">From €—</span>
-          <span class="fs-15 text-medium-gray">/ night</span>
-        </div>
-        <div class="d-flex align-items-center">
-          <span class="text-base-color me-6px"><i class="fa-solid fa-star"></i></span>
-          <span class="fw-600 text-dark-gray me-8px" data-bind="rating">—</span>
-          <span class="text-medium-gray" data-bind="reviewsCountText">(— reviews)</span>
-        </div>
-        <div class="mt-10px fs-14 text-medium-gray">
-          No platform fees • Best price guarantee
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PHOTOS (Swiper) -->
-<section class="p-0 overflow-hidden" id="photos">
-  <div class="container-fluid p-0">
-    <div class="row row-cols-1 justify-content-center">
-      <div class="col">
-        <div class="swiper magic-cursor slider-four-slide swiper-dark-pagination swiper-pagination-style-3"
-             data-slider-options='{ "slidesPerView": 1, "spaceBetween": 20, "loop": true,
+  <!-- PHOTOS (Swiper) -->
+  <section class="p-0 overflow-hidden" id="photos">
+    <div class="container-fluid p-0">
+      <div class="row row-cols-1 justify-content-center">
+        <div class="col">
+          <div class="swiper magic-cursor slider-four-slide swiper-dark-pagination swiper-pagination-style-3"
+            data-slider-options='{ "slidesPerView": 1, "spaceBetween": 20, "loop": true,
                "pagination": { "el": ".slider-four-slide-pagination", "clickable": true },
                "autoplay": { "delay": 3000, "disableOnInteraction": false },
                "navigation": { "nextEl": ".slider-one-slide-next-1", "prevEl": ".slider-one-slide-prev-1" },
@@ -116,283 +121,322 @@
                "breakpoints": { "1200": { "slidesPerView": 3 }, "992": { "slidesPerView": 3 }, "768": { "slidesPerView": 2 } },
                "effect": "slide" }'>
 
-         <div class="swiper-wrapper">
-  <div class="swiper-slide"><img data-gallery-index="0" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="1" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="2" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="3" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="4" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="5" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="6" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="7" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="8" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-  <div class="swiper-slide"><img data-gallery-index="9" src="https://placehold.co/626x600" class="w-100" alt=""></div>
-</div>
-          <div class="slider-four-slide-pagination swiper-pagination"></div>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img data-gallery-index="0" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="1" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="2" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="3" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="4" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="5" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="6" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="7" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="8" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+              <div class="swiper-slide"><img data-gallery-index="9" src="https://placehold.co/626x600" class="w-100"
+                  alt=""></div>
+            </div>
+            <div class="slider-four-slide-pagination swiper-pagination"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- QUICK FACTS -->
-<section class="pt-30px pb-30px border-bottom border-color-extra-medium-gray">
-  <div class="container">
-    <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2" id="quickFacts">
-      <!-- quick facts inserted here -->
+  </section>
+  <!-- QUICK FACTS -->
+  <section class="pt-30px pb-30px border-bottom border-color-extra-medium-gray">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2" id="quickFacts">
+        <!-- quick facts inserted here -->
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- MAIN CONTENT -->
-<section class="position-relative">
-  <div class="container">
-    <div class="row">
+  <!-- MAIN CONTENT -->
+  <section class="position-relative">
+    <div class="container">
+      <div class="row">
 
-      <!-- LEFT -->
-      <div class="col-lg-7 md-mb-50px">
+        <!-- LEFT -->
+        <div class="col-lg-7 md-mb-50px">
 
-        <!-- ABOUT -->
-        <div class="row mb-15px" id="about">
-          <div class="col-12">
-            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">About the place</span>
-            <p data-bind="description">—</p>
+          <!-- ABOUT -->
+          <div class="row mb-15px" id="about">
+            <div class="col-12">
+              <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">About the place</span>
+              <p data-bind="description">—</p>
+            </div>
           </div>
+
+          <!-- AMENITIES ICON GRID -->
+          <div class="row g-0" id="amenities">
+            <div class="col bg-very-light-gray p-35px lg-ps-15px lg-pe-15px border-radius-6px fs-16">
+              <div class="row row-cols-2 row-cols-md-4 row-cols-sm-2" data-bind-list="amenitiesTop">
+                <!-- amenity cards inserted -->
+              </div>
+            </div>
+          </div>
+
+          <!-- FULL AMENITIES LIST -->
+          <div class="row mt-7">
+            <div class="col-12">
+              <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">Amenities</span>
+            </div>
+
+            <div class="col-12">
+              <div class="row" data-bind-list="amenitiesColumns">
+                <!-- columns inserted -->
+              </div>
+            </div>
+          </div>
+
+          <!-- HOUSE RULES -->
+          <div class="row mt-7" id="rules">
+            <div class="col-12">
+              <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">House rules</span>
+              <ul class="list-style-02 ps-0 mb-0" data-bind-list="houseRules">
+                <!-- list inserted -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- LOCATION -->
+          <div class="row mt-7" id="location">
+            <div class="col-12">
+              <span class="text-dark-gray fs-24 fw-600 alt-font mb-25px d-block">Location</span>
+            </div>
+            <div class="col-12">
+              <iframe class="border-radius-6px w-100" style="height:360px;border:0" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade" data-bind-attr="mapsEmbedSrc"
+                src="https://www.google.com/maps?q=New%20York&output=embed">
+              </iframe>
+            </div>
+          </div>
+
+          <!-- REVIEWS -->
+          <div class="row mt-7" id="reviews">
+            <div class="col-12">
+              <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">Reviews</span>
+            </div>
+            <div class="col-12">
+              <div class="row" data-bind-list="reviews">
+                <!-- review cards inserted -->
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ -->
+          <div class="row mt-7" id="faq">
+            <div class="col-12">
+              <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">FAQ</span>
+            </div>
+            <div class="col-12" data-bind-list="faq">
+              <!-- accordion inserted -->
+            </div>
+          </div>
+
         </div>
 
-        <!-- AMENITIES ICON GRID -->
-        <div class="row g-0" id="amenities">
-          <div class="col bg-very-light-gray p-35px lg-ps-15px lg-pe-15px border-radius-6px fs-16">
-            <div class="row row-cols-2 row-cols-md-4 row-cols-sm-2" data-bind-list="amenitiesTop">
-              <!-- amenity cards inserted -->
+        <!-- RIGHT / BOOKING CARD -->
+        <div class="col-xl-4 offset-xl-1 col-lg-5">
+          <div class="border-radius-10px bg-white box-shadow-double-large position-sticky top-120px" id="book">
+            <div class="p-35px border-radius-10px bg-base-color border-color-extra-medium-gray">
+              <div class="d-flex align-items-baseline justify-content-between">
+                <div>
+                  <span class="fs-24 fw-700 text-white" data-bind="nightPriceText">€—</span>
+                  <span class="text-light-gray"> / night</span>
+                </div>
+                <div class="fs-14 text-light-gray">
+                  <i class="fa-solid fa-star text-light-gray"></i>
+                  <span class="fw-600 text-white" data-bind="ratingSmall">—</span>
+                  <span data-bind="reviewsCountSmall">(—)</span>
+                </div>
+              </div>
+              <div class="mt-10px fs-13 text-light-gray" data-bind="bookingHint">
+                No platform fees • Payment after confirmation
+              </div>
+            </div>
+
+            <div class="p-35px">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Check-in</label>
+                  <input id="checkin" type="text" class="form-control border-color-extra-medium-gray"
+                    placeholder="Select" />
+                </div>
+                <div class="col-6">
+                  <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Check-out</label>
+                  <input id="checkout" type="text" class="form-control border-color-extra-medium-gray"
+                    placeholder="Select" />
+                </div>
+                <div class="col-12 mt-10px">
+                  <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Guests</label>
+                  <select id="guests" class="form-select border-color-extra-medium-gray"></select>
+                </div>
+              </div>
+
+              <div class="mt-15px p-20px bg-very-light-gray border-radius-6px" id="priceBox">
+                <div class="small text-medium-gray">Select dates to see total price.</div>
+              </div>
+
+              <button id="requestBtn" class="btn btn-base-color btn-large btn-round-edge w-100 mt-20px" disabled>
+                Select dates
+              </button>
+
+              <div class="text-center mt-12px fs-13 text-medium-gray" id="paymentNote">
+                You won’t be charged yet
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- FULL AMENITIES LIST -->
-        <div class="row mt-7">
-          <div class="col-12">
-            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">Amenities</span>
-          </div>
+      </div>
+    </div>
+  </section>
 
-          <div class="col-12">
-            <div class="row" data-bind-list="amenitiesColumns">
-              <!-- columns inserted -->
-            </div>
+  <footer class="footer-light bg-gradient-very-light-gray pb-0 mt-5">
+    <div class="container position-relative pt-3 pb-3 overlap-section md-mb-15px">
+      <div
+        class="position-absolute left-0px top-0px background-no-repeat background-size-100 h-100 w-100 animation-float"
+        style="background-image: url('https://via.placeholder.com/1190x262')"></div>
+      <!-- start newsletter -->
+      <div
+        class="row row-cols-1 row-cols-lg-2 justify-content-center align-items-center bg-base-color pt-4 pb-4 ps-6 pe-6 lg-p-5 border-radius-6px g-0">
+        <div class="col-xl-6 col-lg-7 md-mb-25px sm-mb-15px position-relative text-center text-lg-start">
+          <h3 class="alt-font fw-500 text-white ls-minus-1px mb-10px">Are you renting<span
+              class="fw-700 text-highlight d-inline-block">your place<span
+                class="bg-white h-10px bottom-1px opacity-3"></span></span></h3>
+          <span class="fs-20 text-white">and want your own direct booking website?</span>
+        </div>
+        <div class="col-lg-5 offset-xl-1 position-relative">
+          <div class="d-inline-block w-100 newsletter-style-03 position-relative">
+            <form action="email-templates/subscribe-newsletter.php" method="post" class="position-relative w-100">
+              <input class="input-large bg-white border-color-white w-100 box-shadow-extra-large form-control required"
+                type="email" name="email" placeholder="Enter your email..." />
+              <input type="hidden" name="redirect" value="">
+              <button class="btn btn-large text-dark-gray ls-0px left-icon submit fw-700" aria-label="submit"><i
+                  class="icon feather icon-feather-mail icon-small text-base-color"></i><span>We'll contact
+                  you</span></button>
+              <div
+                class="form-results border-radius-4px pt-10px pb-10px ps-15px pe-15px fs-16 lh-22 mt-10px w-100 text-center position-absolute d-none">
+              </div>
+            </form>
           </div>
         </div>
-
-        <!-- HOUSE RULES -->
-        <div class="row mt-7" id="rules">
-          <div class="col-12">
-            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">House rules</span>
-            <ul class="list-style-02 ps-0 mb-0" data-bind-list="houseRules">
-              <!-- list inserted -->
+      </div>
+      <!-- end newsletter -->
+    </div>
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <!-- start footer column -->
+        <div class="col-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+          <div class="text-dark-gray fs-28 alt-font fw-500">1M+ property ready to <span
+              class="fw-700 text-decoration-line-bottom">buying and selling.</span></div>
+          <div
+            class="bg-white border-radius-50px d-flex align-items-center p-10px ps-35px ms-20px md-ps-20px md-ms-15px box-shadow-medium sm-m-20px">
+            <a href="demo-real-estate-contact.html"
+              class="text-dark-gray fs-22 alt-font fw-500 me-10px overflow-hidden">Say, <span
+                class="fw-700 w-65px text-start d-inline-block"
+                data-fancy-text='{ "effect": "rotate", "string": ["Hello!", "Salve!", "Hallå!"] }'></span></a>
+            <span
+              class="text-dark-gray h-45px w-45px text-center d-flex align-items-center justify-content-center border-radius-100 bg-base-color-transparent fs-20">&#128075;</span>
+          </div>
+        </div>
+        <!-- end footer column -->
+      </div>
+      <div class="row justify-content-center mt-5 mb-4 sm-mb-35px">
+        <!-- start footer column -->
+        <div class="col-lg-3 last-paragraph-no-margin md-mb-35px text-center text-lg-start">
+          <a href="demo-real-estate.html" class="footer-logo mb-10px d-inline-block"><img
+              src="images/demo-real-estate-logo-black.png" data-at2x="images/demo-real-estate-logo-black@2x.png"
+              alt=""></a>
+          <p class="w-85 lg-w-100">Lorem ipsum text adipiscing eiusmod elit incididunt enim.</p>
+          <div class="elements-social social-icon-style-02 mt-15px">
+            <ul class="small-icon dark">
+              <li><a class="facebook" href="https://www.facebook.com/" target="_blank"><i
+                    class="fa-brands fa-facebook-f"></i></a></li>
+              <li><a class="dribbble" href="http://www.dribbble.com" target="_blank"><i
+                    class="fa-brands fa-dribbble"></i></a></li>
+              <li><a class="twitter" href="http://www.twitter.com" target="_blank"><i
+                    class="fa-brands fa-twitter"></i></a></li>
+              <li><a class="instagram" href="http://www.instagram.com" target="_blank"><i
+                    class="fa-brands fa-instagram"></i></a></li>
             </ul>
           </div>
         </div>
-
-        <!-- LOCATION -->
-        <div class="row mt-7" id="location">
-          <div class="col-12">
-            <span class="text-dark-gray fs-24 fw-600 alt-font mb-25px d-block">Location</span>
-          </div>
-          <div class="col-12">
-            <iframe class="border-radius-6px w-100" style="height:360px;border:0"
-              loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              data-bind-attr="mapsEmbedSrc"
-              src="https://www.google.com/maps?q=New%20York&output=embed">
-            </iframe>
-          </div>
+        <!-- end footer column -->
+        <!-- start footer column -->
+        <div class="col-6 col-lg-2 col-md-3 sm-mb-25px">
+          <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Company</span>
+          <ul>
+            <li><a href="demo-real-estate-about.html">About us</a></li>
+            <li><a href="demo-real-estate-agents.html">Our agent</a></li>
+            <li><a href="demo-real-estate-blog.html">Latest blog</a></li>
+            <li><a href="demo-real-estate-contact.html">Contact us</a></li>
+          </ul>
         </div>
-
-        <!-- REVIEWS -->
-        <div class="row mt-7" id="reviews">
-          <div class="col-12">
-            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">Reviews</span>
-          </div>
-          <div class="col-12">
-            <div class="row" data-bind-list="reviews">
-              <!-- review cards inserted -->
-            </div>
-          </div>
+        <!-- end footer column -->
+        <!-- start footer column -->
+        <div class="col-6 col-lg-2 col-md-3 sm-mb-25px">
+          <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Resources</span>
+          <ul>
+            <li><a href="demo-real-estate-rent.html">Rent a home</a></li>
+            <li><a href="demo-real-estate-sell.html">Sell a home</a></li>
+            <li><a href="demo-real-estate-agents.html">Ready to move</a></li>
+            <li><a href="demo-real-estate-about.html">Budget homes</a></li>
+          </ul>
         </div>
-
-        <!-- FAQ -->
-        <div class="row mt-7" id="faq">
-          <div class="col-12">
-            <span class="text-dark-gray fs-24 fw-600 alt-font mb-15px d-block">FAQ</span>
-          </div>
-          <div class="col-12" data-bind-list="faq">
-            <!-- accordion inserted -->
-          </div>
+        <!-- end footer column -->
+        <!-- start footer column -->
+        <div class="col-6 col-lg-2 col-md-3">
+          <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Customer</span>
+          <ul>
+            <li><a href="demo-real-estate-contact.html">Client support</a></li>
+            <li><a href="demo-real-estate-contact.html">Help center</a></li>
+            <li><a href="demo-real-estate-contact.html">System status</a></li>
+            <li><a href="demo-real-estate-contact.html">Feedback</a></li>
+          </ul>
         </div>
-
+        <!-- end footer column -->
+        <!-- start footer column -->
+        <div class="col-6 col-lg-2 col-md-3">
+          <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-10px">Say hello</span>
+          <span class="d-block lh-normal">Need support?</span>
+          <a href="mailto:info@domain.com"
+            class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block mb-20px">info@domain.com</a>
+          <span class="d-block lh-normal">Customer care</span>
+          <a href="tel:12345678910" class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block">+1 234 567
+            8910</a>
+        </div>
+        <!-- end footer column -->
       </div>
-
-      <!-- RIGHT / BOOKING CARD -->
-      <div class="col-xl-4 offset-xl-1 col-lg-5">
-        <div class="border-radius-10px bg-white box-shadow-double-large position-sticky top-120px" id="book">
-          <div class="p-35px border-radius-10px bg-base-color border-color-extra-medium-gray">
-            <div class="d-flex align-items-baseline justify-content-between">
-              <div>
-                <span class="fs-24 fw-700 text-white" data-bind="nightPriceText">€—</span>
-                <span class="text-light-gray"> / night</span>
-              </div>
-              <div class="fs-14 text-light-gray">
-                <i class="fa-solid fa-star text-light-gray"></i>
-                <span class="fw-600 text-white" data-bind="ratingSmall">—</span>
-                <span data-bind="reviewsCountSmall">(—)</span>
-              </div>
-            </div>
-            <div class="mt-10px fs-13 text-light-gray" data-bind="bookingHint">
-              No platform fees • Payment after confirmation
-            </div>
-          </div>
-
-          <div class="p-35px">
-            <div class="row g-2">
-              <div class="col-6">
-                <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Check-in</label>
-                <input id="checkin" type="text" class="form-control border-color-extra-medium-gray" placeholder="Select" />
-              </div>
-              <div class="col-6">
-                <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Check-out</label>
-                <input id="checkout" type="text" class="form-control border-color-extra-medium-gray" placeholder="Select" />
-              </div>
-              <div class="col-12 mt-10px">
-                <label class="fs-13 text-dark-gray fw-600 mb-5px d-block">Guests</label>
-                <select id="guests" class="form-select border-color-extra-medium-gray"></select>
-              </div>
-            </div>
-
-            <div class="mt-15px p-20px bg-very-light-gray border-radius-6px" id="priceBox">
-              <div class="small text-medium-gray">Select dates to see total price.</div>
-            </div>
-
-            <button id="requestBtn" class="btn btn-base-color btn-large btn-round-edge w-100 mt-20px" disabled>
-              Select dates
-            </button>
-
-            <div class="text-center mt-12px fs-13 text-medium-gray" id="paymentNote">
-              You won’t be charged yet
-            </div>
-          </div>
-        </div>
+      <!-- start footer content -->
+      <div class="border-top border-color-extra-medium-gray pt-35px pb-35px text-center">
+        <span class="fs-13 w-60 lg-w-70 md-w-90 sm-w-100 d-block mx-auto lh-22">This site is protected by reCAPTCHA and
+          the Google <a href="#" class="text-dark-gray text-decoration-line-bottom">privacy policy</a> and <a href="#"
+            class="text-dark-gray text-decoration-line-bottom">terms of service</a> apply. You must not use this website
+          if you disagree with any of these website standard terms and conditions.</span>
       </div>
-
+      <!-- end footer content -->
     </div>
-  </div>
-</section>
+  </footer>
+  <!-- end footer -->
+  <!-- JS -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/vendors.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 
- <footer class="footer-light bg-gradient-very-light-gray pb-0 mt-5">
-            <div class="container position-relative pt-3 pb-3 overlap-section md-mb-15px">
-                <div class="position-absolute left-0px top-0px background-no-repeat background-size-100 h-100 w-100 animation-float" style="background-image: url('https://via.placeholder.com/1190x262')"></div>
-                <!-- start newsletter -->
-                <div class="row row-cols-1 row-cols-lg-2 justify-content-center align-items-center bg-base-color pt-4 pb-4 ps-6 pe-6 lg-p-5 border-radius-6px g-0">
-                    <div class="col-xl-6 col-lg-7 md-mb-25px sm-mb-15px position-relative text-center text-lg-start">
-                        <h3 class="alt-font fw-500 text-white ls-minus-1px mb-10px">Are you renting<span class="fw-700 text-highlight d-inline-block">your place<span class="bg-white h-10px bottom-1px opacity-3"></span></span></h3>
-                        <span class="fs-20 text-white">and want your own direct booking website?</span>
-                    </div>
-                    <div class="col-lg-5 offset-xl-1 position-relative"> 
-                        <div class="d-inline-block w-100 newsletter-style-03 position-relative">
-                            <form action="email-templates/subscribe-newsletter.php" method="post" class="position-relative w-100">
-                                <input class="input-large bg-white border-color-white w-100 box-shadow-extra-large form-control required" type="email" name="email" placeholder="Enter your email..." />
-                                <input type="hidden" name="redirect" value="">
-                                <button class="btn btn-large text-dark-gray ls-0px left-icon submit fw-700" aria-label="submit"><i class="icon feather icon-feather-mail icon-small text-base-color"></i><span>We'll contact you</span></button>
-                                <div class="form-results border-radius-4px pt-10px pb-10px ps-15px pe-15px fs-16 lh-22 mt-10px w-100 text-center position-absolute d-none"></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- end newsletter -->
-            </div>
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <!-- start footer column -->
-                    <div class="col-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start">
-                        <div class="text-dark-gray fs-28 alt-font fw-500">1M+ property ready to <span class="fw-700 text-decoration-line-bottom">buying and selling.</span></div>
-                        <div class="bg-white border-radius-50px d-flex align-items-center p-10px ps-35px ms-20px md-ps-20px md-ms-15px box-shadow-medium sm-m-20px">
-                            <a href="demo-real-estate-contact.html" class="text-dark-gray fs-22 alt-font fw-500 me-10px overflow-hidden">Say, <span class="fw-700 w-65px text-start d-inline-block" data-fancy-text='{ "effect": "rotate", "string": ["Hello!", "Salve!", "Hallå!"] }'></span></a>
-                            <span class="text-dark-gray h-45px w-45px text-center d-flex align-items-center justify-content-center border-radius-100 bg-base-color-transparent fs-20">&#128075;</span>
-                        </div>
-                    </div>
-                    <!-- end footer column -->
-                </div>
-                <div class="row justify-content-center mt-5 mb-4 sm-mb-35px">
-                    <!-- start footer column -->
-                    <div class="col-lg-3 last-paragraph-no-margin md-mb-35px text-center text-lg-start">
-                        <a href="demo-real-estate.html" class="footer-logo mb-10px d-inline-block"><img src="images/demo-real-estate-logo-black.png" data-at2x="images/demo-real-estate-logo-black@2x.png" alt=""></a>
-                        <p class="w-85 lg-w-100">Lorem ipsum text adipiscing eiusmod elit incididunt enim.</p>
-                        <div class="elements-social social-icon-style-02 mt-15px">
-                            <ul class="small-icon dark">
-                                <li><a class="facebook" href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                <li><a class="dribbble" href="http://www.dribbble.com" target="_blank"><i class="fa-brands fa-dribbble"></i></a></li> 
-                                <li><a class="twitter" href="http://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a></li> 
-                                <li><a class="instagram" href="http://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li> 
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- end footer column -->
-                    <!-- start footer column -->
-                    <div class="col-6 col-lg-2 col-md-3 sm-mb-25px">
-                        <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Company</span>
-                        <ul>
-                            <li><a href="demo-real-estate-about.html">About us</a></li>
-                            <li><a href="demo-real-estate-agents.html">Our agent</a></li>
-                            <li><a href="demo-real-estate-blog.html">Latest blog</a></li>
-                            <li><a href="demo-real-estate-contact.html">Contact us</a></li>
-                        </ul>
-                    </div>
-                    <!-- end footer column -->
-                    <!-- start footer column -->
-                    <div class="col-6 col-lg-2 col-md-3 sm-mb-25px">
-                        <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Resources</span>
-                        <ul>
-                            <li><a href="demo-real-estate-rent.html">Rent a home</a></li>
-                            <li><a href="demo-real-estate-sell.html">Sell a home</a></li>
-                            <li><a href="demo-real-estate-agents.html">Ready to move</a></li>
-                            <li><a href="demo-real-estate-about.html">Budget homes</a></li>
-                        </ul>
-                    </div>
-                    <!-- end footer column -->
-                    <!-- start footer column -->
-                    <div class="col-6 col-lg-2 col-md-3">
-                        <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Customer</span>
-                        <ul>                           
-                            <li><a href="demo-real-estate-contact.html">Client support</a></li>
-                            <li><a href="demo-real-estate-contact.html">Help center</a></li>
-                            <li><a href="demo-real-estate-contact.html">System status</a></li>
-                            <li><a href="demo-real-estate-contact.html">Feedback</a></li>
-                        </ul>
-                    </div>
-                    <!-- end footer column -->
-                    <!-- start footer column -->
-                    <div class="col-6 col-lg-2 col-md-3">
-                        <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-10px">Say hello</span>
-                        <span class="d-block lh-normal">Need support?</span>
-                        <a href="mailto:info@domain.com" class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block mb-20px">info@domain.com</a>
-                        <span class="d-block lh-normal">Customer care</span>
-                        <a href="tel:12345678910" class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block">+1 234 567 8910</a>
-                    </div>
-                    <!-- end footer column -->                     
-                </div>
-                <!-- start footer content -->
-                <div class="border-top border-color-extra-medium-gray pt-35px pb-35px text-center">
-                    <span class="fs-13 w-60 lg-w-70 md-w-90 sm-w-100 d-block mx-auto lh-22">This site is protected by reCAPTCHA and the Google <a href="#" class="text-dark-gray text-decoration-line-bottom">privacy policy</a> and <a href="#" class="text-dark-gray text-decoration-line-bottom">terms of service</a> apply. You must not use this website if you disagree with any of these website standard terms and conditions.</span>
-                </div>
-                <!-- end footer content -->
-            </div> 
-        </footer>
-        <!-- end footer -->
-<!-- JS -->
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/vendors.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+  <!-- Flatpickr -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<!-- Flatpickr -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<!-- Our app (must be last) -->
-<script type="text/javascript" src="assets/js/app.js"></script>
+  <!-- Our app (must be last) -->
+  <script type="text/javascript" src="assets/js/app.js"></script>
 </body>
+
 </html>
