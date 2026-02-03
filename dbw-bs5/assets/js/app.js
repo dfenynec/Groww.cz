@@ -329,21 +329,41 @@ function initDatepickers(bookedRanges, minNights = 1) {
         checkoutEl.dispatchEvent(new Event("change"));
       });
 
-      // 3) Když user ručně smaže input, vyčisti i picker
-      checkinEl.addEventListener("input", () => {
-        if (!checkinEl.value && !checkoutEl.value) clearRange(picker);
-      });
-      checkoutEl.addEventListener("input", () => {
-        if (!checkinEl.value && !checkoutEl.value) clearRange(picker);
-      });
+      
 
       // 4) Otevři picker při focusu (když klikne do checkout)
       checkinEl.addEventListener("focus", () => picker.show());
       checkoutEl.addEventListener("focus", () => picker.show());
+
+      attachSafeClearByKey(picker, checkinEl, checkoutEl);
     }
   });
 }
-  
+  function attachSafeClearByKey(picker, checkinEl, checkoutEl) {
+  const onKey = (e) => {
+    if (e.key !== "Backspace" && e.key !== "Delete") return;
+
+    const a = (checkinEl.value || "").trim();
+    const b = (checkoutEl.value || "").trim();
+
+    // když jsou prázdné -> clear selection (safe)
+    if (!a && !b) {
+      e.preventDefault();
+      picker.clearSelection();
+      checkinEl.value = "";
+      checkoutEl.value = "";
+      checkinEl.dispatchEvent(new Event("change"));
+      checkoutEl.dispatchEvent(new Event("change"));
+    }
+  };
+
+  // aby se to nepřidalo 2x (když re-inituješ), nejdřív případně remove
+  checkinEl.removeEventListener("keydown", onKey);
+  checkoutEl.removeEventListener("keydown", onKey);
+
+  checkinEl.addEventListener("keydown", onKey);
+  checkoutEl.addEventListener("keydown", onKey);
+}
   // ---------- Bind template ----------
   function setText(selector, value) {
     const el = $(selector);
