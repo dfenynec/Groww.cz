@@ -153,11 +153,26 @@ $slug = clean_slug($_GET['property'] ?? '');
 if (!$slug) { http_response_code(400); echo json_encode(['error'=>'missing property']); exit; }
 
 // base path
-$base = rtrim(dirname(__DIR__), "."); // /dbw-bs5
-
-// iCal config file (private)
+$base = realpath(__DIR__ . '/..'); // /.../dbw-bs5
 $configPath = $base . '/private/ical-config.json';
-$raw = @file_get_contents($configPath);
+
+if (!file_exists($configPath)) {
+  http_response_code(500);
+  echo json_encode(['error' => 'config missing', 'configPath' => $configPath]);
+  exit;
+}
+if (!is_readable($configPath)) {
+  http_response_code(500);
+  echo json_encode(['error' => 'config not readable', 'configPath' => $configPath]);
+  exit;
+}
+
+$raw = file_get_contents($configPath);
+if ($raw === false) {
+  http_response_code(500);
+  echo json_encode(['error' => 'config read failed', 'configPath' => $configPath]);
+  exit;
+}
 $cfg = $raw ? json_decode($raw, true) : null;
 
 // iCal urls (optional)
