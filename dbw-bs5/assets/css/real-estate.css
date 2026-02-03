@@ -253,3 +253,13 @@ footer .footer-logo img {
         height: 300px !important;
     }
 }
+#photos .swiper-slide img{
+  height: 600px;
+  object-fit: cover;
+}
+@media (max-width: 992px){
+  #photos .swiper-slide img{ height: 420px; }
+}
+@media (max-width: 576px){
+  #photos .swiper-slide img{ height: 300px; }
+}
