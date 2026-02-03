@@ -620,14 +620,37 @@ document.addEventListener("dates:updated", updatePricing);
 updatePricing();
 
     // Request button (MVP behaviour)
-    btn?.addEventListener("click", () => {
-      const checkin = $("#checkin")?.value;
-      const checkout = $("#checkout")?.value;
-      const guests = $("#guests")?.value;
+   btn?.addEventListener("click", async () => {
+  const checkin = $("#checkin")?.value;
+  const checkout = $("#checkout")?.value;
+  const guests = $("#guests")?.value;
 
-      const msg = `Booking request:\n${property.title}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}`;
-      alert(msg);
-    });
+  const payload = {
+    property: property.slug || slug,
+    checkin,
+    checkout,
+    guests: guests ? Number(guests) : null,
+    name: $("#guestName")?.value || "",     // pokud máš inputy
+    email: $("#guestEmail")?.value || "",
+    phone: $("#guestPhone")?.value || "",
+    message: $("#guestMessage")?.value || "",
+  };
+
+  const res = await fetch("./api/enquiry.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    alert(data?.error ? `Error: ${data.error}` : "Error sending enquiry");
+    return;
+  }
+
+  alert(`Enquiry sent! ID: ${data.id}`);
+});
   }
 
   init().catch(err => {
