@@ -377,7 +377,7 @@ function renderExternalLinks(links = {}) {
 
   if (airbnb?.url) {
     items.push(`
-      <a class="btn btn-white btn-medium btn-rounded d-table d-lg-inline-block lg-mb-15px md-mx-auto" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
+      <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block lg-mb-15px md-mx-auto" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
         
         <span>${escapeHtml(airbnb.label)}</span><img class="dbw-trust-logo" src="./images/airbnb.svg" alt="Airbnb">
       </a>
@@ -386,7 +386,7 @@ function renderExternalLinks(links = {}) {
 
   if (booking?.url) {
     items.push(`
-      <a class="btn btn-white btn-medium btn-rounded d-table d-lg-inline-block lg-mb-15px md-mx-auto" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
+      <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block lg-mb-15px md-mx-auto" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
         
         <span>${escapeHtml(booking.label)}</span><img class="dbw-trust-logo" src="./images/booking.svg" alt="Booking.com">
       </a>
