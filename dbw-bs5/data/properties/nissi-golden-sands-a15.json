@@ -7,7 +7,16 @@
     "https://placehold.co/626x600",
     "https://placehold.co/626x600"
   ],
-  "chips": ["Near Nissi Beach", "Free parking", "Fast Wi-Fi", "Pool", "Terrace"],
+  "externalLinks": {
+  "airbnb": {
+    "url": "https://www.airbnb.com/rooms/123456",
+    "label": "View on Airbnb"
+  },
+  "booking": {
+    "url": "https://www.booking.com/hotel/xx/xxx.html",
+    "label": "View on Booking.com"
+  }
+},
   "description": "Bright, cozy apartment near Nissi Beach. Perfect for couples or families.",
   "quickFacts": [
     { "label": "Guests", "value": "Up to 4" },

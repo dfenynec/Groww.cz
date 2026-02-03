@@ -359,12 +359,42 @@ function initDatepickers(bookedRanges, minNights = 1) {
     if (hero && url) hero.style.backgroundImage = `url('${url}')`;
   }
 
-  function renderChips(chips = []) {
-    const host = document.querySelector('[data-bind-list="chips"]');
-    if (!host) return;
-    host.innerHTML = chips.slice(0, 6).map(c => `<span class="dbw-chip">${escapeHtml(c)}</span>`).join("");
+function renderExternalLinks(links = {}) {
+  const host = document.querySelector('[data-bind="externalLinks"]');
+  if (!host) return;
+
+  // Podpora: links.airbnb může být string nebo {url,label}
+  const norm = (x, fallbackLabel) => {
+    if (!x) return null;
+    if (typeof x === "string") return { url: x, label: fallbackLabel };
+    return { url: x.url, label: x.label || fallbackLabel };
+  };
+
+  const airbnb = norm(links.airbnb, "View on Airbnb");
+  const booking = norm(links.booking, "View on Booking.com");
+
+  const items = [];
+
+  if (airbnb?.url) {
+    items.push(`
+      <a class="dbw-trust-btn" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
+        <img class="dbw-trust-logo" src="./assets/brands/airbnb.svg" alt="Airbnb">
+        <span>${escapeHtml(airbnb.label)}</span>
+      </a>
+    `);
   }
 
+  if (booking?.url) {
+    items.push(`
+      <a class="dbw-trust-btn" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
+        <img class="dbw-trust-logo" src="./assets/brands/booking.svg" alt="Booking.com">
+        <span>${escapeHtml(booking.label)}</span>
+      </a>
+    `);
+  }
+
+  host.innerHTML = items.join("");
+}
  function normalizeUrl(u) {
   if (!u) return "";
   // absolutní URL necháme
@@ -523,7 +553,7 @@ function renderGallery(urls = []) {
     setHeroBg(property.heroImage || property.gallery?.[0]);
 
     // Chips, gallery, facts, amenities, rules, etc.
-    renderChips(property.chips || []);
+   renderExternalLinks(property.externalLinks || {});
 
     // 1) render gallery
    renderGallery(property.gallery || []);
