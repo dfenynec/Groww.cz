@@ -50,7 +50,7 @@
     "weekendNight": 140,
     "weekendDays": [5, 6],
     "cleaningFee": 40,
-    "minNightsDefault": 2,
+    "minNightsDefault": 3,
     "rules": [
       { "from": "2026-06-01", "to": "2026-08-31", "night": 190, "minNights": 4 },
       { "from": "2026-12-20", "to": "2027-01-05", "night": 220, "minNights": 5 }
