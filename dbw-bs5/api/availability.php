@@ -8,7 +8,6 @@ function clean_slug($s){
 }
 
 function http_get($url){
-  // jednoduché stažení přes file_get_contents s timeoutem
   $ctx = stream_context_create([
     'http' => [
       'method' => 'GET',
@@ -24,7 +23,6 @@ function http_get($url){
 }
 
 function unfold_ical($ics){
-  // iCal "line folding": řádky začínající mezerou/tab jsou pokračování předchozího
   $ics = str_replace("\r\n", "\n", $ics);
   $lines = explode("\n", $ics);
   $out = [];
@@ -54,13 +52,11 @@ function parse_ical_events($ics){
     }
     if (!$in) continue;
 
-    // Key;PARAMS:VALUE
     $pos = strpos($line, ':');
     if ($pos === false) continue;
     $k = substr($line, 0, $pos);
     $v = substr($line, $pos + 1);
 
-    // strip params (DTSTART;VALUE=DATE -> DTSTART)
     $semi = strpos($k, ';');
     if ($semi !== false) $k = substr($k, 0, $semi);
 
@@ -71,10 +67,6 @@ function parse_ical_events($ics){
 }
 
 function ical_date_to_iso($dt){
-  // DTSTART může být:
-  // - 20260202 (DATE)
-  // - 20260202T120000Z (DATE-TIME)
-  // - 20260202T120000 (DATE-TIME local)
   $dt = trim($dt);
   if (preg_match('~^\d{8}$~', $dt)) {
     return substr($dt,0,4).'-'.substr($dt,4,2).'-'.substr($dt,6,2);
@@ -86,41 +78,40 @@ function ical_date_to_iso($dt){
   return null;
 }
 
-function add_range(&$ranges, $fromISO, $toISO){
-  // iCal DTEND je obvykle "checkout" (exclusive),
-  // takže obsazené noci jsou [DTSTART, DTEND)
-  // My vrátíme disable range inclusive -> to = DTEND - 1 den
+/**
+ * END-EXCLUSIVE range:
+ * from = checkin
+ * to   = checkout  (DTEND)
+ */
+function add_range_exclusive(&$ranges, $fromISO, $toISO){
+  // basic validation
   $from = DateTime::createFromFormat('Y-m-d', $fromISO, new DateTimeZone('UTC'));
-  $to = DateTime::createFromFormat('Y-m-d', $toISO, new DateTimeZone('UTC'));
+  $to   = DateTime::createFromFormat('Y-m-d', $toISO,   new DateTimeZone('UTC'));
   if (!$from || !$to) return;
 
-  // to = to - 1 day
-  $to->modify('-1 day');
-
-  // pokud by to vyšlo obráceně (jednodenní), tak nic
-  if ($to < $from) return;
+  // end-exclusive: pokud to <= from => nic (0 nocí)
+  if ($to <= $from) return;
 
   $ranges[] = [
     'from' => $from->format('Y-m-d'),
-    'to'   => $to->format('Y-m-d')
+    'to'   => $to->format('Y-m-d'),
   ];
 }
 
-function merge_ranges($ranges){
+/**
+ * Merge END-EXCLUSIVE ranges:
+ * merge if overlap OR touch (cur.to >= next.from)
+ */
+function merge_ranges_exclusive($ranges){
   if (!$ranges) return [];
   usort($ranges, fn($a,$b) => strcmp($a['from'], $b['from']));
 
   $out = [];
   $cur = $ranges[0];
 
-  foreach (array_slice($ranges,1) as $r) {
-    // pokud se překrývají nebo navazují (cur.to +1 >= r.from), sloučit
-    $curTo = DateTime::createFromFormat('Y-m-d', $cur['to'], new DateTimeZone('UTC'));
-    $rFrom = DateTime::createFromFormat('Y-m-d', $r['from'], new DateTimeZone('UTC'));
-    $curToPlus = clone $curTo; $curToPlus->modify('+1 day');
-
-    if ($rFrom <= $curToPlus) {
-      // extend cur.to pokud je potřeba
+  foreach (array_slice($ranges, 1) as $r) {
+    // if next starts before or exactly at current end -> merge
+    if ($r['from'] <= $cur['to']) {
       if ($r['to'] > $cur['to']) $cur['to'] = $r['to'];
     } else {
       $out[] = $cur;
@@ -131,30 +122,52 @@ function merge_ranges($ranges){
   return $out;
 }
 
+function fetch_db_ranges_exclusive($dbPath, $slug){
+  if (!file_exists($dbPath)) return [];
+
+  $pdo = new PDO('sqlite:' . $dbPath, null, null, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+  ]);
+
+  // očekáváme tabulku reservations:
+  // property_slug TEXT, checkin TEXT (YYYY-MM-DD), checkout TEXT (YYYY-MM-DD), status TEXT
+  $stmt = $pdo->prepare("
+    SELECT checkin, checkout
+    FROM reservations
+    WHERE property_slug = :slug
+      AND status = 'confirmed'
+      AND checkin IS NOT NULL AND checkout IS NOT NULL
+  ");
+  $stmt->execute([':slug' => $slug]);
+
+  $ranges = [];
+  foreach ($stmt->fetchAll() as $row) {
+    add_range_exclusive($ranges, $row['checkin'], $row['checkout']);
+  }
+  return $ranges;
+}
+
 // -------- main --------
 $slug = clean_slug($_GET['property'] ?? '');
 if (!$slug) { http_response_code(400); echo json_encode(['error'=>'missing property']); exit; }
 
-// config file (private)
+// base path
 $base = rtrim(dirname(__DIR__), "."); // /dbw-bs5
+
+// iCal config file (private)
 $configPath = $base . '/private/ical-config.json';
-
 $raw = @file_get_contents($configPath);
-if (!$raw) { http_response_code(500); echo json_encode(['error'=>'config missing']); exit; }
+$cfg = $raw ? json_decode($raw, true) : null;
 
-$cfg = json_decode($raw, true);
-if (!is_array($cfg) || empty($cfg[$slug])) {
-  http_response_code(400);
-  echo json_encode(['error'=>'unknown property']);
-  exit;
+// iCal urls (optional)
+$urls = [];
+if (is_array($cfg) && !empty($cfg[$slug])) {
+  if (!empty($cfg[$slug]['airbnb']))  $urls[] = $cfg[$slug]['airbnb'];
+  if (!empty($cfg[$slug]['booking'])) $urls[] = $cfg[$slug]['booking'];
 }
 
-$urls = [];
-if (!empty($cfg[$slug]['airbnb']))  $urls[] = $cfg[$slug]['airbnb'];
-if (!empty($cfg[$slug]['booking'])) $urls[] = $cfg[$slug]['booking'];
-
-if (!$urls) { echo json_encode(['booked'=>[]]); exit; }
-
+// 1) ranges from iCal
 $ranges = [];
 
 foreach ($urls as $u) {
@@ -165,13 +178,18 @@ foreach ($urls as $u) {
   foreach ($events as $ev) {
     $startISO = ical_date_to_iso($ev['DTSTART'] ?? '');
     $endISO   = ical_date_to_iso($ev['DTEND'] ?? '');
-    if ($startISO && $endISO) add_range($ranges, $startISO, $endISO);
+    if ($startISO && $endISO) add_range_exclusive($ranges, $startISO, $endISO);
   }
 }
 
-$ranges = merge_ranges($ranges);
+// 2) ranges from DB reservations
+$dbPath = $base . '/storage/app.sqlite';
+$rangesDb = fetch_db_ranges_exclusive($dbPath, $slug);
+$ranges = array_merge($ranges, $rangesDb);
 
-// cache header (klidně uprav)
+// 3) merge
+$ranges = merge_ranges_exclusive($ranges);
+
 header('Cache-Control: no-store');
 
 echo json_encode([
