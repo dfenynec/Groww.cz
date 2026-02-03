@@ -6,18 +6,6 @@
   document.dispatchEvent(new CustomEvent("dates:updated"));
 }
 
- function emitChange(el) {
-  if (!el) return;   // ← klíčový fix
-
-  try {
-    el.dispatchEvent(new Event("change", { bubbles: true }));
-  } catch (e) {
-    // fallback pro starší buildy
-    const evt = document.createEvent("HTMLEvents");
-    evt.initEvent("change", true, false);
-    el.dispatchEvent(evt);
-  }
-}
   function escapeHtml(s = "") {
     return String(s)
       .replaceAll("&", "&amp;")
