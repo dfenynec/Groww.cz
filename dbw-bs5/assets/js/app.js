@@ -627,75 +627,90 @@
       return { res, data };
     }
 
-    // Enquiry submit
-    btn?.addEventListener("click", async () => {
-      try {
-        setMsg("");
+ // Enquiry submit
+btn?.addEventListener("click", async () => {
+  try {
+    setMsg("");
 
-        const checkin = getVal("checkin");
-        const checkout = getVal("checkout");
-        const guests = getVal("guests");
-        const name = getVal("enqName");     // ✅ matches your HTML
-        const email = getVal("enqEmail");   // ✅ matches your HTML
+    const slugParam = getParam("p", ""); // vždy z URL
+    const propertySlug = (property?.slug || slugParam || "").trim();
 
-        if (!checkin || !checkout) {
-          setMsg("Select dates first.", "error");
-          return;
-        }
-        if (!guests) {
-          setMsg("Select guests first.", "error");
-          return;
-        }
-        if (!name) {
-          setMsg("Please enter your full name.", "error");
-          return;
-        }
-        if (!email) {
-          setMsg("Please enter your email.", "error");
-          return;
-        }
+    const checkin = $("#checkin")?.value?.trim();
+    const checkout = $("#checkout")?.value?.trim();
+    const guests = $("#guests")?.value;
 
-        btn.disabled = true;
-        const oldText = btn.textContent;
-        btn.textContent = "Sending...";
+    const name = $("#enqName")?.value?.trim() || "";
+    const email = $("#enqEmail")?.value?.trim() || "";
 
-        const payload = {
-          property: property.slug || slug,
-          checkin,
-          checkout,
-          guests: Number(guests),
-          name,
-          email,
-        };
+    if (!propertySlug) {
+      setMsg("Missing property slug in URL (?p=...)", "error");
+      return;
+    }
+    if (!checkin || !checkout) {
+      setMsg("Select dates first.", "error");
+      return;
+    }
+    if (!guests) {
+      setMsg("Select guests first.", "error");
+      return;
+    }
+    if (!name) {
+      setMsg("Please enter your full name.", "error");
+      return;
+    }
+    if (!email) {
+      setMsg("Please enter your email.", "error");
+      return;
+    }
 
-        const { res, data } = await sendEnquiry(payload);
+    btn.disabled = true;
+    const oldText = btn.textContent;
+    btn.textContent = "Sending...";
 
-        if (!res.ok || !data?.ok) {
-          if (data?.minNights) {
-            setMsg(`Minimum stay is ${data.minNights} nights. Please extend your stay.`, "error");
-          } else if (res.status === 409) {
-            setMsg("Those dates are no longer available. Please select different dates.", "error");
-          } else {
-            setMsg(data?.error ? `Error: ${data.error}` : `Error sending enquiry (${res.status})`, "error");
-          }
-          btn.disabled = false;
-          btn.textContent = oldText;
-          return;
-        }
+    const payload = {
+      property: propertySlug,
+      checkin,
+      checkout,
+      guests: Number(guests),
+      name,
+      email,
+      // phone/message až přidáš:
+      // phone: $("#enqPhone")?.value?.trim() || "",
+      // message: $("#enqMessage")?.value?.trim() || "",
+    };
 
-        setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
-        btn.textContent = "Sent ✅";
-        btn.disabled = true;
-      } catch (e) {
-        console.error(e);
-        setMsg("Server error. Please try again.", "error");
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = "Request booking";
-        }
-      }
+    const res = await fetch("./api/enquiry.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data?.ok) {
+      if (data?.minNights) {
+        setMsg(`Minimum stay is ${data.minNights} nights. Please extend your stay.`, "error");
+      } else if (res.status === 409) {
+        setMsg("Those dates are no longer available. Please select different dates.", "error");
+      } else {
+        setMsg(data?.error ? `Error: ${data.error}` : `Error sending enquiry (${res.status})`, "error");
+      }
+      btn.disabled = false;
+      btn.textContent = oldText;
+      return;
+    }
+
+    setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
+    btn.textContent = "Sent ✅";
+    btn.disabled = true;
+
+  } catch (e) {
+    console.error(e);
+    setMsg("Server error. Please try again.", "error");
+    btn.disabled = false;
+    btn.textContent = "Request booking";
   }
+});
 
   init().catch((err) => {
     console.error(err);
