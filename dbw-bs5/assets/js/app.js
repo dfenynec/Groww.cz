@@ -92,7 +92,6 @@
   function trimCheckoutToAvoidBooked(checkinDate, checkoutDate, bookedNightsSet) {
     const firstBookedNight = findFirstBookedNightBetween(checkinDate, checkoutDate, bookedNightsSet);
     if (!firstBookedNight) return checkoutDate;
-    // checkout becomes the day of first booked night (end-exclusive)
     return new Date(firstBookedNight.getFullYear(), firstBookedNight.getMonth(), firstBookedNight.getDate());
   }
 
@@ -181,7 +180,6 @@
     const url = `./api/availability.php?property=${encodeURIComponent(slug)}`;
     const res = await fetch(url, { cache: "no-store" });
 
-    // Debug: když je 500, uvidíš aspoň odpověď v konzoli
     if (!res.ok) {
       const t = await res.text().catch(() => "");
       console.error("Availability API error:", res.status, t);
@@ -194,7 +192,7 @@
   // ---------- Litepicker ----------
   let lp = null;
 
-  function initDatepickers(bookedRanges, minNights = 1) {
+  function initDatepickers(bookedRanges) {
     const checkinEl = $("#checkin");
     const checkoutEl = $("#checkout");
     if (!checkinEl || !checkoutEl) {
@@ -231,7 +229,6 @@
       showTooltip: true,
       format: "YYYY-MM-DD",
       minDate: new Date(),
-
       lockDays,
       disallowLockDaysInRange: true,
       lockDaysInclusivity: "[]",
@@ -248,18 +245,13 @@
           const cin = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
           let cout = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
 
-          // ensure at least 1 night
           if (cout <= cin) cout = addDaysLocal(cin, 1);
 
-          // fail-safe trim against booked nights
-          const trimmed = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
-          cout = trimmed;
+          cout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
 
-          // write chosen (no silent min-nights auto extend)
           checkinEl.value = localDateToISO(cin);
           checkoutEl.value = localDateToISO(cout);
 
-          // if picker end differs (because of trim), sync it
           const pickedEndISO = localDateToISO(new Date(date2.getFullYear(), date2.getMonth(), date2.getDate()));
           const endISO = checkoutEl.value;
           if (pickedEndISO !== endISO) safeSetRange(picker, cin, cout);
@@ -327,9 +319,7 @@
 
     if (airbnb?.url) {
       items.push(`
-        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(
-          airbnb.url
-        )}" target="_blank" rel="noopener">
+        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
           <span class="me-2">${escapeHtml(airbnb.label)}</span>
           <img class="dbw-trust-logo" src="./images/airbnb.svg" alt="Airbnb">
         </a>
@@ -338,9 +328,7 @@
 
     if (booking?.url) {
       items.push(`
-        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(
-          booking.url
-        )}" target="_blank" rel="noopener">
+        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
           <span class="me-2">${escapeHtml(booking.label)}</span>
           <img class="dbw-trust-logo" src="./images/booking.svg" alt="Booking.com">
         </a>
@@ -348,110 +336,6 @@
     }
 
     host.innerHTML = items.join("");
-  }
-
-  function renderQuickFacts(facts = []) {
-    const host = $("#quickFacts");
-    if (!host) return;
-    const cols = (facts || []).slice(0, 4);
-    host.innerHTML = cols
-      .map(
-        (f, idx) => `
-      <div class="col text-center ${idx < cols.length - 1 ? "border-end" : ""} xs-border-end-0 border-color-extra-medium-gray alt-font md-mb-15px">
-        <span class="fs-19 text-dark-gray fw-600">${escapeHtml(f.label)}:</span> ${escapeHtml(f.value)}
-      </div>
-    `
-      )
-      .join("");
-  }
-
-  function renderAmenitiesTop(items = []) {
-    const host = document.querySelector('[data-bind-list="amenitiesTop"]');
-    if (!host) return;
-    host.innerHTML = (items || [])
-      .slice(0, 4)
-      .map(
-        (a, idx) => `
-      <div class="col text-center ${idx < 3 ? "border-end border-color-extra-medium-gray" : ""} sm-mb-30px">
-        <div class="text-base-color fs-28 mb-10px">${escapeHtml(a.icon || "✓")}</div>
-        <span class="text-dark-gray d-block lh-20">${escapeHtml(a.label)}</span>
-      </div>
-    `
-      )
-      .join("");
-  }
-
-  function renderAmenitiesColumns(columns = []) {
-    const host = document.querySelector('[data-bind-list="amenitiesColumns"]');
-    if (!host) return;
-
-    host.innerHTML = (columns || [])
-      .slice(0, 3)
-      .map(
-        (col) => `
-      <div class="col-6 col-sm-4">
-        <ul class="list-style-02 ps-0 mb-0">
-          ${(col || [])
-            .map((item) => `<li><i class="bi bi-check-circle text-green icon-small me-10px"></i>${escapeHtml(item)}</li>`)
-            .join("")}
-        </ul>
-      </div>
-    `
-      )
-      .join("");
-  }
-
-  function renderHouseRules(rules = []) {
-    const host = document.querySelector('[data-bind-list="houseRules"]');
-    if (!host) return;
-    host.innerHTML = (rules || [])
-      .map((r) => `<li><i class="bi bi-exclamation-circle text-red icon-small me-10px"></i>${escapeHtml(r)}</li>`)
-      .join("");
-  }
-
-  function renderReviews(reviews = []) {
-    const host = document.querySelector('[data-bind-list="reviews"]');
-    if (!host) return;
-    host.innerHTML = (reviews || [])
-      .slice(0, 6)
-      .map(
-        (r) => `
-      <div class="col-12 mb-15px">
-        <div class="border-radius-10px bg-white box-shadow-double-large p-25px">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="fw-700 text-dark-gray">${escapeHtml(r.name || "Guest")}</div>
-            <div class="text-base-color">${"★".repeat(Math.max(0, Math.min(5, r.stars || 5)))}</div>
-          </div>
-          <div class="text-medium-gray mt-8px">${escapeHtml(r.text || "")}</div>
-        </div>
-      </div>
-    `
-      )
-      .join("");
-  }
-
-  function renderFAQ(items = []) {
-    const host = document.querySelector('[data-bind-list="faq"]');
-    if (!host) return;
-    host.innerHTML = (items || [])
-      .slice(0, 8)
-      .map(
-        (q, i) => `
-      <div class="accordion mb-10px" id="faqAcc${i}">
-        <div class="accordion-item border border-radius-10px overflow-hidden">
-          <h2 class="accordion-header" id="h${i}">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c${i}" aria-expanded="false" aria-controls="c${i}">
-              ${escapeHtml(q.q)}
-            </button>
-          </h2>
-          <div id="c${i}" class="accordion-collapse collapse" aria-labelledby="h${i}">
-            <div class="accordion-body text-medium-gray">${escapeHtml(q.a)}</div>
-          </div>
-        </div>
-      </div>
-    `
-      )
-      .join("");
   }
 
   function populateGuests(maxGuests = 4) {
@@ -477,59 +361,25 @@
 
   // ---------- Main ----------
   async function init() {
-    const slug = getParam("p", "nissi-golden-sands-a15");
-    const jsonUrl = `./data/properties/${encodeURIComponent(slug)}.json`;
+    const slugParam = getParam("p", "nissi-golden-sands-a15");
+    const jsonUrl = `./data/properties/${encodeURIComponent(slugParam)}.json`;
 
     const property = await fetch(jsonUrl, { cache: "no-store" }).then((r) => {
       if (!r.ok) throw new Error(`Property JSON not found: ${jsonUrl}`);
       return r.json();
     });
 
-    // Basic binds
-    document.title = property.seo?.title || `${property.title} • Direct Booking`;
-    setText('[data-bind="pageTitle"]', document.title);
-    setText('[data-bind="metaDescription"]', property.seo?.description || "");
-    setText('[data-bind="title"]', property.title);
-    setText('[data-bind="addressLine"]', property.location?.addressLine || "");
-    setText('[data-bind="rating"]', property.reviews?.rating ?? "—");
-    setText('[data-bind="ratingSmall"]', property.reviews?.rating ?? "—");
-    setText('[data-bind="reviewsCountText"]', `(${property.reviews?.count ?? 0} reviews)`);
-    setText('[data-bind="reviewsCountSmall"]', `(${property.reviews?.count ?? 0})`);
-    setText('[data-bind="description"]', property.description || "");
-    setText('[data-bind="year"]', String(new Date().getFullYear()));
-
     // Trust links
     renderExternalLinks(property.externalLinks || {});
-
-    // Gallery + sections
-    renderGallery(property.gallery || []);
-    renderQuickFacts(property.quickFacts || []);
-    renderAmenitiesTop(property.amenitiesTop || []);
-    renderAmenitiesColumns(property.amenitiesColumns || []);
-    renderHouseRules(property.houseRules || []);
-    renderReviews(property.reviews?.items || []);
-    renderFAQ(property.faq || []);
-
-    // Map embed
-    const mapsUrl = property.location?.mapsEmbedUrl;
-    if (mapsUrl) setAttr('iframe[data-bind-attr="mapsEmbedSrc"]', "src", mapsUrl);
-
-    const pricing = property.pricing || null;
-
-    // Pricing header (from/base)
-    if (pricing) {
-      const cur = pricing.currency || "EUR";
-      const from = pricing.baseNight ?? 0;
-      setText('[data-bind="fromPriceText"]', `From ${formatMoney(from, cur)}`);
-      setText('[data-bind="nightPriceText"]', formatMoney(from, cur));
-    }
 
     // Guests select
     populateGuests(property.booking?.maxGuests || 4);
 
-    // Availability + datepicker (⚠️ guard if pricing missing)
-    const availability = await fetchAvailability(property.slug || slug);
-    initDatepickers(availability.booked || [], pricing?.minNightsDefault || 1);
+    // Availability + datepicker
+    const availability = await fetchAvailability(property.slug || slugParam);
+    initDatepickers(availability.booked || []);
+
+    const pricing = property.pricing || null;
 
     // UI elements
     const priceBox = $("#priceBox");
@@ -557,7 +407,6 @@
 
       const minDefault = pricing.minNightsDefault || 1;
 
-      // no dates
       if (!checkin || !checkout) {
         renderPriceBox(priceBox, pricing, null, minDefault);
         if (btn) {
@@ -569,7 +418,6 @@
         return;
       }
 
-      // compute totals
       const minReq = minNightsForRange(pricing, checkin, checkout);
       const calc = calculateTotal(pricing, checkin, checkout);
 
@@ -586,7 +434,6 @@
 
       renderPriceBox(priceBox, pricing, calc, minReq);
 
-      // guests gating
       if (!guests) {
         if (btn) {
           btn.disabled = true;
@@ -597,120 +444,109 @@
         return;
       }
 
-      // min nights gating
       const ok = calc.nights >= minReq;
       if (btn) {
         btn.disabled = !ok;
         btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
       }
       if (note) {
-        note.textContent = ok
-          ? "Request • Pay to confirm"
-          : `Minimum stay is ${minReq} nights. Please extend your stay.`;
+        note.textContent = ok ? "Request • Pay to confirm" : `Minimum stay is ${minReq} nights. Please extend your stay.`;
       }
       if (!ok) setMsg(`Minimum stay is ${minReq} nights. Please extend your stay.`, "error");
       else setMsg("");
     };
 
-    // listeners
     $("#guests")?.addEventListener("change", updatePricing);
     document.addEventListener("dates:updated", updatePricing);
     updatePricing();
 
-    async function sendEnquiry(payload) {
-      const res = await fetch("./api/enquiry.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
-      return { res, data };
-    }
+    // Enquiry submit (✅ slug vždy z URL parametru)
+    btn?.addEventListener("click", async () => {
+      try {
+        setMsg("");
 
- // Enquiry submit
-btn?.addEventListener("click", async () => {
-  try {
-    setMsg("");
+        const propertySlug = String(getParam("p", "") || property?.slug || "").trim();
 
-    const slugParam = getParam("p", ""); // vždy z URL
-    const propertySlug = (property?.slug || slugParam || "").trim();
+        const checkin = $("#checkin")?.value?.trim();
+        const checkout = $("#checkout")?.value?.trim();
+        const guests = $("#guests")?.value;
 
-    const checkin = $("#checkin")?.value?.trim();
-    const checkout = $("#checkout")?.value?.trim();
-    const guests = $("#guests")?.value;
+        const name = $("#enqName")?.value?.trim() || "";
+        const email = $("#enqEmail")?.value?.trim() || "";
 
-    const name = $("#enqName")?.value?.trim() || "";
-    const email = $("#enqEmail")?.value?.trim() || "";
+        console.log("slug param", getParam("p", ""));
+        console.log("property.slug from JSON", property?.slug);
 
-    if (!propertySlug) {
-      setMsg("Missing property slug in URL (?p=...)", "error");
-      return;
-    }
-    if (!checkin || !checkout) {
-      setMsg("Select dates first.", "error");
-      return;
-    }
-    if (!guests) {
-      setMsg("Select guests first.", "error");
-      return;
-    }
-    if (!name) {
-      setMsg("Please enter your full name.", "error");
-      return;
-    }
-    if (!email) {
-      setMsg("Please enter your email.", "error");
-      return;
-    }
+        if (!propertySlug) {
+          setMsg("Missing property slug in URL (?p=...)", "error");
+          return;
+        }
+        if (!checkin || !checkout) {
+          setMsg("Select dates first.", "error");
+          return;
+        }
+        if (!guests) {
+          setMsg("Select guests first.", "error");
+          return;
+        }
+        if (!name) {
+          setMsg("Please enter your full name.", "error");
+          return;
+        }
+        if (!email) {
+          setMsg("Please enter your email.", "error");
+          return;
+        }
 
-    btn.disabled = true;
-    const oldText = btn.textContent;
-    btn.textContent = "Sending...";
+        btn.disabled = true;
+        const oldText = btn.textContent;
+        btn.textContent = "Sending...";
 
-    const payload = {
-      property: propertySlug,
-      checkin,
-      checkout,
-      guests: Number(guests),
-      name,
-      email,
-      // phone/message až přidáš:
-      // phone: $("#enqPhone")?.value?.trim() || "",
-      // message: $("#enqMessage")?.value?.trim() || "",
-    };
+        const payload = {
+          property: propertySlug,
+          checkin,
+          checkout,
+          guests: Number(guests),
+          name,
+          email,
+        };
 
-    const res = await fetch("./api/enquiry.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+        console.log("ENQUIRY PAYLOAD", payload);
 
-    const data = await res.json().catch(() => ({}));
+        const res = await fetch("./api/enquiry.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-    if (!res.ok || !data?.ok) {
-      if (data?.minNights) {
-        setMsg(`Minimum stay is ${data.minNights} nights. Please extend your stay.`, "error");
-      } else if (res.status === 409) {
-        setMsg("Those dates are no longer available. Please select different dates.", "error");
-      } else {
-        setMsg(data?.error ? `Error: ${data.error}` : `Error sending enquiry (${res.status})`, "error");
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data?.ok) {
+          if (data?.minNights) {
+            setMsg(`Minimum stay is ${data.minNights} nights. Please extend your stay.`, "error");
+          } else if (res.status === 409) {
+            setMsg("Those dates are no longer available. Please select different dates.", "error");
+          } else {
+            setMsg(data?.error ? `Error: ${data.error}` : `Error sending enquiry (${res.status})`, "error");
+          }
+          btn.disabled = false;
+          btn.textContent = oldText;
+          return;
+        }
+
+        setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
+        btn.textContent = "Sent ✅";
+        btn.disabled = true;
+      } catch (e) {
+        console.error(e);
+        setMsg("Server error. Please try again.", "error");
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Request booking";
+        }
       }
-      btn.disabled = false;
-      btn.textContent = oldText;
-      return;
-    }
-
-    setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
-    btn.textContent = "Sent ✅";
-    btn.disabled = true;
-
-  } catch (e) {
-    console.error(e);
-    setMsg("Server error. Please try again.", "error");
-    btn.disabled = false;
-    btn.textContent = "Request booking";
+    });
   }
-});
 
   init().catch((err) => {
     console.error(err);
