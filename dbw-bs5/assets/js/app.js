@@ -354,10 +354,6 @@ function initDatepickers(bookedRanges, minNights = 1) {
     if (el) el.setAttribute(attr, value);
   }
 
-  function setHeroBg(url) {
-    const hero = $(".dbw-hero");
-    if (hero && url) hero.style.backgroundImage = `url('${url}')`;
-  }
 
 function renderExternalLinks(links = {}) {
   const host = document.querySelector('[data-bind="externalLinks"]');
@@ -549,8 +545,7 @@ function renderGallery(urls = []) {
     setText('[data-bind="description"]', property.description || "");
     setText('[data-bind="year"]', String(new Date().getFullYear()));
 
-    // Hero BG
-    setHeroBg(property.heroImage || property.gallery?.[0]);
+
 
     // Chips, gallery, facts, amenities, rules, etc.
    renderExternalLinks(property.externalLinks || {});
