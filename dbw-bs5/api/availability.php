@@ -260,6 +260,37 @@ function fetch_db_ranges_exclusive(string $dbPath, string $slug, array &$warning
   }
 }
 
+/** načte iCal URL z property JSON: ical.airbnb + ical.booking */
+function load_ical_urls_from_property(string $base, string $slug, array &$warnings): array {
+  $propPath = $base . '/data/properties/' . $slug . '.json';
+  if (!file_exists($propPath)) {
+    $warnings[] = "Property JSON not found: {$propPath}";
+    return [];
+  }
+  if (!is_readable($propPath)) {
+    $warnings[] = "Property JSON not readable: {$propPath}";
+    return [];
+  }
+
+  $raw = file_get_contents($propPath);
+  $prop = json_decode($raw ?: '', true);
+  if (!is_array($prop)) {
+    $warnings[] = "Property JSON invalid: {$propPath} (" . json_last_error_msg() . ")";
+    return [];
+  }
+
+  $urls = [];
+  $air = $prop['ical']['airbnb'] ?? '';
+  $boo = $prop['ical']['booking'] ?? '';
+
+  if (is_string($air) && trim($air) !== '') $urls[] = trim($air);
+  if (is_string($boo) && trim($boo) !== '') $urls[] = trim($boo);
+
+  if (!$urls) $warnings[] = "No iCal URLs set in property JSON (ical.airbnb / ical.booking)";
+
+  return $urls;
+}
+
 // ---------------- MAIN ----------------
 try {
   $slug = clean_slug((string)($_GET['property'] ?? ''));
@@ -272,33 +303,10 @@ try {
   $warnings = [];
   $ranges = [];
 
-  // iCal config
-  $configPath = $base . '/private/ical-config.json';
-  if (!file_exists($configPath)) respond(500, ['error' => 'config missing', 'configPath' => $configPath]);
-  if (!is_readable($configPath)) respond(500, ['error' => 'config not readable', 'configPath' => $configPath]);
+  // 1) iCal urls from property JSON
+  $urls = load_ical_urls_from_property($base, $slug, $warnings);
 
-  $raw = file_get_contents($configPath);
-  if ($raw === false) respond(500, ['error' => 'config read failed', 'configPath' => $configPath]);
-
-  $cfg = json_decode($raw, true);
-  if (!is_array($cfg)) {
-    respond(500, [
-      'error' => 'config invalid json',
-      'json_error' => json_last_error_msg(),
-      'configPath' => $configPath,
-    ]);
-  }
-
-  // iCal urls (optional)
-  $urls = [];
-  if (!empty($cfg[$slug]) && is_array($cfg[$slug])) {
-    if (!empty($cfg[$slug]['airbnb']))  $urls[] = (string)$cfg[$slug]['airbnb'];
-    if (!empty($cfg[$slug]['booking'])) $urls[] = (string)$cfg[$slug]['booking'];
-  } else {
-    $warnings[] = "No iCal config for slug '{$slug}'";
-  }
-
-  // 1) iCal ranges
+  // 2) iCal ranges
   foreach ($urls as $u) {
     [$ics, $meta] = http_get($u);
 
@@ -315,12 +323,12 @@ try {
     }
   }
 
-  // 2) DB confirmed ranges
+  // 3) DB confirmed ranges
   $dbPath = $base . '/storage/app.sqlite';
   $rangesDb = fetch_db_ranges_exclusive($dbPath, $slug, $warnings);
   $ranges = array_merge($ranges, $rangesDb);
 
-  // 3) merge
+  // 4) merge
   $ranges = merge_ranges_exclusive($ranges);
 
   respond(200, [

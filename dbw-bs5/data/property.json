@@ -18,6 +18,10 @@
       { "q": "Is parking available?", "a": "Free street parking is usually available nearby." }
     ]
   },
+  "ical": {
+  "airbnb": "https://www.airbnb....ics",
+  "booking": "https://admin.booking....ics"
+},
   "booking": {
     "mode": "request",
     "currency": "EUR",
@@ -27,4 +31,5 @@
     "policiesUrl": "#",
     "stripeEnabled": false
   }
+  
 }

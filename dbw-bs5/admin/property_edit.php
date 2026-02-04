@@ -182,6 +182,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     setv($new, 'externalLinks.airbnb', normalize_url((string)($_POST['airbnbUrl'] ?? '')));
     setv($new, 'externalLinks.booking', normalize_url((string)($_POST['bookingUrl'] ?? '')));
 
+    // iCal links (availability)
+setv($new, 'ical.airbnb', normalize_url((string)($_POST['icalAirbnb'] ?? '')));
+setv($new, 'ical.booking', normalize_url((string)($_POST['icalBooking'] ?? '')));
+
     // hero + gallery (hero můžeš klidně ignorovat v UI)
     setv($new, 'heroImage', trim((string)($_POST['heroImage'] ?? '')));
 
@@ -322,7 +326,19 @@ $galleryArr = normalize_gallery($galleryArr);
           <th>Description</th>
           <td><textarea name="description"><?= htmlspecialchars((string)getv($current,'description','')) ?></textarea></td>
         </tr>
-
+        <tr>
+        <th>iCal links (availability sync)</th>
+        <td class="row2">
+          <div>
+            <div style="font-size:13px;color:#555;margin-bottom:6px">Airbnb iCal URL</div>
+            <input name="icalAirbnb" value="<?= htmlspecialchars((string)getv($current,'ical.airbnb','')) ?>">
+          </div>
+          <div>
+            <div style="font-size:13px;color:#555;margin-bottom:6px">Booking iCal URL</div>
+            <input name="icalBooking" value="<?= htmlspecialchars((string)getv($current,'ical.booking','')) ?>">
+          </div>
+        </td>
+        </tr>
         <tr>
           <th>SEO title</th>
           <td><input name="seo_title" value="<?= htmlspecialchars((string)getv($current,'seo.title','')) ?>"></td>
