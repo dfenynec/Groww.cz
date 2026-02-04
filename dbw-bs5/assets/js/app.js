@@ -619,12 +619,16 @@
           email,
         };
 
-        const res = await fetch("./api/enquiry.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+  const res = await fetch("./api/enquiry.php", {
+  method: "POST",
+  redirect: "manual",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(payload),
+});
 
+if (res.status === 301 || res.status === 302 || res.status === 307 || res.status === 308) {
+  console.error("Redirected to:", res.headers.get("Location"));
+}
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok || !data?.ok) {
