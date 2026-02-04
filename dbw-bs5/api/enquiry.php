@@ -13,12 +13,28 @@ function respond(int $code, array $payload): void {
 }
 
 function read_input(): array {
-  $ct = $_SERVER['CONTENT_TYPE'] ?? '';
+  // Některé hostingy nemají CONTENT_TYPE, nebo ho mají v HTTP_CONTENT_TYPE
+  $ct = $_SERVER['CONTENT_TYPE'] ?? ($_SERVER['HTTP_CONTENT_TYPE'] ?? '');
+
+  // 1) Pokud to vypadá jako JSON, parse JSON
   if (stripos($ct, 'application/json') !== false) {
-    $raw = file_get_contents('php://input');
-    $data = json_decode($raw ?: '', true);
+    $raw = file_get_contents('php://input') ?: '';
+    $data = json_decode($raw, true);
     return is_array($data) ? $data : [];
   }
+
+  // 2) Pokud je POST a máme nějaké raw body, zkus JSON i bez headeru
+  if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+    $raw = file_get_contents('php://input') ?: '';
+    $rawTrim = trim($raw);
+
+    if ($rawTrim !== '' && ($rawTrim[0] === '{' || $rawTrim[0] === '[')) {
+      $data = json_decode($rawTrim, true);
+      if (is_array($data)) return $data;
+    }
+  }
+
+  // 3) Fallback na klasický form POST
   return $_POST ?? [];
 }
 
