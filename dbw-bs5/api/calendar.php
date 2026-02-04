@@ -1,16 +1,64 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../_shared/db.php';
+/**
+ * DBW iCal export (per-property, confirmed only)
+ * URL:
+ *   /dbw-bs5/api/calendar.php?property=SLUG&token=TOKEN
+ *
+ * Tokens file:
+ *   /dbw-bs5/private/ical-export-tokens.json
+ *   {
+ *     "nissi-golden-sands-a15": "LONG_RANDOM_TOKEN",
+ *     "another-slug": "ANOTHER_TOKEN"
+ *   }
+ */
 
-header('Cache-Control: no-store');
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+error_reporting(E_ALL);
 
-function bad(int $code, string $msg): void {
+// --- Buffer so we can replace output on fatal ---
+ob_start();
+
+/** Plain text response (useful for debugging 500) */
+function respondText(int $code, string $text): void {
+  // clear any buffered output
+  if (ob_get_level()) { @ob_clean(); }
   http_response_code($code);
   header('Content-Type: text/plain; charset=utf-8');
-  echo $msg;
+  header('Cache-Control: no-store');
+  echo $text;
   exit;
 }
+
+/** Safe JSON (only if you want) */
+function respondJson(int $code, array $payload): void {
+  if (ob_get_level()) { @ob_clean(); }
+  http_response_code($code);
+  header('Content-Type: application/json; charset=utf-8');
+  header('Cache-Control: no-store');
+  echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+  exit;
+}
+
+/** Fatal error -> readable text */
+register_shutdown_function(function () {
+  $e = error_get_last();
+  if ($e && in_array($e['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR], true)) {
+    $msg = "FATAL 500 in calendar.php\n"
+         . $e['message'] . "\n"
+         . "File: " . $e['file'] . "\n"
+         . "Line: " . $e['line'] . "\n";
+    // log too
+    error_log($msg);
+    if (ob_get_level()) { @ob_clean(); }
+    http_response_code(500);
+    header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: no-store');
+    echo $msg;
+  }
+});
 
 function clean_slug(string $s): string {
   $s = strtolower(trim($s));
@@ -18,56 +66,72 @@ function clean_slug(string $s): string {
   return $s ?: '';
 }
 
+function is_valid_iso_date(string $s): bool {
+  return (bool)preg_match('~^\d{4}-\d{2}-\d{2}$~', $s);
+}
+
 function ics_escape(string $s): string {
-  // ICS escaping: backslash, comma, semicolon, newline
+  // RFC5545: backslash, comma, semicolon, newline
   $s = str_replace("\\", "\\\\", $s);
-  $s = str_replace(",", "\\,", $s);
-  $s = str_replace(";", "\\;", $s);
-  $s = str_replace("\r\n", "\n", $s);
-  $s = str_replace("\r", "\n", $s);
-  $s = str_replace("\n", "\\n", $s);
+  $s = str_replace([",", ";"], ["\\,", "\\;"], $s);
+  $s = str_replace(["\r\n", "\n", "\r"], "\\n", $s);
   return $s;
 }
 
-function ymd_to_ics_date(string $ymd): string {
-  // "2026-03-02" -> "20260302"
-  return str_replace("-", "", $ymd);
+/** Fold long lines at 75 octets-ish (simple) */
+function ics_fold(string $line): string {
+  $out = '';
+  $len = strlen($line);
+  $pos = 0;
+  while ($pos < $len) {
+    $chunk = substr($line, $pos, 73); // keep some margin
+    $pos += 73;
+    if ($out === '') $out = $chunk;
+    else $out .= "\r\n " . $chunk;
+  }
+  return $out;
 }
 
-function now_utc_ics(): string {
-  return gmdate('Ymd\THis\Z');
-}
-
-// --- Input ---
-$slug  = clean_slug((string)($_GET['property'] ?? ''));
-$token = trim((string)($_GET['token'] ?? ''));
-
-if ($slug === '') bad(400, 'missing property');
-if ($token === '') bad(401, 'missing token');
-
-// --- Tokens config (per-property) ---
-$base = realpath(__DIR__ . '/..'); // /dbw-bs5/api -> /dbw-bs5
-if ($base === false) bad(500, 'base path error');
-
-$tokPath = $base . '/private/ical-export-tokens.json';
-if (!file_exists($tokPath)) bad(500, 'token config missing');
-if (!is_readable($tokPath)) bad(500, 'token config not readable');
-
-$rawTok = file_get_contents($tokPath);
-$tokCfg = json_decode($rawTok ?: '', true);
-if (!is_array($tokCfg)) bad(500, 'token config invalid json');
-
-$expected = (string)($tokCfg[$slug] ?? '');
-if ($expected === '') bad(404, 'unknown property');
-if (!hash_equals($expected, $token)) bad(403, 'invalid token');
-
-// --- Fetch confirmed reservations ---
 try {
-  $pdo = db();
+  $slug  = clean_slug((string)($_GET['property'] ?? ''));
+  $token = trim((string)($_GET['token'] ?? ''));
 
-  // jen confirmed (to je to, co má blokovat)
+  if ($slug === '') respondText(400, "missing property\n");
+  if ($token === '') respondText(401, "missing token\n");
+
+  // base = /dbw-bs5
+  $base = realpath(__DIR__ . '/..');
+  if ($base === false) respondText(500, "base realpath failed\n");
+
+  // token file
+  $tokenPath = $base . '/private/ical-export-tokens.json';
+  if (!file_exists($tokenPath)) respondText(500, "tokens file missing: {$tokenPath}\n");
+  if (!is_readable($tokenPath)) respondText(500, "tokens file not readable: {$tokenPath}\n");
+
+  $tokRaw = file_get_contents($tokenPath);
+  $tokCfg = json_decode($tokRaw ?: '', true);
+  if (!is_array($tokCfg)) respondText(500, "tokens file invalid json: " . json_last_error_msg() . "\n");
+
+  $expected = (string)($tokCfg[$slug] ?? '');
+  if ($expected === '' || !hash_equals($expected, $token)) {
+    respondText(403, "invalid token\n");
+  }
+
+  // DB: read confirmed reservations
+  $dbPath = $base . '/storage/app.sqlite';
+  if (!file_exists($dbPath)) respondText(500, "db not found: {$dbPath}\n");
+
+  $pdo = new PDO('sqlite:' . $dbPath, null, null, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+  ]);
+
+  // Ensure table exists
+  $exists = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='reservations'")->fetchColumn();
+  if (!$exists) respondText(500, "table reservations missing\n");
+
   $stmt = $pdo->prepare("
-    SELECT id, checkin, checkout
+    SELECT id, checkin, checkout, guest_name, status, created_at
     FROM reservations
     WHERE property_slug = :slug
       AND status = 'confirmed'
@@ -75,52 +139,50 @@ try {
     ORDER BY checkin ASC
   ");
   $stmt->execute([':slug' => $slug]);
-  $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $rows = $stmt->fetchAll();
+
+  // --- Output ICS ---
+  if (ob_get_level()) { @ob_clean(); }
+  header('Content-Type: text/calendar; charset=utf-8');
+  header('Content-Disposition: inline; filename="dbw-' . $slug . '.ics"');
+  header('Cache-Control: no-store');
+
+  $now = gmdate('Ymd\THis\Z');
+
+  echo "BEGIN:VCALENDAR\r\n";
+  echo "VERSION:2.0\r\n";
+  echo "PRODID:-//DBW//Direct Booking Website//EN\r\n";
+  echo "CALSCALE:GREGORIAN\r\n";
+  echo "METHOD:PUBLISH\r\n";
+  echo ics_fold("X-WR-CALNAME:" . ics_escape("DBW • " . $slug)) . "\r\n";
+
+  foreach ($rows as $r) {
+    $checkin  = (string)$r['checkin'];
+    $checkout = (string)$r['checkout'];
+
+    if (!is_valid_iso_date($checkin) || !is_valid_iso_date($checkout)) continue;
+
+    // DTSTART/DTEND as DATE (all-day), DTEND is checkout day (end-exclusive)
+    $dtstart = str_replace('-', '', $checkin);
+    $dtend   = str_replace('-', '', $checkout);
+
+    $uid = "dbw-{$slug}-" . (int)$r['id'] . "@groww.cz";
+    $summary = "Booked";
+
+    echo "BEGIN:VEVENT\r\n";
+    echo ics_fold("UID:" . $uid) . "\r\n";
+    echo "DTSTAMP:" . $now . "\r\n";
+    echo "DTSTART;VALUE=DATE:" . $dtstart . "\r\n";
+    echo "DTEND;VALUE=DATE:" . $dtend . "\r\n";
+    echo ics_fold("SUMMARY:" . ics_escape($summary)) . "\r\n";
+    echo "STATUS:CONFIRMED\r\n";
+    echo "END:VEVENT\r\n";
+  }
+
+  echo "END:VCALENDAR\r\n";
+  exit;
 
 } catch (Throwable $e) {
-  bad(500, 'db error');
+  error_log("calendar.php exception: " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine());
+  respondText(500, "EXCEPTION 500 in calendar.php\n" . $e->getMessage() . "\n" . $e->getFile() . ":" . $e->getLine() . "\n");
 }
-
-// --- Build ICS ---
-header('Content-Type: text/calendar; charset=utf-8');
-header('Content-Disposition: inline; filename="' . $slug . '.ics"');
-
-$prodid = '-//DBW Direct Booking//iCal Export//EN';
-$calName = 'DBW - ' . $slug;
-
-$out = [];
-$out[] = 'BEGIN:VCALENDAR';
-$out[] = 'VERSION:2.0';
-$out[] = 'PRODID:' . $prodid;
-$out[] = 'CALSCALE:GREGORIAN';
-$out[] = 'METHOD:PUBLISH';
-$out[] = 'X-WR-CALNAME:' . ics_escape($calName);
-
-$dtstamp = now_utc_ics();
-
-foreach ($rows as $r) {
-  $id = (int)($r['id'] ?? 0);
-  $checkin  = (string)($r['checkin'] ?? '');
-  $checkout = (string)($r['checkout'] ?? '');
-
-  // sanity
-  if (!preg_match('~^\d{4}-\d{2}-\d{2}$~', $checkin)) continue;
-  if (!preg_match('~^\d{4}-\d{2}-\d{2}$~', $checkout)) continue;
-
-  $uid = $slug . '-' . $id . '@dbw';
-
-  $out[] = 'BEGIN:VEVENT';
-  $out[] = 'UID:' . ics_escape($uid);
-  $out[] = 'DTSTAMP:' . $dtstamp;
-  $out[] = 'SUMMARY:' . ics_escape('Booked');
-  // all-day, end-exclusive (DTEND = checkout)
-  $out[] = 'DTSTART;VALUE=DATE:' . ymd_to_ics_date($checkin);
-  $out[] = 'DTEND;VALUE=DATE:' . ymd_to_ics_date($checkout);
-  $out[] = 'END:VEVENT';
-}
-
-$out[] = 'END:VCALENDAR';
-
-// fold lines (75 octets) – optional; většinou to platformy sežerou i bez, ale přidáme basic folding
-$ics = implode("\r\n", $out) . "\r\n";
-echo $ics;
