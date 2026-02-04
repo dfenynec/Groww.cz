@@ -621,12 +621,37 @@
           email,
         };
 
-  const res = await fetch("./api/enquiry.php", {
-  method: "POST",
-  redirect: "manual",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload),
-});
+  async function postJsonNoRedirect(url, payload) {
+  const res = await fetch(url, {
+    method: "POST",
+    redirect: "manual",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    credentials: "same-origin",
+    cache: "no-store",
+  });
+
+  if ([301, 302, 303, 307, 308].includes(res.status)) {
+    const loc = res.headers.get("Location");
+    if (!loc) throw new Error(`Redirect ${res.status} without Location`);
+
+    const redirectedUrl = new URL(loc, new URL(url, location.href)).toString();
+
+    return fetch(redirectedUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      credentials: "same-origin",
+      cache: "no-store",
+    });
+  }
+
+  return res;
+}
+
+const API_ENQUIRY = `${location.origin}/dbw-bs5/api/enquiry.php`;
+const res = await postJsonNoRedirect(API_ENQUIRY, payload);
+const data = await res.json().catch(() => ({}));
 
 if (res.status === 301 || res.status === 302 || res.status === 307 || res.status === 308) {
   console.error("Redirected to:", res.headers.get("Location"));
