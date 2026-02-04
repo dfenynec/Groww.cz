@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+// ✅ 1) CACHE RAW BODY dřív než include (php://input je stream)
+$RAW_BODY = file_get_contents('php://input') ?: '';
+
 require_once __DIR__ . '/../_shared/db.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -13,28 +16,27 @@ function respond(int $code, array $payload): void {
 }
 
 function read_input(): array {
-  // Některé hostingy nemají CONTENT_TYPE, nebo ho mají v HTTP_CONTENT_TYPE
+  global $RAW_BODY;
+
   $ct = $_SERVER['CONTENT_TYPE'] ?? ($_SERVER['HTTP_CONTENT_TYPE'] ?? '');
 
-  // 1) Pokud to vypadá jako JSON, parse JSON
+  // 1) JSON podle headeru
   if (stripos($ct, 'application/json') !== false) {
-    $raw = file_get_contents('php://input') ?: '';
+    $raw = $RAW_BODY;
     $data = json_decode($raw, true);
     return is_array($data) ? $data : [];
   }
 
-  // 2) Pokud je POST a máme nějaké raw body, zkus JSON i bez headeru
+  // 2) POST – zkus JSON i bez headeru
   if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
-    $raw = file_get_contents('php://input') ?: '';
-    $rawTrim = trim($raw);
-
+    $rawTrim = trim($RAW_BODY);
     if ($rawTrim !== '' && ($rawTrim[0] === '{' || $rawTrim[0] === '[')) {
       $data = json_decode($rawTrim, true);
       if (is_array($data)) return $data;
     }
   }
 
-  // 3) Fallback na klasický form POST
+  // 3) Fallback na form POST
   return $_POST ?? [];
 }
 
@@ -42,7 +44,19 @@ try {
   $in = read_input();
 
   $slug = clean_slug((string)($in['property'] ?? $in['slug'] ?? ''));
-  if ($slug === '') respond(400, ['ok'=>false, 'error'=>'missing property']);
+  if ($slug === '') {
+    // ✅ debug info, ať hned vidíš co server fakt dostal
+    respond(400, [
+      'ok' => false,
+      'error' => 'missing property',
+      'debug' => [
+        'content_type' => ($_SERVER['CONTENT_TYPE'] ?? ($_SERVER['HTTP_CONTENT_TYPE'] ?? '')),
+        'method' => ($_SERVER['REQUEST_METHOD'] ?? ''),
+        'raw_len' => strlen((string)$GLOBALS['RAW_BODY']),
+        'keys' => array_keys(is_array($in) ? $in : []),
+      ]
+    ]);
+  }
 
   $checkin  = (string)($in['checkin'] ?? '');
   $checkout = (string)($in['checkout'] ?? '');
@@ -63,7 +77,6 @@ try {
     ]);
   }
 
-  // guests – doporučuju vyžadovat (UX už máte “Select guests”)
   $guestsRaw = $in['guests'] ?? null;
   if ($guestsRaw === null || $guestsRaw === '') {
     respond(400, ['ok'=>false, 'error'=>'missing guests']);
@@ -71,7 +84,6 @@ try {
   $guests = (int)$guestsRaw;
   if ($guests <= 0 || $guests > 50) respond(400, ['ok'=>false, 'error'=>'invalid guests']);
 
-  // DB konflikt jen s CONFIRMED (iCal už řeší picker – ale tady chráníme server)
   if (db_has_conflict($slug, $checkin, $checkout)) {
     respond(409, ['ok'=>false, 'error'=>'dates not available']);
   }
@@ -81,7 +93,6 @@ try {
   $guest_phone = trim((string)($in['phone'] ?? $in['guest_phone'] ?? ''));
   $message     = trim((string)($in['message'] ?? ''));
 
-  // minimální sanity
   if ($guest_email !== '' && !filter_var($guest_email, FILTER_VALIDATE_EMAIL)) {
     respond(400, ['ok'=>false, 'error'=>'invalid email']);
   }
