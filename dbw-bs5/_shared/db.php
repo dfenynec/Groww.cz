@@ -44,16 +44,29 @@ function db(): PDO {
 
   // --- MIGRATIONS (idempotent) ---
 
-  // Admin users (for login)
+  // --- ADMIN USERS (idempotent) ---
   $pdo->exec("
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS admin_users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT NOT NULL UNIQUE,
       password_hash TEXT NOT NULL,
-      role TEXT NOT NULL DEFAULT 'admin',
       created_at TEXT NOT NULL
     );
   ");
+
+  // seed default admin pokud ještě neexistuje žádný admin
+  $cnt = (int)$pdo->query("SELECT COUNT(*) FROM admin_users")->fetchColumn();
+  if ($cnt === 0) {
+    $stmt = $pdo->prepare("
+      INSERT INTO admin_users (email, password_hash, created_at)
+      VALUES (:email, :hash, :created)
+    ");
+    $stmt->execute([
+      ':email' => 'admin@example.com',
+      ':hash' => password_hash('admin12345', PASSWORD_DEFAULT),
+      ':created' => gmdate('c')
+    ]);
+  }
   $pdo->exec("CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);");
 
   // Reservations / enquiries
