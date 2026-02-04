@@ -20,6 +20,7 @@
     return u.searchParams.get(name) || fallback;
   }
 
+  // ---- dates ----
   function parseISODate(s) {
     const [y, m, d] = String(s).split("-").map(Number);
     return new Date(Date.UTC(y, m - 1, d));
@@ -30,20 +31,6 @@
     const m = String(d.getUTCMonth() + 1).padStart(2, "0");
     const day = String(d.getUTCDate()).padStart(2, "0");
     return `${y}-${m}-${day}`;
-  }
-
-  function daysBetween(checkin, checkout) {
-    const a = parseISODate(checkin);
-    const b = parseISODate(checkout);
-    return Math.round((b - a) / (24 * 60 * 60 * 1000));
-  }
-
-  function formatMoney(amount, currency) {
-    try {
-      return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(amount);
-    } catch {
-      return `${amount} ${currency}`;
-    }
   }
 
   function isoToLocalDate(iso) {
@@ -64,10 +51,17 @@
     return x;
   }
 
+  function daysBetween(checkin, checkout) {
+    const a = parseISODate(checkin);
+    const b = parseISODate(checkout);
+    return Math.round((b - a) / (24 * 60 * 60 * 1000));
+  }
+
   // bookedRanges = [{from:"YYYY-MM-DD", to:"YYYY-MM-DD"}] where "to" = checkout (end-exclusive)
   function buildBookedNightsSet(bookedRanges) {
     const set = new Set();
     (bookedRanges || []).forEach((r) => {
+      if (!r?.from || !r?.to) return;
       const start = isoToLocalDate(r.from);
       const endExclusive = isoToLocalDate(r.to);
       for (let cur = new Date(start); cur < endExclusive; cur = addDaysLocal(cur, 1)) {
@@ -88,7 +82,6 @@
     return null;
   }
 
-  // trim checkout so that no booked night is inside [checkin, checkout)
   function trimCheckoutToAvoidBooked(checkinDate, checkoutDate, bookedNightsSet) {
     const firstBookedNight = findFirstBookedNightBetween(checkinDate, checkoutDate, bookedNightsSet);
     if (!firstBookedNight) return checkoutDate;
@@ -96,6 +89,14 @@
   }
 
   // ---------- Pricing ----------
+  function formatMoney(amount, currency) {
+    try {
+      return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(amount);
+    } catch {
+      return `${amount} ${currency}`;
+    }
+  }
+
   function getRuleForDate(pricing, isoDate) {
     const rules = pricing.rules || [];
     return rules.find((r) => isoDate >= r.from && isoDate <= r.to) || null;
@@ -185,7 +186,6 @@
       console.error("Availability API error:", res.status, t);
       throw new Error("Availability API failed");
     }
-
     return res.json();
   }
 
@@ -195,8 +195,10 @@
   function initDatepickers(bookedRanges) {
     const checkinEl = $("#checkin");
     const checkoutEl = $("#checkout");
-    if (!checkinEl || !checkoutEl) {
-      console.warn("Date inputs not found");
+    if (!checkinEl || !checkoutEl) return;
+
+    if (typeof Litepicker === "undefined") {
+      console.error("Litepicker is not loaded. Check your <script> order.");
       return;
     }
 
@@ -232,7 +234,6 @@
       lockDays,
       disallowLockDaysInRange: true,
       lockDaysInclusivity: "[]",
-
       setup: (picker) => {
         picker.on("selected", (date1, date2) => {
           if (isProgrammaticSet) return;
@@ -265,7 +266,7 @@
     });
   }
 
-  // ---------- UI bind helpers ----------
+  // ---------- Simple bind helpers ----------
   function setText(selector, value) {
     const el = $(selector);
     if (el) el.textContent = value ?? "";
@@ -290,12 +291,10 @@
     imgs.forEach((img, i) => {
       const slide = img.closest(".swiper-slide");
       const u = list[i];
-
       if (!u) {
         if (slide) slide.style.display = "none";
         return;
       }
-
       if (slide) slide.style.display = "";
       img.src = normalizeUrl(u);
       img.loading = "lazy";
@@ -306,30 +305,22 @@
     const host = document.querySelector('[data-bind="externalLinks"]');
     if (!host) return;
 
-    const norm = (x, fallbackLabel) => {
-      if (!x) return null;
-      if (typeof x === "string") return { url: x, label: fallbackLabel };
-      return { url: x.url, label: x.label || fallbackLabel };
-    };
-
-    const airbnb = norm(links.airbnb, "View on");
-    const booking = norm(links.booking, "View on");
+    const airbnbUrl = typeof links.airbnb === "string" ? links.airbnb : links.airbnb?.url;
+    const bookingUrl = typeof links.booking === "string" ? links.booking : links.booking?.url;
 
     const items = [];
-
-    if (airbnb?.url) {
+    if (airbnbUrl) {
       items.push(`
-        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
-          <span class="me-2">${escapeHtml(airbnb.label)}</span>
+        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(airbnbUrl)}" target="_blank" rel="noopener">
+          <span class="me-2">View on</span>
           <img class="dbw-trust-logo" src="./images/airbnb.svg" alt="Airbnb">
         </a>
       `);
     }
-
-    if (booking?.url) {
+    if (bookingUrl) {
       items.push(`
-        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
-          <span class="me-2">${escapeHtml(booking.label)}</span>
+        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(bookingUrl)}" target="_blank" rel="noopener">
+          <span class="me-2">View on</span>
           <img class="dbw-trust-logo" src="./images/booking.svg" alt="Booking.com">
         </a>
       `);
@@ -369,19 +360,29 @@
       return r.json();
     });
 
-    // Trust links
-    renderExternalLinks(property.externalLinks || {});
+    // Basic binds
+    document.title = property.seo?.title || `${property.title} • Direct Booking`;
+    setText('[data-bind="pageTitle"]', document.title);
+    setText('[data-bind="title"]', property.title);
+    setText('[data-bind="addressLine"]', property.location?.addressLine || "");
+    setText('[data-bind="rating"]', property.reviews?.rating ?? "—");
+    setText('[data-bind="reviewsCountText"]', `(${property.reviews?.count ?? 0} reviews)`);
 
-    // Guests select
+    renderExternalLinks(property.externalLinks || {});
+    renderGallery(property.gallery || []);
     populateGuests(property.booking?.maxGuests || 4);
 
-    // Availability + datepicker
-    const availability = await fetchAvailability(property.slug || slugParam);
-    initDatepickers(availability.booked || []);
+    // Map embed guard (povolíme jen embed URL)
+    const mapsUrl = (property.location?.mapsEmbedUrl || "").trim();
+    const looksLikeEmbed = /^https:\/\/www\.google\.[^/]+\/maps(\?|\/)q=/i.test(mapsUrl) || /\/maps\/embed\?/i.test(mapsUrl) || /output=embed/i.test(mapsUrl);
+    if (mapsUrl && looksLikeEmbed) {
+      setAttr('iframe[data-bind-attr="mapsEmbedSrc"]', "src", mapsUrl);
+    } else if (mapsUrl) {
+      console.warn("mapsEmbedUrl ignored:", mapsUrl);
+    }
 
     const pricing = property.pricing || null;
 
-    // UI elements
     const priceBox = $("#priceBox");
     const btn = $("#requestBtn");
     const note = $("#paymentNote");
@@ -395,6 +396,10 @@
       else msgEl.classList.add("text-medium-gray");
       msgEl.textContent = text || "";
     }
+
+    // Availability + picker
+    const availability = await fetchAvailability(property.slug || slugParam);
+    initDatepickers(availability.booked || []);
 
     const getVal = (id) => (document.getElementById(id)?.value || "").trim();
 
@@ -450,53 +455,35 @@
         btn.textContent = ok ? "Request booking" : `Minimum ${minReq} nights`;
       }
       if (note) {
-        note.textContent = ok ? "Request • Pay to confirm" : `Minimum stay is ${minReq} nights. Please extend your stay.`;
+        note.textContent = ok
+          ? "Request • Pay to confirm"
+          : `Minimum stay is ${minReq} nights. Please extend your stay.`;
       }
-      if (!ok) setMsg(`Minimum stay is ${minReq} nights. Please extend your stay.`, "error");
-      else setMsg("");
+      setMsg(ok ? "" : `Minimum stay is ${minReq} nights. Please extend your stay.`, ok ? "info" : "error");
     };
 
     $("#guests")?.addEventListener("change", updatePricing);
     document.addEventListener("dates:updated", updatePricing);
     updatePricing();
 
-    // Enquiry submit (✅ slug vždy z URL parametru)
+    // Enquiry submit
     btn?.addEventListener("click", async () => {
       try {
         setMsg("");
 
-        const propertySlug = String(getParam("p", "") || property?.slug || "").trim();
+        const propertySlug = (property?.slug || slugParam || "").trim();
+        const checkin = getVal("checkin");
+        const checkout = getVal("checkout");
+        const guests = getVal("guests");
 
-        const checkin = $("#checkin")?.value?.trim();
-        const checkout = $("#checkout")?.value?.trim();
-        const guests = $("#guests")?.value;
+        const name = getVal("enqName");
+        const email = getVal("enqEmail");
 
-        const name = $("#enqName")?.value?.trim() || "";
-        const email = $("#enqEmail")?.value?.trim() || "";
-
-        console.log("slug param", getParam("p", ""));
-        console.log("property.slug from JSON", property?.slug);
-
-        if (!propertySlug) {
-          setMsg("Missing property slug in URL (?p=...)", "error");
-          return;
-        }
-        if (!checkin || !checkout) {
-          setMsg("Select dates first.", "error");
-          return;
-        }
-        if (!guests) {
-          setMsg("Select guests first.", "error");
-          return;
-        }
-        if (!name) {
-          setMsg("Please enter your full name.", "error");
-          return;
-        }
-        if (!email) {
-          setMsg("Please enter your email.", "error");
-          return;
-        }
+        if (!propertySlug) return setMsg("Missing property slug (?p=...)", "error");
+        if (!checkin || !checkout) return setMsg("Select dates first.", "error");
+        if (!guests) return setMsg("Select guests first.", "error");
+        if (!name) return setMsg("Please enter your full name.", "error");
+        if (!email) return setMsg("Please enter your email.", "error");
 
         btn.disabled = true;
         const oldText = btn.textContent;
@@ -511,8 +498,6 @@
           email,
         };
 
-        console.log("ENQUIRY PAYLOAD", payload);
-
         const res = await fetch("./api/enquiry.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -522,13 +507,10 @@
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok || !data?.ok) {
-          if (data?.minNights) {
-            setMsg(`Minimum stay is ${data.minNights} nights. Please extend your stay.`, "error");
-          } else if (res.status === 409) {
-            setMsg("Those dates are no longer available. Please select different dates.", "error");
-          } else {
-            setMsg(data?.error ? `Error: ${data.error}` : `Error sending enquiry (${res.status})`, "error");
-          }
+          if (data?.minNights) setMsg(`Minimum stay is ${data.minNights} nights.`, "error");
+          else if (res.status === 409) setMsg("Those dates are no longer available.", "error");
+          else setMsg(data?.error ? `Error: ${data.error}` : `Error (${res.status})`, "error");
+
           btn.disabled = false;
           btn.textContent = oldText;
           return;
@@ -540,6 +522,7 @@
       } catch (e) {
         console.error(e);
         setMsg("Server error. Please try again.", "error");
+        const btn = $("#requestBtn");
         if (btn) {
           btn.disabled = false;
           btn.textContent = "Request booking";
@@ -548,6 +531,7 @@
     });
   }
 
+  // run
   init().catch((err) => {
     console.error(err);
     document.body.innerHTML = `
