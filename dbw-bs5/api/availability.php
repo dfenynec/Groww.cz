@@ -1,10 +1,6 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../_shared/paths.php';
-require_once __DIR__ . '/../_shared/config.php';
-require_once __DIR__ . '/../_shared/db.php';
-
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
@@ -12,13 +8,29 @@ ini_set('display_errors', '0');
 ini_set('display_startup_errors', '0');
 error_reporting(E_ALL);
 
+/** Vrátí JSON a exit */
 function respond(int $code, array $payload): void {
   http_response_code($code);
   echo json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
   exit;
 }
 
-function clean_slug_local(string $s): string {
+/** Když se stane fatal error, vrať JSON (hoster jinak ukáže jen 500 HTML) */
+register_shutdown_function(function () {
+  $e = error_get_last();
+  if ($e && in_array($e['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR], true)) {
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+      'error' => 'fatal',
+      'message' => $e['message'],
+      'file' => $e['file'],
+      'line' => $e['line'],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  }
+});
+
+function clean_slug(string $s): string {
   $s = strtolower(trim($s));
   $s = preg_replace('~[^a-z0-9\-]~', '', $s);
   return $s ?: '';
@@ -26,8 +38,8 @@ function clean_slug_local(string $s): string {
 
 /**
  * Robustní HTTP GET:
- * - zkusí file_get_contents (pokud allow_url_fopen)
- * - když failne, zkusí cURL
+ * - zkus file_get_contents (allow_url_fopen)
+ * - fallback cURL
  * Vrací: [string|null $body, array $meta]
  */
 function http_get(string $url, int $timeoutSec = 12): array {
@@ -39,7 +51,7 @@ function http_get(string $url, int $timeoutSec = 12): array {
     'error' => null,
   ];
 
-  // 1) file_get_contents (pokud povolené)
+  // 1) file_get_contents
   if (filter_var($url, FILTER_VALIDATE_URL) && (bool)ini_get('allow_url_fopen')) {
     $meta['method'] = 'fopen';
     $ctx = stream_context_create([
@@ -70,9 +82,8 @@ function http_get(string $url, int $timeoutSec = 12): array {
     if ($body !== false && $body !== null && $body !== '') {
       $meta['ok'] = ($code === null) ? true : ($code >= 200 && $code < 300);
       return [$body, $meta];
-    } else {
-      $meta['error'] = 'file_get_contents failed (or empty response)';
     }
+    $meta['error'] = 'file_get_contents failed (or empty response)';
   }
 
   // 2) cURL fallback
@@ -138,8 +149,7 @@ function parse_ical_events(string $ics): array {
     if ($t === 'BEGIN:VEVENT') { $in = true; $cur = []; continue; }
     if ($t === 'END:VEVENT') {
       if (!empty($cur['DTSTART']) && !empty($cur['DTEND'])) $events[] = $cur;
-      $in = false;
-      $cur = [];
+      $in = false; $cur = [];
       continue;
     }
     if (!$in) continue;
@@ -189,6 +199,7 @@ function add_range_exclusive(array &$ranges, string $fromISO, string $toISO): vo
   ];
 }
 
+/** merge end-exclusive ranges */
 function merge_ranges_exclusive(array $ranges): array {
   if (!$ranges) return [];
   usort($ranges, fn($a, $b) => strcmp($a['from'], $b['from']));
@@ -197,6 +208,7 @@ function merge_ranges_exclusive(array $ranges): array {
   $cur = $ranges[0];
 
   foreach (array_slice($ranges, 1) as $r) {
+    // merge if overlap OR touch: next.from <= cur.to
     if ($r['from'] <= $cur['to']) {
       if ($r['to'] > $cur['to']) $cur['to'] = $r['to'];
     } else {
@@ -204,20 +216,22 @@ function merge_ranges_exclusive(array $ranges): array {
       $cur = $r;
     }
   }
-
   $out[] = $cur;
   return $out;
 }
 
-function fetch_db_ranges_exclusive(string $slug, array &$warnings): array {
-  $dbPath = db_path();
+/** načte CONFIRMED rezervace z SQLite */
+function fetch_db_ranges_exclusive(string $dbPath, string $slug, array &$warnings): array {
   if (!file_exists($dbPath)) {
     $warnings[] = "DB not found: {$dbPath}";
     return [];
   }
 
   try {
-    $pdo = db();
+    $pdo = new PDO('sqlite:' . $dbPath, null, null, [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
 
     $exists = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='reservations'")->fetchColumn();
     if (!$exists) {
@@ -246,18 +260,36 @@ function fetch_db_ranges_exclusive(string $slug, array &$warnings): array {
   }
 }
 
+// ---------------- MAIN ----------------
 try {
-  $slug = clean_slug_local((string)($_GET['property'] ?? ''));
+  $slug = clean_slug((string)($_GET['property'] ?? ''));
   if ($slug === '') respond(400, ['error' => 'missing property']);
 
-  $warnings = [];
+  // /dbw-bs5/api -> /dbw-bs5
+  $base = realpath(__DIR__ . '/..');
+  if ($base === false) respond(500, ['error' => 'base realpath failed', 'dir' => __DIR__]);
 
-  // iCal config (ze shared)
-  $cfg = ical_config_read(); // <- očekáváme array
+  $warnings = [];
+  $ranges = [];
+
+  // iCal config
+  $configPath = $base . '/private/ical-config.json';
+  if (!file_exists($configPath)) respond(500, ['error' => 'config missing', 'configPath' => $configPath]);
+  if (!is_readable($configPath)) respond(500, ['error' => 'config not readable', 'configPath' => $configPath]);
+
+  $raw = file_get_contents($configPath);
+  if ($raw === false) respond(500, ['error' => 'config read failed', 'configPath' => $configPath]);
+
+  $cfg = json_decode($raw, true);
   if (!is_array($cfg)) {
-    respond(500, ['error' => 'ical config invalid']);
+    respond(500, [
+      'error' => 'config invalid json',
+      'json_error' => json_last_error_msg(),
+      'configPath' => $configPath,
+    ]);
   }
 
+  // iCal urls (optional)
   $urls = [];
   if (!empty($cfg[$slug]) && is_array($cfg[$slug])) {
     if (!empty($cfg[$slug]['airbnb']))  $urls[] = (string)$cfg[$slug]['airbnb'];
@@ -267,7 +299,6 @@ try {
   }
 
   // 1) iCal ranges
-  $ranges = [];
   foreach ($urls as $u) {
     [$ics, $meta] = http_get($u);
 
@@ -285,7 +316,8 @@ try {
   }
 
   // 2) DB confirmed ranges
-  $rangesDb = fetch_db_ranges_exclusive($slug, $warnings);
+  $dbPath = $base . '/storage/app.sqlite';
+  $rangesDb = fetch_db_ranges_exclusive($dbPath, $slug, $warnings);
   $ranges = array_merge($ranges, $rangesDb);
 
   // 3) merge
