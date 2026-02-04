@@ -587,41 +587,8 @@
     document.addEventListener("dates:updated", updatePricing);
     updatePricing();
 
-    // Enquiry submit
-    btn?.addEventListener("click", async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      try {
-        setMsg("");
-
-        const propertySlug = (property?.slug || slugParam || "").trim();
-        const checkin = getVal("checkin");
-        const checkout = getVal("checkout");
-        const guests = getVal("guests");
-
-        const name = getVal("enqName");
-        const email = getVal("enqEmail");
-
-        if (!propertySlug) return setMsg("Missing property slug (?p=...)", "error");
-        if (!checkin || !checkout) return setMsg("Select dates first.", "error");
-        if (!guests) return setMsg("Select guests first.", "error");
-        if (!name) return setMsg("Please enter your full name.", "error");
-        if (!email) return setMsg("Please enter your email.", "error");
-
-        btn.disabled = true;
-        const oldText = btn.textContent;
-        btn.textContent = "Sending...";
-
-        const payload = {
-          property: propertySlug,
-          checkin,
-          checkout,
-          guests: Number(guests),
-          name,
-          email,
-        };
-
-  async function postJsonNoRedirect(url, payload) {
+  // ---- helper: POST JSON + follow redirect (pro hostingy co dělají 301/302) ----
+async function postJsonFollowRedirect(url, payload) {
   const res = await fetch(url, {
     method: "POST",
     redirect: "manual",
@@ -631,11 +598,12 @@
     cache: "no-store",
   });
 
+  // pokud server vrátí redirect, pošli POST ještě jednou na Location
   if ([301, 302, 303, 307, 308].includes(res.status)) {
     const loc = res.headers.get("Location");
-    if (!loc) throw new Error(`Redirect ${res.status} without Location`);
+    if (!loc) return res;
 
-    const redirectedUrl = new URL(loc, new URL(url, location.href)).toString();
+    const redirectedUrl = new URL(loc, url).toString();
 
     return fetch(redirectedUrl, {
       method: "POST",
@@ -649,48 +617,73 @@
   return res;
 }
 
-const API_ENQUIRY = `${location.origin}/dbw-bs5/api/enquiry.php`;
-const res = await postJsonNoRedirect(API_ENQUIRY, payload);
-const data = await res.json().catch(() => ({}));
+// Enquiry submit
+btn?.addEventListener("click", async (e) => {
+  e.preventDefault();
+  e.stopPropagation();
 
-if (res.status === 301 || res.status === 302 || res.status === 307 || res.status === 308) {
-  console.error("Redirected to:", res.headers.get("Location"));
-}
-        const data = await res.json().catch(() => ({}));
+  try {
+    setMsg("");
 
-        if (!res.ok || !data?.ok) {
-          if (data?.minNights) setMsg(`Minimum stay is ${data.minNights} nights.`, "error");
-          else if (res.status === 409) setMsg("Those dates are no longer available.", "error");
-          else setMsg(data?.error ? `Error: ${data.error}` : `Error (${res.status})`, "error");
+    const propertySlug = (property?.slug || slugParam || "").trim();
+    const checkin = getVal("checkin");
+    const checkout = getVal("checkout");
+    const guests = getVal("guests");
+    const name = getVal("enqName");
+    const email = getVal("enqEmail");
 
-          btn.disabled = false;
-          btn.textContent = oldText;
-          return;
-        }
+    if (!propertySlug) return setMsg("Missing property slug (?p=...)", "error");
+    if (!checkin || !checkout) return setMsg("Select dates first.", "error");
+    if (!guests) return setMsg("Select guests first.", "error");
+    if (!name) return setMsg("Please enter your full name.", "error");
+    if (!email) return setMsg("Please enter your email.", "error");
 
-        setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
-        btn.textContent = "Sent ✅";
-        btn.disabled = true;
-      } catch (e) {
-        console.error(e);
-        setMsg("Server error. Please try again.", "error");
-        const b = $("#requestBtn");
-        if (b) {
-          b.disabled = false;
-          b.textContent = "Request booking";
-        }
-      }
-    });
+    btn.disabled = true;
+    const oldText = btn.textContent;
+    btn.textContent = "Sending...";
+
+    const payload = {
+      property: propertySlug,
+      checkin,
+      checkout,
+      guests: Number(guests),
+      name,
+      email,
+    };
+
+    const API_ENQUIRY = `${location.origin}/dbw-bs5/api/enquiry.php`;
+
+    const res = await postJsonFollowRedirect(API_ENQUIRY, payload);
+
+    // pro debug když to zase zlobí:
+    // console.log("ENQUIRY status:", res.status, "location:", res.headers.get("Location"));
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data?.ok) {
+      if (data?.minNights) setMsg(`Minimum stay is ${data.minNights} nights.`, "error");
+      else if (res.status === 409) setMsg("Those dates are no longer available.", "error");
+      else setMsg(data?.error ? `Error: ${data.error}` : `Error (${res.status})`, "error");
+
+      btn.disabled = false;
+      btn.textContent = oldText;
+      return;
+    }
+
+    setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
+    btn.textContent = "Sent ✅";
+    btn.disabled = true;
+
+  } catch (err) {
+    console.error(err);
+    setMsg("Server error. Please try again.", "error");
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Request booking";
+    }
+  }
+});
   }
 
-  init().catch((err) => {
-    console.error(err);
-    document.body.innerHTML = `
-      <div style="padding:24px;font-family:system-ui">
-        <h2>Page failed to load</h2>
-        <p style="color:#555">${escapeHtml(err.message || String(err))}</p>
-        <p style="color:#777">Check your JSON path and slug.</p>
-      </div>
-    `;
-  });
+
 })();
