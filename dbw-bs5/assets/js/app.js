@@ -588,7 +588,9 @@
     updatePricing();
 
     // Enquiry submit
-    btn?.addEventListener("click", async () => {
+    btn?.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       try {
         setMsg("");
 
