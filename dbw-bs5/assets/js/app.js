@@ -21,7 +21,7 @@
   }
 
   function parseISODate(s) {
-    const [y, m, d] = s.split("-").map(Number);
+    const [y, m, d] = String(s).split("-").map(Number);
     return new Date(Date.UTC(y, m - 1, d));
   }
 
@@ -67,7 +67,7 @@
   // bookedRanges = [{from:"YYYY-MM-DD", to:"YYYY-MM-DD"}] where "to" = checkout (end-exclusive)
   function buildBookedNightsSet(bookedRanges) {
     const set = new Set();
-    (bookedRanges || []).forEach(r => {
+    (bookedRanges || []).forEach((r) => {
       const start = isoToLocalDate(r.from);
       const endExclusive = isoToLocalDate(r.to);
       for (let cur = new Date(start); cur < endExclusive; cur = addDaysLocal(cur, 1)) {
@@ -99,7 +99,7 @@
   // ---------- Pricing ----------
   function getRuleForDate(pricing, isoDate) {
     const rules = pricing.rules || [];
-    return rules.find(r => isoDate >= r.from && isoDate <= r.to) || null;
+    return rules.find((r) => isoDate >= r.from && isoDate <= r.to) || null;
   }
 
   function nightPriceForDate(pricing, isoDate) {
@@ -178,8 +178,16 @@
 
   // ---------- Availability ----------
   async function fetchAvailability(slug) {
-    const res = await fetch(`./api/availability.php?property=${encodeURIComponent(slug)}`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Availability API failed");
+    const url = `./api/availability.php?property=${encodeURIComponent(slug)}`;
+    const res = await fetch(url, { cache: "no-store" });
+
+    // Debug: když je 500, uvidíš aspoň odpověď v konzoli
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      console.error("Availability API error:", res.status, t);
+      throw new Error("Availability API failed");
+    }
+
     return res.json();
   }
 
@@ -244,7 +252,8 @@
           if (cout <= cin) cout = addDaysLocal(cin, 1);
 
           // fail-safe trim against booked nights
-          cout = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
+          const trimmed = trimCheckoutToAvoidBooked(cin, cout, bookedNightsSet);
+          cout = trimmed;
 
           // write chosen (no silent min-nights auto extend)
           checkinEl.value = localDateToISO(cin);
@@ -260,7 +269,7 @@
 
         checkinEl.addEventListener("focus", () => picker.show());
         checkoutEl.addEventListener("focus", () => picker.show());
-      }
+      },
     });
   }
 
@@ -282,7 +291,7 @@
   }
 
   function renderGallery(urls = []) {
-    const imgs = document.querySelectorAll('#photos img[data-gallery-index]');
+    const imgs = document.querySelectorAll("#photos img[data-gallery-index]");
     if (!imgs.length) return;
 
     const list = (urls || []).slice(0, imgs.length);
@@ -318,7 +327,9 @@
 
     if (airbnb?.url) {
       items.push(`
-        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(airbnb.url)}" target="_blank" rel="noopener">
+        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(
+          airbnb.url
+        )}" target="_blank" rel="noopener">
           <span class="me-2">${escapeHtml(airbnb.label)}</span>
           <img class="dbw-trust-logo" src="./images/airbnb.svg" alt="Airbnb">
         </a>
@@ -327,7 +338,9 @@
 
     if (booking?.url) {
       items.push(`
-        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(booking.url)}" target="_blank" rel="noopener">
+        <a class="btn btn-light m-1 btn-medium btn-rounded d-table d-lg-inline-block" href="${escapeHtml(
+          booking.url
+        )}" target="_blank" rel="noopener">
           <span class="me-2">${escapeHtml(booking.label)}</span>
           <img class="dbw-trust-logo" src="./images/booking.svg" alt="Booking.com">
         </a>
@@ -341,47 +354,68 @@
     const host = $("#quickFacts");
     if (!host) return;
     const cols = (facts || []).slice(0, 4);
-    host.innerHTML = cols.map((f, idx) => `
+    host.innerHTML = cols
+      .map(
+        (f, idx) => `
       <div class="col text-center ${idx < cols.length - 1 ? "border-end" : ""} xs-border-end-0 border-color-extra-medium-gray alt-font md-mb-15px">
         <span class="fs-19 text-dark-gray fw-600">${escapeHtml(f.label)}:</span> ${escapeHtml(f.value)}
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
   function renderAmenitiesTop(items = []) {
     const host = document.querySelector('[data-bind-list="amenitiesTop"]');
     if (!host) return;
-    host.innerHTML = (items || []).slice(0, 4).map((a, idx) => `
+    host.innerHTML = (items || [])
+      .slice(0, 4)
+      .map(
+        (a, idx) => `
       <div class="col text-center ${idx < 3 ? "border-end border-color-extra-medium-gray" : ""} sm-mb-30px">
         <div class="text-base-color fs-28 mb-10px">${escapeHtml(a.icon || "✓")}</div>
         <span class="text-dark-gray d-block lh-20">${escapeHtml(a.label)}</span>
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
   function renderAmenitiesColumns(columns = []) {
     const host = document.querySelector('[data-bind-list="amenitiesColumns"]');
     if (!host) return;
 
-    host.innerHTML = (columns || []).slice(0, 3).map(col => `
+    host.innerHTML = (columns || [])
+      .slice(0, 3)
+      .map(
+        (col) => `
       <div class="col-6 col-sm-4">
         <ul class="list-style-02 ps-0 mb-0">
-          ${(col || []).map(item => `<li><i class="bi bi-check-circle text-green icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
+          ${(col || [])
+            .map((item) => `<li><i class="bi bi-check-circle text-green icon-small me-10px"></i>${escapeHtml(item)}</li>`)
+            .join("")}
         </ul>
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
   function renderHouseRules(rules = []) {
     const host = document.querySelector('[data-bind-list="houseRules"]');
     if (!host) return;
-    host.innerHTML = (rules || []).map(r => `<li><i class="bi bi-exclamation-circle text-red icon-small me-10px"></i>${escapeHtml(r)}</li>`).join("");
+    host.innerHTML = (rules || [])
+      .map((r) => `<li><i class="bi bi-exclamation-circle text-red icon-small me-10px"></i>${escapeHtml(r)}</li>`)
+      .join("");
   }
 
   function renderReviews(reviews = []) {
     const host = document.querySelector('[data-bind-list="reviews"]');
     if (!host) return;
-    host.innerHTML = (reviews || []).slice(0, 6).map(r => `
+    host.innerHTML = (reviews || [])
+      .slice(0, 6)
+      .map(
+        (r) => `
       <div class="col-12 mb-15px">
         <div class="border-radius-10px bg-white box-shadow-double-large p-25px">
           <div class="d-flex align-items-center justify-content-between">
@@ -391,13 +425,18 @@
           <div class="text-medium-gray mt-8px">${escapeHtml(r.text || "")}</div>
         </div>
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
   function renderFAQ(items = []) {
     const host = document.querySelector('[data-bind-list="faq"]');
     if (!host) return;
-    host.innerHTML = (items || []).slice(0, 8).map((q, i) => `
+    host.innerHTML = (items || [])
+      .slice(0, 8)
+      .map(
+        (q, i) => `
       <div class="accordion mb-10px" id="faqAcc${i}">
         <div class="accordion-item border border-radius-10px overflow-hidden">
           <h2 class="accordion-header" id="h${i}">
@@ -410,7 +449,9 @@
           </div>
         </div>
       </div>
-    `).join("");
+    `
+      )
+      .join("");
   }
 
   function populateGuests(maxGuests = 4) {
@@ -439,7 +480,7 @@
     const slug = getParam("p", "nissi-golden-sands-a15");
     const jsonUrl = `./data/properties/${encodeURIComponent(slug)}.json`;
 
-    const property = await fetch(jsonUrl, { cache: "no-store" }).then(r => {
+    const property = await fetch(jsonUrl, { cache: "no-store" }).then((r) => {
       if (!r.ok) throw new Error(`Property JSON not found: ${jsonUrl}`);
       return r.json();
     });
@@ -486,7 +527,7 @@
     // Guests select
     populateGuests(property.booking?.maxGuests || 4);
 
-    // Availability + datepicker
+    // Availability + datepicker (⚠️ guard if pricing missing)
     const availability = await fetchAvailability(property.slug || slug);
     initDatepickers(availability.booked || [], pricing?.minNightsDefault || 1);
 
@@ -505,11 +546,14 @@
       msgEl.textContent = text || "";
     }
 
+    const getVal = (id) => (document.getElementById(id)?.value || "").trim();
+
     const updatePricing = () => {
       if (!pricing) return;
 
-      const checkin = $("#checkin")?.value;
-      const checkout = $("#checkout")?.value;
+      const checkin = getVal("checkin");
+      const checkout = getVal("checkout");
+      const guests = getVal("guests");
 
       const minDefault = pricing.minNightsDefault || 1;
 
@@ -536,14 +580,13 @@
           btn.textContent = "Select dates";
         }
         if (note) note.textContent = "Select valid dates";
-        setMsg("");
+        setMsg("Select valid dates.", "error");
         return;
       }
 
       renderPriceBox(priceBox, pricing, calc, minReq);
 
       // guests gating
-      const guests = $("#guests")?.value;
       if (!guests) {
         if (btn) {
           btn.disabled = true;
@@ -565,9 +608,11 @@
           ? "Request • Pay to confirm"
           : `Minimum stay is ${minReq} nights. Please extend your stay.`;
       }
-      setMsg("");
+      if (!ok) setMsg(`Minimum stay is ${minReq} nights. Please extend your stay.`, "error");
+      else setMsg("");
     };
 
+    // listeners
     $("#guests")?.addEventListener("change", updatePricing);
     document.addEventListener("dates:updated", updatePricing);
     updatePricing();
@@ -587,9 +632,11 @@
       try {
         setMsg("");
 
-        const checkin = $("#checkin")?.value;
-        const checkout = $("#checkout")?.value;
-        const guests = $("#guests")?.value;
+        const checkin = getVal("checkin");
+        const checkout = getVal("checkout");
+        const guests = getVal("guests");
+        const name = getVal("enqName");     // ✅ matches your HTML
+        const email = getVal("enqEmail");   // ✅ matches your HTML
 
         if (!checkin || !checkout) {
           setMsg("Select dates first.", "error");
@@ -597,6 +644,14 @@
         }
         if (!guests) {
           setMsg("Select guests first.", "error");
+          return;
+        }
+        if (!name) {
+          setMsg("Please enter your full name.", "error");
+          return;
+        }
+        if (!email) {
+          setMsg("Please enter your email.", "error");
           return;
         }
 
@@ -609,11 +664,8 @@
           checkin,
           checkout,
           guests: Number(guests),
-          // až přidáš inputs:
-          // name: $("#guestName")?.value || "",
-          // email: $("#guestEmail")?.value || "",
-          // phone: $("#guestPhone")?.value || "",
-          // message: $("#guestMessage")?.value || "",
+          name,
+          email,
         };
 
         const { res, data } = await sendEnquiry(payload);
@@ -634,17 +686,18 @@
         setMsg(`Enquiry sent ✅ (ID #${data.id}). We’ll get back to you shortly.`, "success");
         btn.textContent = "Sent ✅";
         btn.disabled = true;
-
       } catch (e) {
         console.error(e);
         setMsg("Server error. Please try again.", "error");
-        btn.disabled = false;
-        btn.textContent = "Request booking";
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Request booking";
+        }
       }
     });
   }
 
-  init().catch(err => {
+  init().catch((err) => {
     console.error(err);
     document.body.innerHTML = `
       <div style="padding:24px;font-family:system-ui">
