@@ -266,7 +266,7 @@
     });
   }
 
-  // ---------- Simple bind helpers ----------
+  // ---------- Bind helpers ----------
   function setText(selector, value) {
     const el = $(selector);
     if (el) el.textContent = value ?? "";
@@ -329,12 +329,113 @@
     host.innerHTML = items.join("");
   }
 
+  function renderQuickFacts(facts = []) {
+    const host = $("#quickFacts");
+    if (!host) return;
+    const cols = (facts || []).slice(0, 4);
+    host.innerHTML = cols
+      .map(
+        (f, idx) => `
+        <div class="col text-center ${idx < cols.length - 1 ? "border-end" : ""}">
+          <span class="fs-19 text-dark-gray fw-600">${escapeHtml(f.label)}:</span> ${escapeHtml(f.value)}
+        </div>
+      `
+      )
+      .join("");
+  }
+
+  function renderAmenitiesTop(items = []) {
+    const host = document.querySelector('[data-bind-list="amenitiesTop"]');
+    if (!host) return;
+    host.innerHTML = (items || [])
+      .slice(0, 4)
+      .map(
+        (a, idx) => `
+        <div class="col text-center ${idx < 3 ? "border-end border-color-extra-medium-gray" : ""}">
+          <div class="text-base-color fs-28 mb-10px">${escapeHtml(a.icon || "✓")}</div>
+          <span class="text-dark-gray d-block lh-20">${escapeHtml(a.label)}</span>
+        </div>
+      `
+      )
+      .join("");
+  }
+
+  function renderAmenitiesColumns(columns = []) {
+    const host = document.querySelector('[data-bind-list="amenitiesColumns"]');
+    if (!host) return;
+
+    host.innerHTML = (columns || [])
+      .slice(0, 3)
+      .map(
+        (col) => `
+        <div class="col-6 col-sm-4">
+          <ul class="list-style-02 ps-0 mb-0">
+            ${(col || []).map((item) => `<li><i class="bi bi-check-circle text-green icon-small me-10px"></i>${escapeHtml(item)}</li>`).join("")}
+          </ul>
+        </div>
+      `
+      )
+      .join("");
+  }
+
+  function renderHouseRules(rules = []) {
+    const host = document.querySelector('[data-bind-list="houseRules"]');
+    if (!host) return;
+    host.innerHTML = (rules || [])
+      .map((r) => `<li><i class="bi bi-exclamation-circle text-red icon-small me-10px"></i>${escapeHtml(r)}</li>`)
+      .join("");
+  }
+
+  function renderReviews(reviews = []) {
+    const host = document.querySelector('[data-bind-list="reviews"]');
+    if (!host) return;
+    host.innerHTML = (reviews || [])
+      .slice(0, 6)
+      .map(
+        (r) => `
+        <div class="col-12 mb-15px">
+          <div class="border-radius-10px bg-white box-shadow-double-large p-25px">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="fw-700 text-dark-gray">${escapeHtml(r.name || "Guest")}</div>
+              <div class="text-base-color">${"★".repeat(Math.max(0, Math.min(5, r.stars || 5)))}</div>
+            </div>
+            <div class="text-medium-gray mt-8px">${escapeHtml(r.text || "")}</div>
+          </div>
+        </div>
+      `
+      )
+      .join("");
+  }
+
+  function renderFAQ(items = []) {
+    const host = document.querySelector('[data-bind-list="faq"]');
+    if (!host) return;
+    host.innerHTML = (items || [])
+      .slice(0, 8)
+      .map(
+        (q, i) => `
+        <div class="accordion mb-10px" id="faqAcc${i}">
+          <div class="accordion-item border border-radius-10px overflow-hidden">
+            <h2 class="accordion-header" id="h${i}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c${i}">
+                ${escapeHtml(q.q)}
+              </button>
+            </h2>
+            <div id="c${i}" class="accordion-collapse collapse" aria-labelledby="h${i}">
+              <div class="accordion-body text-medium-gray">${escapeHtml(q.a)}</div>
+            </div>
+          </div>
+        </div>
+      `
+      )
+      .join("");
+  }
+
   function populateGuests(maxGuests = 4) {
     const sel = $("#guests");
     if (!sel) return;
 
     sel.innerHTML = "";
-
     const placeholder = document.createElement("option");
     placeholder.value = "";
     placeholder.textContent = "Select guests";
@@ -360,29 +461,53 @@
       return r.json();
     });
 
-    // Basic binds
+    // ---- binds ----
     document.title = property.seo?.title || `${property.title} • Direct Booking`;
     setText('[data-bind="pageTitle"]', document.title);
+    setText('[data-bind="metaDescription"]', property.seo?.description || "");
+
     setText('[data-bind="title"]', property.title);
     setText('[data-bind="addressLine"]', property.location?.addressLine || "");
-    setText('[data-bind="rating"]', property.reviews?.rating ?? "—");
-    setText('[data-bind="reviewsCountText"]', `(${property.reviews?.count ?? 0} reviews)`);
 
+    setText('[data-bind="rating"]', property.reviews?.rating ?? "—");
+    setText('[data-bind="ratingSmall"]', property.reviews?.rating ?? "—");
+    setText('[data-bind="reviewsCountText"]', `(${property.reviews?.count ?? 0} reviews)`);
+    setText('[data-bind="reviewsCountSmall"]', `(${property.reviews?.count ?? 0})`);
+
+    setText('[data-bind="description"]', property.description || "");
+    setText('[data-bind="year"]', String(new Date().getFullYear()));
+
+    // sections
     renderExternalLinks(property.externalLinks || {});
     renderGallery(property.gallery || []);
-    populateGuests(property.booking?.maxGuests || 4);
+    renderQuickFacts(property.quickFacts || []);
+    renderAmenitiesTop(property.amenitiesTop || []);
+    renderAmenitiesColumns(property.amenitiesColumns || []);
+    renderHouseRules(property.houseRules || []);
+    renderReviews(property.reviews?.items || []);
+    renderFAQ(property.faq || []);
 
-    // Map embed guard (povolíme jen embed URL)
+    // Map embed (neblokuj, jen nastav)
     const mapsUrl = (property.location?.mapsEmbedUrl || "").trim();
-    const looksLikeEmbed = /^https:\/\/www\.google\.[^/]+\/maps(\?|\/)q=/i.test(mapsUrl) || /\/maps\/embed\?/i.test(mapsUrl) || /output=embed/i.test(mapsUrl);
-    if (mapsUrl && looksLikeEmbed) {
-      setAttr('iframe[data-bind-attr="mapsEmbedSrc"]', "src", mapsUrl);
-    } else if (mapsUrl) {
-      console.warn("mapsEmbedUrl ignored:", mapsUrl);
+    if (mapsUrl) setAttr('iframe[data-bind-attr="mapsEmbedSrc"]', "src", mapsUrl);
+
+    // pricing header
+    const pricing = property.pricing || null;
+    if (pricing) {
+      const cur = pricing.currency || "EUR";
+      const from = pricing.baseNight ?? 0;
+      setText('[data-bind="fromPriceText"]', `From ${formatMoney(from, cur)}`);
+      setText('[data-bind="nightPriceText"]', formatMoney(from, cur));
     }
 
-    const pricing = property.pricing || null;
+    // guests
+    populateGuests(property.booking?.maxGuests || 4);
 
+    // availability + picker
+    const availability = await fetchAvailability(property.slug || slugParam);
+    initDatepickers(availability.booked || []);
+
+    // booking box elements
     const priceBox = $("#priceBox");
     const btn = $("#requestBtn");
     const note = $("#paymentNote");
@@ -396,10 +521,6 @@
       else msgEl.classList.add("text-medium-gray");
       msgEl.textContent = text || "";
     }
-
-    // Availability + picker
-    const availability = await fetchAvailability(property.slug || slugParam);
-    initDatepickers(availability.booked || []);
 
     const getVal = (id) => (document.getElementById(id)?.value || "").trim();
 
@@ -522,16 +643,15 @@
       } catch (e) {
         console.error(e);
         setMsg("Server error. Please try again.", "error");
-        const btn = $("#requestBtn");
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = "Request booking";
+        const b = $("#requestBtn");
+        if (b) {
+          b.disabled = false;
+          b.textContent = "Request booking";
         }
       }
     });
   }
 
-  // run
   init().catch((err) => {
     console.error(err);
     document.body.innerHTML = `
