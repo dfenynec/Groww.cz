@@ -635,10 +635,9 @@ async function postJson(url, payload) {
           email,
         };
 
-        // ⚠️ důležité: použij .php (ne /api/enquiry bez php)
-        const API_ENQUIRY = `${location.origin}/dbw-bs5/api/enquiry.php`;
+  
 
-        const res = await postJsonFollowRedirect(API_ENQUIRY, payload);
+       const res = await postJson("./api/enquiry", payload);
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok || !data?.ok) {
