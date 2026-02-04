@@ -1,32 +1,68 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/paths.php';
+
+/**
+ * Shared SQLite helpers + idempotent migrations
+ * - no $pdo usage outside functions (fixes your fatal error)
+ */
+
+function base_path(): string {
+  $base = realpath(__DIR__ . '/..'); // /dbw-bs5
+  if ($base === false) {
+    throw new RuntimeException("Base path not found from " . __DIR__);
+  }
+  return $base;
+}
 
 function db_path(): string {
-  return db_file();
+  return base_path() . '/storage/app.sqlite';
+}
+
+function ensure_storage_dir(): void {
+  $dir = base_path() . '/storage';
+  if (!is_dir($dir)) {
+    @mkdir($dir, 0775, true);
+  }
 }
 
 function db(): PDO {
   static $pdo = null;
   if ($pdo instanceof PDO) return $pdo;
 
+  ensure_storage_dir();
+
   $path = db_path();
+
   $pdo = new PDO('sqlite:' . $path, null, null, [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
   ]);
 
-  // Basic pragmas
+  // Pragmas
   $pdo->exec("PRAGMA journal_mode = WAL;");
   $pdo->exec("PRAGMA foreign_keys = ON;");
 
-  // MIGRACE (idempotent)
+  // --- MIGRATIONS (idempotent) ---
+
+  // Admin users (for login)
+  $pdo->exec("
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL UNIQUE,
+      password_hash TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'admin',
+      created_at TEXT NOT NULL
+    );
+  ");
+  $pdo->exec("CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);");
+
+  // Reservations / enquiries
   $pdo->exec("
     CREATE TABLE IF NOT EXISTS reservations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       property_slug TEXT NOT NULL,
-      checkin TEXT NOT NULL,   -- YYYY-MM-DD
-      checkout TEXT NOT NULL,  -- YYYY-MM-DD (end-exclusive)
+      checkin TEXT NOT NULL,    -- YYYY-MM-DD
+      checkout TEXT NOT NULL,   -- YYYY-MM-DD (end-exclusive)
       guests INTEGER,
 
       guest_name TEXT,
@@ -40,18 +76,37 @@ function db(): PDO {
       created_at TEXT NOT NULL
     );
   ");
-
   $pdo->exec("CREATE INDEX IF NOT EXISTS idx_resv_property_status ON reservations(property_slug, status);");
   $pdo->exec("CREATE INDEX IF NOT EXISTS idx_resv_dates ON reservations(checkin, checkout);");
+
+  // Seed default admin if none exists
+  seed_default_admin($pdo);
 
   return $pdo;
 }
 
-// --- helpers ---
+function seed_default_admin(PDO $pdo): void {
+  $count = (int)($pdo->query("SELECT COUNT(*) FROM users")->fetchColumn() ?: 0);
+  if ($count > 0) return;
+
+  $email = 'admin@example.com';
+  $pass  = 'admin12345';
+  $hash  = password_hash($pass, PASSWORD_DEFAULT);
+
+  $stmt = $pdo->prepare("INSERT INTO users(email, password_hash, role, created_at) VALUES(:e,:h,'admin',:c)");
+  $stmt->execute([
+    ':e' => $email,
+    ':h' => $hash,
+    ':c' => gmdate('c'),
+  ]);
+}
+
+// -------- helpers used across api/admin --------
+
 function clean_slug(string $s): string {
   $s = strtolower(trim($s));
   $s = preg_replace('~[^a-z0-9\-]~', '', $s);
-  return $s ?? '';
+  return $s ?: '';
 }
 
 function is_valid_iso_date(string $s): bool {
@@ -76,8 +131,7 @@ function ranges_overlap_exclusive(string $a_from, string $a_to, string $b_from, 
 }
 
 /**
- * Vrátí true, pokud termín koliduje s CONFIRMED rezervací v DB.
- * (iCal kolize řeší availability pro picker – pro enquiry je tohle MVP kontrola)
+ * True if requested range collides with a CONFIRMED reservation in DB.
  */
 function db_has_conflict(string $slug, string $checkin, string $checkout): bool {
   $pdo = db();
@@ -90,7 +144,7 @@ function db_has_conflict(string $slug, string $checkin, string $checkout): bool 
   $stmt->execute([':slug' => $slug]);
 
   foreach ($stmt->fetchAll() as $row) {
-    if (ranges_overlap_exclusive($checkin, $checkout, $row['checkin'], $row['checkout'])) {
+    if (ranges_overlap_exclusive($checkin, $checkout, (string)$row['checkin'], (string)$row['checkout'])) {
       return true;
     }
   }
@@ -98,13 +152,10 @@ function db_has_conflict(string $slug, string $checkin, string $checkout): bool 
 }
 
 /**
- * Načte minNightsDefault z /data/properties/{slug}.json
+ * Load minNightsDefault from /data/properties/{slug}.json
  */
 function get_min_nights_for_property(string $slug): int {
-  $base = realpath(__DIR__ . '/..');
-  if ($base === false) return 1;
-
-  $path = $base . '/data/properties/' . $slug . '.json';
+  $path = base_path() . '/data/properties/' . $slug . '.json';
   if (!file_exists($path)) return 1;
 
   $raw = file_get_contents($path);
@@ -115,21 +166,19 @@ function get_min_nights_for_property(string $slug): int {
   return max(1, $min);
 }
 
-$pdo->exec("
-  CREATE TABLE IF NOT EXISTS admin_users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
-    created_at TEXT NOT NULL
-  );
-");
-// seed default admin (jen pokud neexistuje)
-$exists = $pdo->query("SELECT COUNT(*) FROM admin_users")->fetchColumn();
-if ((int)$exists === 0) {
-  $email = 'admin@example.com';
-  $hash = password_hash('admin12345', PASSWORD_DEFAULT);
-  $now = gmdate('c');
+// ------- auth helpers (optional, but handy) -------
 
-  $stmt = $pdo->prepare("INSERT INTO admin_users (email, password_hash, created_at) VALUES (:e,:h,:t)");
-  $stmt->execute([':e'=>$email, ':h'=>$hash, ':t'=>$now]);
+function user_find_by_email(string $email): ?array {
+  $pdo = db();
+  $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :e LIMIT 1");
+  $stmt->execute([':e' => $email]);
+  $row = $stmt->fetch();
+  return $row ? $row : null;
+}
+
+function user_verify_login(string $email, string $password): ?array {
+  $u = user_find_by_email($email);
+  if (!$u) return null;
+  if (!password_verify($password, (string)$u['password_hash'])) return null;
+  return $u;
 }
