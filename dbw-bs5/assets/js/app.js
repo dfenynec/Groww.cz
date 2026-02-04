@@ -588,33 +588,18 @@
     updatePricing();
 
      // ---- helper: POST JSON + follow redirect (pro hostingy co dělají 301/302) ----
-    async function postJsonFollowRedirect(url, payload) {
-      const res = await fetch(url, {
-        method: "POST",
-        redirect: "manual",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        credentials: "same-origin",
-        cache: "no-store",
-      });
+  // ---- helper: POST JSON ----
+async function postJson(url, payload) {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    credentials: "same-origin",
+    cache: "no-store",
+  });
 
-      if ([301, 302, 303, 307, 308].includes(res.status)) {
-        const loc = res.headers.get("Location");
-        if (!loc) return res;
-
-        const redirectedUrl = new URL(loc, url).toString();
-
-        return fetch(redirectedUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          credentials: "same-origin",
-          cache: "no-store",
-        });
-      }
-
-      return res;
-    }
+  return res;
+}
 
     // Enquiry submit
     btn?.addEventListener("click", async (e) => {
