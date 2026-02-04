@@ -7,6 +7,45 @@ require_login();
 $base = realpath(__DIR__ . '/..');
 if ($base === false) { http_response_code(500); echo "Base path not found"; exit; }
 
+// ---- iCal export token storage ----
+$tokenPath = $base . '/private/ical-export-tokens.json';
+
+function load_tokens(string $path): array {
+  if (!file_exists($path)) return [];
+  $raw = file_get_contents($path);
+  $data = json_decode($raw ?: '', true);
+  return is_array($data) ? $data : [];
+}
+
+function save_tokens_atomic(string $path, array $data): bool {
+  $dir = dirname($path);
+  if (!is_dir($dir)) @mkdir($dir, 0775, true);
+
+  $tmp = $path . '.tmp';
+  $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+  if ($json === false) return false;
+
+  $ok = (file_put_contents($tmp, $json, LOCK_EX) !== false);
+  if (!$ok) return false;
+
+  return @rename($tmp, $path);
+}
+
+function gen_token_hex(int $bytes = 24): string {
+  try {
+    return bin2hex(random_bytes($bytes));
+  } catch (Throwable $e) {
+    // fallback (horší, ale aspoň něco)
+    return bin2hex(openssl_random_pseudo_bytes($bytes) ?: str_repeat("a", $bytes));
+  }
+}
+
+function base_url(): string {
+  $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+  $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+  return $scheme . '://' . $host;
+}
+
 $slug = preg_replace('~[^a-z0-9\-]~', '', strtolower((string)($_GET['slug'] ?? '')));
 if ($slug === '') { echo "Missing slug"; exit; }
 
@@ -152,6 +191,18 @@ $current = read_json_file($path);
 if (!isset($current['slug']) || !$current['slug']) $current['slug'] = $slug;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // ---- iCal token regenerate ----
+  if (isset($_POST['action']) && $_POST['action'] === 'regen_ical_token') {
+    $tokens = load_tokens($tokenPath);
+    $tokens[$slug] = gen_token_hex(24);
+
+    if (!save_tokens_atomic($tokenPath, $tokens)) {
+      $err = "Failed to save iCal token file: " . $tokenPath;
+    } else {
+      $ok = "iCal token regenerated.";
+    }
+    // pokračuj dál v renderu stránky (neexit), ať se ukáže ok/err
+  }
   $mode = (string)($_POST['mode'] ?? 'form');
   $new = $current;
 
@@ -258,6 +309,17 @@ $rawCurrent = json_encode($current, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE |
 $galleryArr = getv($current, 'gallery', []);
 if (!is_array($galleryArr)) $galleryArr = [];
 $galleryArr = normalize_gallery($galleryArr);
+
+// ---- iCal export URL (per-property) ----
+$tokens = load_tokens($tokenPath);
+$currentToken = (string)($tokens[$slug] ?? '');
+
+if ($currentToken === '') {
+  // token ještě neexistuje => jen zobrazíme "not generated"
+  $icalExportUrl = '';
+} else {
+  $icalExportUrl = base_url() . "/dbw-bs5/api/calendar.php?property=" . urlencode($slug) . "&token=" . urlencode($currentToken);
+}
 ?>
 <!doctype html>
 <html>
@@ -339,6 +401,46 @@ $galleryArr = normalize_gallery($galleryArr);
           </div>
         </td>
         </tr>
+        <tr>
+  <th>Calendar sync (iCal export)</th>
+  <td>
+    <div style="margin-bottom:10px;color:#555;font-size:13px">
+      This link is used for <strong>Airbnb / Booking import</strong>. It exports only <strong>confirmed</strong> reservations for this property.
+    </div>
+
+    <?php if ($icalExportUrl === ''): ?>
+      <div class="msg-err" style="margin:0 0 12px 0">Token not generated yet.</div>
+    <?php endif; ?>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input
+        id="icalExportUrl"
+        readonly
+        value="<?= htmlspecialchars($icalExportUrl) ?>"
+        placeholder="Generate token to get export URL"
+        style="flex:1;min-width:280px"
+      >
+      <button class="btn" type="button" onclick="(function(){const el=document.getElementById('icalExportUrl'); if(!el||!el.value) return; navigator.clipboard.writeText(el.value); alert('Copied');})()">
+        Copy
+      </button>
+    </div>
+
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" type="submit" name="action" value="regen_ical_token"
+        onclick="return confirm('Regenerate iCal token? You will need to update the import URL in Airbnb/Booking.');">
+        <?= $icalExportUrl === '' ? 'Generate token' : 'Regenerate token' ?>
+      </button>
+
+      <?php if ($icalExportUrl !== ''): ?>
+        <a class="btn" href="<?= htmlspecialchars($icalExportUrl) ?>" target="_blank" rel="noopener">Open .ics</a>
+      <?php endif; ?>
+    </div>
+
+    <div style="margin-top:10px;color:#666;font-size:13px">
+      Airbnb / Booking: <strong>Import calendar</strong> → paste this URL.
+    </div>
+  </td>
+</tr>
         <tr>
           <th>SEO title</th>
           <td><input name="seo_title" value="<?= htmlspecialchars((string)getv($current,'seo.title','')) ?>"></td>
