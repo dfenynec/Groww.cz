@@ -1,88 +1,41 @@
 <?php
-require_once __DIR__ . "/_db.php";
-require_once __DIR__ . "/_auth.php";
+declare(strict_types=1);
+
+require_once __DIR__ . '/_auth.php';
 require_login();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $slug  = trim($_POST['slug'] ?? "");
-  $title = trim($_POST['title'] ?? "");
+$base = realpath(__DIR__ . '/..');
+$dir = $base . '/data/properties';
+$files = glob($dir . '/*.json') ?: [];
 
-  if ($slug && $title) {
-    $baseJson = [
-      "slug" => $slug,
-      "title" => $title,
-      "seo" => ["title" => $title, "description" => ""],
-      "location" => ["addressLine" => "", "mapsEmbedUrl" => ""],
-      "heroImage" => "",
-      "gallery" => [],
-      "chips" => [],
-      "description" => "",
-      "quickFacts" => [],
-      "amenitiesTop" => [],
-      "amenitiesColumns" => [[],[],[]],
-      "houseRules" => [],
-      "faq" => [],
-      "reviews" => ["rating" => 0, "count" => 0, "items" => []],
-      "pricing" => [
-        "currency" => "EUR",
-        "baseNight" => 100,
-        "weekendNight" => null,
-        "weekendDays" => [5,6],
-        "cleaningFee" => 40,
-        "minNightsDefault" => 3,
-        "rules" => []
-      ],
-      "booking" => ["maxGuests" => 4]
-    ];
-
-    $stmt = db()->prepare("INSERT INTO properties(slug,title,json) VALUES(?,?,?)");
-    $stmt->execute([$slug, $title, json_encode($baseJson, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)]);
-  }
-  header("Location: properties.php");
-  exit;
+function slug_from_path(string $p): string {
+  return basename($p, '.json');
 }
-
-$rows = db()->query("SELECT slug,title,updated_at,published_json_path FROM properties ORDER BY updated_at DESC")->fetchAll(PDO::FETCH_ASSOC);
-
-include __DIR__ . "/_layout_top.php";
 ?>
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3 class="m-0">Properties</h3>
-</div>
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Properties</title></head>
+<body style="font-family:system-ui;max-width:1000px;margin:30px auto">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2>Properties</h2>
+    <div><a href="dashboard.php">Dashboard</a> | <a href="logout.php">Logout</a></div>
+  </div>
 
-<div class="card p-3 mb-3">
-  <form method="post" class="row g-2">
-    <div class="col-md-4">
-      <input class="form-control" name="slug" placeholder="slug (e.g. nissi-golden-sands-a15)" required>
-    </div>
-    <div class="col-md-6">
-      <input class="form-control" name="title" placeholder="Title" required>
-    </div>
-    <div class="col-md-2 d-grid">
-      <button class="btn btn-dark">Create</button>
-    </div>
-  </form>
-</div>
-
-<div class="card p-3">
-  <table class="table align-middle mb-0">
-    <thead><tr>
-      <th>Slug</th><th>Title</th><th>Updated</th><th>Published JSON</th><th></th>
-    </tr></thead>
-    <tbody>
-    <?php foreach($rows as $r): ?>
-      <tr>
-        <td><code><?=$r['slug']?></code></td>
-        <td><?=$r['title']?></td>
-        <td class="text-muted small"><?=$r['updated_at']?></td>
-        <td class="text-muted small"><?= $r['published_json_path'] ? basename($r['published_json_path']) : "—" ?></td>
-        <td class="text-end">
-          <a class="btn btn-sm btn-outline-dark" href="property_edit.php?slug=<?=$r['slug']?>">Edit</a>
-          <a class="btn btn-sm btn-dark" href="export_property.php?slug=<?=$r['slug']?>">Publish</a>
-        </td>
+  <table style="width:100%;border-collapse:collapse">
+    <thead>
+      <tr style="text-align:left;border-bottom:1px solid #ddd">
+        <th>Slug</th><th>File</th><th></th>
       </tr>
-    <?php endforeach; ?>
+    </thead>
+    <tbody>
+      <?php foreach ($files as $f): $slug = slug_from_path($f); ?>
+      <tr style="border-bottom:1px solid #f0f0f0">
+        <td><b><?= htmlspecialchars($slug) ?></b></td>
+        <td><small><?= htmlspecialchars(str_replace($base,'',$f)) ?></small></td>
+        <td><a href="property_edit.php?slug=<?= urlencode($slug) ?>">Edit</a></td>
+      </tr>
+      <?php endforeach; ?>
     </tbody>
   </table>
-</div>
-<?php include __DIR__ . "/_layout_bottom.php"; ?>
+</body>
+</html>

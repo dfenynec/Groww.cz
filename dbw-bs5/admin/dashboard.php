@@ -1,32 +1,53 @@
 <?php
-require_once __DIR__ . "/_db.php";
-require_once __DIR__ . "/_auth.php";
+declare(strict_types=1);
+
+require_once __DIR__ . '/_auth.php';
 require_login();
+require_once __DIR__ . '/../_shared/db.php';
 
-$props = (int)db()->query("SELECT COUNT(*) FROM properties")->fetchColumn();
-$enq   = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE status='ENQUIRY'")->fetchColumn();
-$conf  = (int)db()->query("SELECT COUNT(*) FROM bookings WHERE status='CONFIRMED'")->fetchColumn();
+$pdo = db();
 
-include __DIR__ . "/_layout_top.php";
+$counts = [
+  'enquiry' => (int)$pdo->query("SELECT COUNT(*) FROM reservations WHERE status='enquiry'")->fetchColumn(),
+  'confirmed' => (int)$pdo->query("SELECT COUNT(*) FROM reservations WHERE status='confirmed'")->fetchColumn(),
+  'cancelled' => (int)$pdo->query("SELECT COUNT(*) FROM reservations WHERE status='cancelled'")->fetchColumn(),
+];
 ?>
-<div class="row g-3">
-  <div class="col-md-4">
-    <div class="card p-3">
-      <div class="text-muted">Properties</div>
-      <div class="fs-2 fw-bold"><?=$props?></div>
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Dashboard</title></head>
+<body style="font-family:system-ui;max-width:980px;margin:30px auto">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2>Dashboard</h2>
+    <div>
+      <?= htmlspecialchars($_SESSION['admin_email'] ?? '') ?> |
+      <a href="logout.php">Logout</a>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="card p-3">
-      <div class="text-muted">New enquiries</div>
-      <div class="fs-2 fw-bold"><?=$enq?></div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin:18px 0">
+    <div style="padding:14px;border:1px solid #ddd;border-radius:10px;min-width:200px">
+      <div style="color:#666">Enquiries</div>
+      <div style="font-size:28px;font-weight:700"><?= $counts['enquiry'] ?></div>
+      <a href="bookings.php?status=enquiry">Open</a>
+    </div>
+    <div style="padding:14px;border:1px solid #ddd;border-radius:10px;min-width:200px">
+      <div style="color:#666">Confirmed</div>
+      <div style="font-size:28px;font-weight:700"><?= $counts['confirmed'] ?></div>
+      <a href="reservations.php?status=confirmed">Open</a>
+    </div>
+    <div style="padding:14px;border:1px solid #ddd;border-radius:10px;min-width:200px">
+      <div style="color:#666">Cancelled</div>
+      <div style="font-size:28px;font-weight:700"><?= $counts['cancelled'] ?></div>
+      <a href="reservations.php?status=cancelled">Open</a>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="card p-3">
-      <div class="text-muted">Confirmed</div>
-      <div class="fs-2 fw-bold"><?=$conf?></div>
-    </div>
-  </div>
-</div>
-<?php include __DIR__ . "/_layout_bottom.php"; ?>
+
+  <hr>
+  <p>
+    <a href="bookings.php">Booking enquiries</a> •
+    <a href="reservations.php">Reservations</a> •
+    <a href="properties.php">Properties</a>
+  </p>
+</body>
+</html>

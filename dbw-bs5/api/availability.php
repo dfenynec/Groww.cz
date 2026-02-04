@@ -1,10 +1,14 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../_shared/paths.php';
+require_once __DIR__ . '/../_shared/config.php';
+require_once __DIR__ . '/../_shared/db.php';
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
-ini_set('display_errors', '0');        // error držíme v JSONu
+ini_set('display_errors', '0');
 ini_set('display_startup_errors', '0');
 error_reporting(E_ALL);
 
@@ -14,7 +18,7 @@ function respond(int $code, array $payload): void {
   exit;
 }
 
-function clean_slug(string $s): string {
+function clean_slug_local(string $s): string {
   $s = strtolower(trim($s));
   $s = preg_replace('~[^a-z0-9\-]~', '', $s);
   return $s ?: '';
@@ -52,7 +56,6 @@ function http_get(string $url, int $timeoutSec = 12): array {
 
     $body = @file_get_contents($url, false, $ctx);
 
-    // zkus vyčíst HTTP code z $http_response_header
     $code = null;
     if (isset($http_response_header) && is_array($http_response_header)) {
       foreach ($http_response_header as $h) {
@@ -69,7 +72,6 @@ function http_get(string $url, int $timeoutSec = 12): array {
       return [$body, $meta];
     } else {
       $meta['error'] = 'file_get_contents failed (or empty response)';
-      // pokračuj na cURL fallback
     }
   }
 
@@ -100,6 +102,7 @@ function http_get(string $url, int $timeoutSec = 12): array {
       $meta['ok'] = ($code >= 200 && $code < 300);
       return [$body, $meta];
     }
+
     $meta['error'] = $err ?: 'curl failed (or empty response)';
     return [null, $meta];
   }
@@ -126,14 +129,12 @@ function unfold_ical(string $ics): array {
 
 function parse_ical_events(string $ics): array {
   $lines = unfold_ical($ics);
-
   $events = [];
   $in = false;
   $cur = [];
 
   foreach ($lines as $line) {
     $t = trim($line);
-
     if ($t === 'BEGIN:VEVENT') { $in = true; $cur = []; continue; }
     if ($t === 'END:VEVENT') {
       if (!empty($cur['DTSTART']) && !empty($cur['DTEND'])) $events[] = $cur;
@@ -149,7 +150,7 @@ function parse_ical_events(string $ics): array {
     $k = substr($line, 0, $pos);
     $v = substr($line, $pos + 1);
 
-    $semi = strpos($k, ';');          // DTSTART;VALUE=DATE -> DTSTART
+    $semi = strpos($k, ';'); // DTSTART;VALUE=DATE -> DTSTART
     if ($semi !== false) $k = substr($k, 0, $semi);
 
     $k = strtoupper(trim($k));
@@ -163,31 +164,24 @@ function ical_date_to_iso(string $dt): ?string {
   $dt = trim($dt);
   if ($dt === '') return null;
 
-  // DATE: 20260202
   if (preg_match('~^\d{8}$~', $dt)) {
     return substr($dt, 0, 4) . '-' . substr($dt, 4, 2) . '-' . substr($dt, 6, 2);
   }
-
-  // DATE-TIME: 20260202T120000Z / 20260202T120000
   if (preg_match('~^(\d{8})T~', $dt, $m)) {
     $d = $m[1];
     return substr($d, 0, 4) . '-' . substr($d, 4, 2) . '-' . substr($d, 6, 2);
   }
-
   return null;
 }
 
 /**
- * END-EXCLUSIVE range:
- * - from = checkin (inclusive)
- * - to   = checkout (exclusive)
+ * END-EXCLUSIVE range: [from, to)
  */
 function add_range_exclusive(array &$ranges, string $fromISO, string $toISO): void {
   $from = DateTime::createFromFormat('Y-m-d', $fromISO, new DateTimeZone('UTC'));
   $to   = DateTime::createFromFormat('Y-m-d', $toISO,   new DateTimeZone('UTC'));
   if (!$from || !$to) return;
-
-  if ($to <= $from) return; // 0 nocí
+  if ($to <= $from) return;
 
   $ranges[] = [
     'from' => $from->format('Y-m-d'),
@@ -195,13 +189,8 @@ function add_range_exclusive(array &$ranges, string $fromISO, string $toISO): vo
   ];
 }
 
-/**
- * Merge END-EXCLUSIVE ranges:
- * merge if overlap OR touch: next.from <= cur.to
- */
 function merge_ranges_exclusive(array $ranges): array {
   if (!$ranges) return [];
-
   usort($ranges, fn($a, $b) => strcmp($a['from'], $b['from']));
 
   $out = [];
@@ -220,27 +209,16 @@ function merge_ranges_exclusive(array $ranges): array {
   return $out;
 }
 
-/**
- * Načte CONFIRMED rezervace z SQLite:
- * tabulka reservations:
- * - property_slug TEXT
- * - checkin TEXT (YYYY-MM-DD)
- * - checkout TEXT (YYYY-MM-DD)
- * - status TEXT ('confirmed')
- */
-function fetch_db_ranges_exclusive(string $dbPath, string $slug, array &$warnings): array {
+function fetch_db_ranges_exclusive(string $slug, array &$warnings): array {
+  $dbPath = db_path();
   if (!file_exists($dbPath)) {
     $warnings[] = "DB not found: {$dbPath}";
     return [];
   }
 
   try {
-    $pdo = new PDO('sqlite:' . $dbPath, null, null, [
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+    $pdo = db();
 
-    // Ověř, že tabulka existuje
     $exists = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='reservations'")->fetchColumn();
     if (!$exists) {
       $warnings[] = "DB table 'reservations' missing";
@@ -260,7 +238,6 @@ function fetch_db_ranges_exclusive(string $dbPath, string $slug, array &$warning
     foreach ($stmt->fetchAll() as $row) {
       add_range_exclusive($ranges, (string)$row['checkin'], (string)$row['checkout']);
     }
-
     return $ranges;
 
   } catch (Throwable $e) {
@@ -270,46 +247,27 @@ function fetch_db_ranges_exclusive(string $dbPath, string $slug, array &$warning
 }
 
 try {
-  // -------- main --------
-  $slug = clean_slug((string)($_GET['property'] ?? ''));
+  $slug = clean_slug_local((string)($_GET['property'] ?? ''));
   if ($slug === '') respond(400, ['error' => 'missing property']);
-
-  // base path: /dbw-bs5/api -> /dbw-bs5
-  $base = realpath(__DIR__ . '/..');
-  if ($base === false) respond(500, ['error' => 'base realpath failed', 'dir' => __DIR__]);
 
   $warnings = [];
 
-  // iCal config
-  $configPath = $base . '/private/ical-config.json';
-  if (!file_exists($configPath)) respond(500, ['error' => 'config missing', 'configPath' => $configPath]);
-  if (!is_readable($configPath)) respond(500, ['error' => 'config not readable', 'configPath' => $configPath]);
-
-  $raw = file_get_contents($configPath);
-  if ($raw === false) respond(500, ['error' => 'config read failed', 'configPath' => $configPath]);
-
-  $cfg = json_decode($raw, true);
+  // iCal config (ze shared)
+  $cfg = ical_config_read(); // <- očekáváme array
   if (!is_array($cfg)) {
-    respond(500, [
-      'error' => 'config invalid json',
-      'json_error' => json_last_error_msg(),
-      'configPath' => $configPath,
-    ]);
+    respond(500, ['error' => 'ical config invalid']);
   }
 
-  // iCal urls (optional)
   $urls = [];
   if (!empty($cfg[$slug]) && is_array($cfg[$slug])) {
     if (!empty($cfg[$slug]['airbnb']))  $urls[] = (string)$cfg[$slug]['airbnb'];
     if (!empty($cfg[$slug]['booking'])) $urls[] = (string)$cfg[$slug]['booking'];
   } else {
-    // není to fatální – můžeš mít property bez iCal
     $warnings[] = "No iCal config for slug '{$slug}'";
   }
 
-  // 1) ranges from iCal
+  // 1) iCal ranges
   $ranges = [];
-
   foreach ($urls as $u) {
     [$ics, $meta] = http_get($u);
 
@@ -326,9 +284,8 @@ try {
     }
   }
 
-  // 2) ranges from DB reservations
-  $dbPath = $base . '/storage/app.sqlite';
-  $rangesDb = fetch_db_ranges_exclusive($dbPath, $slug, $warnings);
+  // 2) DB confirmed ranges
+  $rangesDb = fetch_db_ranges_exclusive($slug, $warnings);
   $ranges = array_merge($ranges, $rangesDb);
 
   // 3) merge
@@ -337,7 +294,7 @@ try {
   respond(200, [
     'property' => $slug,
     'booked' => $ranges,
-    'warnings' => $warnings, // můžeš vypnout později
+    'warnings' => $warnings,
   ]);
 
 } catch (Throwable $e) {

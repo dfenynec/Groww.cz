@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/paths.php';
 
 function db_path(): string {
-  $base = realpath(__DIR__ . '/..'); // /dbw-bs5
-  if ($base === false) throw new RuntimeException("Base path not found");
-  return $base . '/storage/app.sqlite';
+  return db_file();
 }
 
 function db(): PDO {
@@ -114,4 +113,23 @@ function get_min_nights_for_property(string $slug): int {
   $json = json_decode($raw, true);
   $min = (int)($json['pricing']['minNightsDefault'] ?? 1);
   return max(1, $min);
+}
+
+$pdo->exec("
+  CREATE TABLE IF NOT EXISTS admin_users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
+");
+// seed default admin (jen pokud neexistuje)
+$exists = $pdo->query("SELECT COUNT(*) FROM admin_users")->fetchColumn();
+if ((int)$exists === 0) {
+  $email = 'admin@example.com';
+  $hash = password_hash('admin12345', PASSWORD_DEFAULT);
+  $now = gmdate('c');
+
+  $stmt = $pdo->prepare("INSERT INTO admin_users (email, password_hash, created_at) VALUES (:e,:h,:t)");
+  $stmt->execute([':e'=>$email, ':h'=>$hash, ':t'=>$now]);
 }

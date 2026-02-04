@@ -278,11 +278,50 @@
                   <select id="guests" class="form-select border-color-extra-medium-gray"></select>
                 </div>
               </div>
+              <div id="enquiryMsg" class="mt-10px small"></div>
               <div id="stayHint" class="small text-medium-gray mt-2"></div>
               <div class="mt-15px p-20px bg-very-light-gray border-radius-6px" id="priceBox">
                 <div class="small text-medium-gray">Select dates to see total price.</div>
               </div>
+              <!-- Booking enquiry form -->
+<div id="enquiryCard" class="mt-15px" style="border:1px solid rgba(17,24,39,.12);border-radius:14px;padding:14px;background:#fff;">
+  <div style="font-weight:700;margin-bottom:8px;">Booking enquiry</div>
 
+  <div id="enquiryAlert" style="display:none;margin-bottom:10px;padding:10px;border-radius:10px;border:1px solid rgba(17,24,39,.12);"></div>
+
+  <div class="row g-2">
+    <div class="col-12 col-md-6">
+      <label class="form-label small mb-1">Full name *</label>
+      <input id="enqName" type="text" class="form-control" placeholder="John Doe" autocomplete="name">
+    </div>
+    <div class="col-12 col-md-6">
+      <label class="form-label small mb-1">Email *</label>
+      <input id="enqEmail" type="email" class="form-control" placeholder="john@email.com" autocomplete="email">
+    </div>
+    <div class="col-12 col-md-6">
+      <label class="form-label small mb-1">Phone (optional)</label>
+      <input id="enqPhone" type="tel" class="form-control" placeholder="+420 777 123 456" autocomplete="tel">
+    </div>
+    <div class="col-12 col-md-6">
+      <label class="form-label small mb-1">Message (optional)</label>
+      <input id="enqMsgShort" type="text" class="form-control" placeholder="Late check-in? Baby cot?">
+    </div>
+    <div class="col-12">
+      <label class="form-label small mb-1">More details (optional)</label>
+      <textarea id="enqMessage" class="form-control" rows="3" placeholder="Hi! We’re coming for..."></textarea>
+      <div class="small text-medium-gray mt-1">We’ll reply by email as soon as possible.</div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-10px flex-wrap mt-12px align-items-center">
+    <button id="sendEnquiryBtn" type="button" class="btn btn-dark" style="border-radius:12px;">
+      Send enquiry
+    </button>
+    <div class="small text-medium-gray" id="enquiryHint">
+      Select dates + guests first.
+    </div>
+  </div>
+</div>
               <button id="requestBtn" class="btn btn-base-color btn-large btn-round-edge w-100 mt-20px" disabled>
                 Select dates
               </button>

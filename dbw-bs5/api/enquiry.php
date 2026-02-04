@@ -1,88 +1,113 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../_shared/db.php';
+
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
-require_once __DIR__ . '/_db.php';
-
-function json_out(array $data, int $code = 200): void {
+function respond(int $code, array $payload): void {
   http_response_code($code);
-  echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
   exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  json_out(['error' => 'method_not_allowed'], 405);
+function read_input(): array {
+  $ct = $_SERVER['CONTENT_TYPE'] ?? '';
+  if (stripos($ct, 'application/json') !== false) {
+    $raw = file_get_contents('php://input');
+    $data = json_decode($raw ?: '', true);
+    return is_array($data) ? $data : [];
+  }
+  return $_POST ?? [];
 }
 
-$input = json_decode(file_get_contents('php://input') ?: '', true);
-if (!is_array($input)) $input = $_POST; // fallback
+try {
+  $in = read_input();
 
-$slug     = clean_slug((string)($input['property'] ?? ''));
-$checkin  = (string)($input['checkin'] ?? '');
-$checkout = (string)($input['checkout'] ?? '');
-$guests   = isset($input['guests']) ? (int)$input['guests'] : null;
+  $slug = clean_slug((string)($in['property'] ?? $in['slug'] ?? ''));
+  if ($slug === '') respond(400, ['ok'=>false, 'error'=>'missing property']);
 
-$name  = trim((string)($input['name'] ?? ''));
-$email = trim((string)($input['email'] ?? ''));
-$phone = trim((string)($input['phone'] ?? ''));
-$msg   = trim((string)($input['message'] ?? ''));
+  $checkin  = (string)($in['checkin'] ?? '');
+  $checkout = (string)($in['checkout'] ?? '');
+  if (!is_valid_iso_date($checkin) || !is_valid_iso_date($checkout)) {
+    respond(400, ['ok'=>false, 'error'=>'invalid dates']);
+  }
 
-if ($slug === '') json_out(['error' => 'missing_property'], 400);
-if (!is_valid_iso_date($checkin) || !is_valid_iso_date($checkout)) json_out(['error' => 'invalid_dates'], 400);
+  $nights = nights_between($checkin, $checkout);
+  if ($nights <= 0) respond(400, ['ok'=>false, 'error'=>'checkout must be after checkin']);
 
-$nights = nights_between($checkin, $checkout);
-if ($nights <= 0) json_out(['error' => 'checkout_must_be_after_checkin'], 400);
+  $minReq = get_min_nights_for_property($slug);
+  if ($nights < $minReq) {
+    respond(400, [
+      'ok'=>false,
+      'error'=>"minimum stay is {$minReq} nights",
+      'minNights'=>$minReq,
+      'nights'=>$nights
+    ]);
+  }
 
-// enforce min nights from property JSON
-$minNights = get_min_nights_for_property($slug);
-if ($nights < $minNights) {
-  json_out([
-    'error' => 'min_nights',
-    'minNights' => $minNights,
+  // guests – doporučuju vyžadovat (UX už máte “Select guests”)
+  $guestsRaw = $in['guests'] ?? null;
+  if ($guestsRaw === null || $guestsRaw === '') {
+    respond(400, ['ok'=>false, 'error'=>'missing guests']);
+  }
+  $guests = (int)$guestsRaw;
+  if ($guests <= 0 || $guests > 50) respond(400, ['ok'=>false, 'error'=>'invalid guests']);
+
+  // DB konflikt jen s CONFIRMED (iCal už řeší picker – ale tady chráníme server)
+  if (db_has_conflict($slug, $checkin, $checkout)) {
+    respond(409, ['ok'=>false, 'error'=>'dates not available']);
+  }
+
+  $guest_name  = trim((string)($in['name'] ?? $in['guest_name'] ?? ''));
+  $guest_email = trim((string)($in['email'] ?? $in['guest_email'] ?? ''));
+  $guest_phone = trim((string)($in['phone'] ?? $in['guest_phone'] ?? ''));
+  $message     = trim((string)($in['message'] ?? ''));
+
+  // minimální sanity
+  if ($guest_email !== '' && !filter_var($guest_email, FILTER_VALIDATE_EMAIL)) {
+    respond(400, ['ok'=>false, 'error'=>'invalid email']);
+  }
+
+  $pdo = db();
+  $stmt = $pdo->prepare("
+    INSERT INTO reservations (
+      property_slug, checkin, checkout, guests,
+      guest_name, guest_email, guest_phone, message,
+      source, status, created_at
+    ) VALUES (
+      :slug, :cin, :cout, :guests,
+      :name, :email, :phone, :msg,
+      'enquiry', 'enquiry', :created
+    )
+  ");
+
+  $created = gmdate('c');
+  $stmt->execute([
+    ':slug'   => $slug,
+    ':cin'    => $checkin,
+    ':cout'   => $checkout,
+    ':guests' => $guests,
+    ':name'   => $guest_name,
+    ':email'  => $guest_email,
+    ':phone'  => $guest_phone,
+    ':msg'    => $message,
+    ':created'=> $created,
+  ]);
+
+  $id = (int)$pdo->lastInsertId();
+
+  respond(200, [
+    'ok' => true,
+    'id' => $id,
+    'status' => 'enquiry',
+    'property' => $slug,
+    'checkin' => $checkin,
+    'checkout' => $checkout,
     'nights' => $nights
-  ], 400);
+  ]);
+
+} catch (Throwable $e) {
+  respond(500, ['ok'=>false, 'error'=>'server error', 'message'=>$e->getMessage()]);
 }
-
-// basic guests validation (optional)
-if ($guests !== null && ($guests < 1 || $guests > 50)) {
-  json_out(['error' => 'invalid_guests'], 400);
-}
-
-// conflict check against DB confirmed
-if (db_has_conflict($slug, $checkin, $checkout)) {
-  json_out(['error' => 'dates_unavailable'], 409);
-}
-
-$pdo = db();
-
-$stmt = $pdo->prepare("
-  INSERT INTO reservations
-    (property_slug, checkin, checkout, guests, guest_name, guest_email, guest_phone, message, source, status, created_at)
-  VALUES
-    (:slug, :checkin, :checkout, :guests, :name, :email, :phone, :message, 'enquiry', 'enquiry', :created_at)
-");
-
-$createdAt = gmdate('c');
-
-$stmt->execute([
-  ':slug' => $slug,
-  ':checkin' => $checkin,
-  ':checkout' => $checkout,
-  ':guests' => $guests,
-  ':name' => $name !== '' ? $name : null,
-  ':email' => $email !== '' ? $email : null,
-  ':phone' => $phone !== '' ? $phone : null,
-  ':message' => $msg !== '' ? $msg : null,
-  ':created_at' => $createdAt,
-]);
-
-$id = (int)$pdo->lastInsertId();
-
-json_out([
-  'ok' => true,
-  'id' => $id,
-  'status' => 'enquiry',
-  'created_at' => $createdAt,
-]);

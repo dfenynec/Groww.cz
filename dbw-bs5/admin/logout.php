@@ -1,4 +1,7 @@
 <?php
-session_start();
-session_destroy();
+declare(strict_types=1);
+
+require_once __DIR__ . '/_auth.php';
+logout_user();
 header("Location: login.php");
+exit;
