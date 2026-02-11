@@ -2,7 +2,7 @@
     Crafto - Gym and fitness
 ====================================== */
 /* font */
-@import url("https://use.typekit.net/rrw2seg.css");
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&display=swap');
 /* variable */
 :root {     
@@ -10,7 +10,7 @@
     --dark-gray: #232323;
     --light-purple: #F3EEFD;
     --light-medium-gray: #cbcbcb;
-    --alt-font: korolev-condensed, sans-serif;
+     --alt-font: 'Antonio', sans-serif;
     --primary-font: 'Urbanist', sans-serif;
 } 
 /* reset */
