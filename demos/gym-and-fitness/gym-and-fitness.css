@@ -6,8 +6,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&display=swap');
 /* variable */
 :root {     
-    --base-color: #623BAB;  
+    --base-color: #9564C8;  
     --dark-gray: #232323;
+    --light-purple: #F3EEFD
     --light-medium-gray: #cbcbcb;
     --alt-font: korolev-condensed, sans-serif;
     --primary-font: 'Urbanist', sans-serif;
@@ -109,6 +110,9 @@ h6 {
 /* background color */
 .bg-nero-grey {
     background-color: #221349;
+}
+bg-light-purple {
+    background-color: #F3EEFD;
 }
 .bg-cultured {
     background-color: #f4f9f6;
